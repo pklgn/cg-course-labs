@@ -1,1 +1,1 @@
-"# cg-course-labs" 
+# cg-course-labs
