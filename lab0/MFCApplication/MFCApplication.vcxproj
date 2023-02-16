@@ -183,11 +183,14 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Common\Frame\Frame.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MFCApplication.h" />
     <ClInclude Include="MFCApplicationDoc.h" />
     <ClInclude Include="MFCApplicationView.h" />
+    <ClInclude Include="MyInitialsDrawer\MyInitials.h" />
+    <ClInclude Include="MyInitialsDrawer\MyInitialsDrawer.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
@@ -197,6 +200,10 @@
     <ClCompile Include="MFCApplication.cpp" />
     <ClCompile Include="MFCApplicationDoc.cpp" />
     <ClCompile Include="MFCApplicationView.cpp" />
+    <ClCompile Include="MyInitialsDrawer\MyInitialsDrawer.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

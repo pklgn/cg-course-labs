@@ -13,6 +13,8 @@
 #include "MFCApplicationDoc.h"
 #include "MFCApplicationView.h"
 
+#include "MyInitialsDrawer/MyInitialsDrawer.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -56,20 +58,11 @@ void CMFCApplicationView::OnDraw(CDC* pDC)
 
 	// TODO: add draw code for native data here
 
-	// создаем перо и кисть с использованием классов библиотеки MFC
-	CPen pen(PS_SOLID, 2, RGB(255, 0, 0));
-	CBrush brush(RGB(255, 255, 0));
+	MyInitialsDrawer myInitialsDrawer({20, 20, 400, 300}, 20);
+	myInitialsDrawer.DrawInitial(pDC, MyInitials::E, RGB(255, 0, 0));
+	myInitialsDrawer.DrawInitial(pDC, MyInitials::P, RGB(255, 255, 0));
+	myInitialsDrawer.DrawInitial(pDC, MyInitials::K, RGB(30, 120, 0));
 
-	// Выбираем их в контекст устройства
-	CPen* pOldPen = pDC->SelectObject(&pen);
-	CBrush* pOldBrush = pDC->SelectObject(&brush);
-
-	// Рисуем эллипс
-	pDC->Ellipse(100, 50, 250, 150);
-
-	// Выбираем прежние объекты
-	pDC->SelectObject(pOldPen);
-	pDC->SelectObject(pOldBrush);
 }
 
 
