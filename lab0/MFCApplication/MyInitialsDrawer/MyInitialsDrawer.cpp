@@ -1,4 +1,4 @@
-#include "../pch.h"
+п»ї#include "../pch.h"
 #include "MyInitialsDrawer.h"
 
 MyInitialsDrawer::MyInitialsDrawer(const RectD& frame, size_t lineThickness)
@@ -22,9 +22,9 @@ void MyInitialsDrawer::DrawInitial(CDC* pDC, MyInitials initial, COLORREF color)
 	CPen* pOldPen = pDC->SelectObject(&pen);
 	CBrush* pOldBrush = pDC->SelectObject(&brush);
 
-	// TODO: использовать static_cast либо gsl, либо использовать класс CRect там нужные координаты
-	// TODO: вынести код рисования каждой буквы в отдельный метод
-	// TODO: не использовать Doc/View
+	// TODO: РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ static_cast Р»РёР±Рѕ gsl, Р»РёР±Рѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РєР»Р°СЃСЃ CRect С‚Р°Рј РЅСѓР¶РЅС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹
+	// TODO: РІС‹РЅРµСЃС‚Рё РєРѕРґ СЂРёСЃРѕРІР°РЅРёСЏ РєР°Р¶РґРѕР№ Р±СѓРєРІС‹ РІ РѕС‚РґРµР»СЊРЅС‹Р№ РјРµС‚РѕРґ
+	// TODO: РЅРµ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ Doc/View
 	switch (initial)
 	{
 	case MyInitials::E:
