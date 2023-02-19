@@ -16,8 +16,16 @@
 
 // CChildView
 
+const double ROTATION_SPEED = 30;
+
 CChildView::CChildView()
+	: m_lastTick(GetTickCount())
 {
+	CommandLineParser cmdLineParser;
+	cmdLineParser.Parse();
+	m_frame = { cmdLineParser.GetLeftTop(), cmdLineParser.GetFrameSize() };
+	m_myInitialsDrawer.SetFrame(m_frame);
+	m_myInitialsDrawer.SetLineThickness(cmdLineParser.GetLineThickness());
 }
 
 CChildView::~CChildView()
@@ -26,7 +34,10 @@ CChildView::~CChildView()
 
 
 BEGIN_MESSAGE_MAP(CChildView, CWnd)
+	ON_WM_CREATE()
 	ON_WM_PAINT()
+	ON_WM_TIMER()
+	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
 
@@ -46,6 +57,13 @@ BOOL CChildView::PreCreateWindow(CREATESTRUCT& cs)
 	return TRUE;
 }
 
+int CChildView::OnCreate(LPCREATESTRUCT /*lpCreateStruct*/)
+{
+	m_nTimerID = SetTimer(1, 100, 0);
+
+	return 0;
+}
+
 void CChildView::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
@@ -57,9 +75,39 @@ void CChildView::OnPaint()
 	CommandLineParser cmdLineParser;
 	cmdLineParser.Parse();
 
-	MyInitialsDrawer myInitialsDrawer({ cmdLineParser.GetLeftTop(), cmdLineParser.GetFrameSize() }, cmdLineParser.GetLineThickness());
-	myInitialsDrawer.DrawInitial(dc, LetterDrawer::Letter::E, RGB(33, 115, 70));
-	myInitialsDrawer.DrawInitial(dc, LetterDrawer::Letter::P, RGB(43, 87, 154));
-	myInitialsDrawer.DrawInitial(dc, LetterDrawer::Letter::K, RGB(183, 71, 42));
+	m_myInitialsDrawer.DrawInitial(dc, LetterDrawer::Letter::E, RGB(33, 115, 70));
+	m_myInitialsDrawer.DrawInitial(dc, LetterDrawer::Letter::P, RGB(43, 87, 154));
+	m_myInitialsDrawer.DrawInitial(dc, LetterDrawer::Letter::K, RGB(183, 71, 42));
 }
 
+void CChildView::OnTimer(UINT_PTR nIDEvent)
+{
+	if (nIDEvent == m_nTimerID)
+	{
+		Animate();
+	}
+}
+
+void CChildView::OnDestroy()
+{
+	KillTimer(1);
+}
+
+void CChildView::Animate(void)
+{
+	auto currentTick = GetTickCount();
+	double delta = (currentTick - m_lastTick) * 0.001;
+	m_lastTick = currentTick;
+
+	m_wavePhase += ROTATION_SPEED * delta;
+	m_wavePhase = fmod(m_wavePhase, 3.14);
+
+	auto shiftY = static_cast<int>(cos(m_wavePhase) * 20);
+	m_frame.top += shiftY;
+	m_frame.bottom += shiftY;
+	m_myInitialsDrawer.SetInitialShiftY(shiftY);
+	m_myInitialsDrawer.SetFrame(m_frame);
+
+	Invalidate();
+	UpdateWindow();
+}

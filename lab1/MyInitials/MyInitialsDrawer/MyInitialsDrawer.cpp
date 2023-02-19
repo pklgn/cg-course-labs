@@ -1,11 +1,19 @@
 ﻿#include "../pch.h"
 #include "MyInitialsDrawer.h"
 
+MyInitialsDrawer::MyInitialsDrawer()
+	: m_isFrameFull(false)
+	, m_letterDrawer()
+	, m_initialShiftY(0)
+{
+}
+
 MyInitialsDrawer::MyInitialsDrawer(const CRect& frame, LetterDrawer::LineThickness lineThickness)
 	: m_frame(frame)
 	, m_activeFrame(CPoint{ frame.left, frame.top }, CSize{ frame.Width() / MY_INITIALS_LENGTH - lineThickness / 2, frame.Height() })
 	, m_isFrameFull(frame.Width() == 0 || frame.Height() == 0)
 	, m_letterDrawer(lineThickness)
+	, m_initialShiftY(0)
 {
 }
 
@@ -51,4 +59,27 @@ void MyInitialsDrawer::DrawInitial(CDC& pDC, LetterDrawer::Letter initial, COLOR
 	{
 		m_isFrameFull = true;
 	}
+}
+
+void MyInitialsDrawer::SetInitialShiftY(int shift)
+{
+	m_initialShiftY = shift;
+}
+
+void MyInitialsDrawer::SetFrame(const CRect& frame)
+{
+	m_isFrameFull = frame.Width() == 0 || frame.Height() == 0;
+	m_frame = frame;
+	m_activeFrame = { CPoint{ frame.left, frame.top }, CSize{ frame.Width() / MY_INITIALS_LENGTH - m_lineThickness / 2, frame.Height() } };
+}
+
+void MyInitialsDrawer::SetLineThickness(LetterDrawer::LineThickness lineThickness)
+{
+	m_lineThickness = lineThickness;
+	m_letterDrawer.SetLineThickness(lineThickness);
+}
+
+int MyInitialsDrawer::GetInitialShiftY() const
+{
+	return m_initialShiftY;
 }

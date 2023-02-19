@@ -17,6 +17,11 @@ void LetterDrawer::SetColor(COLORREF color)
 	m_color = color;
 }
 
+void LetterDrawer::SetLineThickness(LineThickness lineThickness)
+{
+	m_lineThickness = lineThickness;
+}
+
 void LetterDrawer::DrawLetter(CDC& pDC, Letter letter)
 {
 	switch (letter)

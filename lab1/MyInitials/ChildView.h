@@ -4,6 +4,7 @@
 
 
 #pragma once
+#include "MyInitialsDrawer/MyInitialsDrawer.h"
 
 
 // CChildView window
@@ -17,8 +18,18 @@ public:
 // Attributes
 public:
 
+private:
+	DWORD m_lastTick;
+	UINT_PTR m_nTimerID = 0;
+	MyInitialsDrawer m_myInitialsDrawer;
+	CRect m_frame;
+	double m_wavePhase;
+
 // Operations
 public:
+
+private:
+	void Animate(void);
 
 // Overrides
 	protected:
@@ -30,7 +41,10 @@ public:
 
 	// Generated message map functions
 protected:
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnPaint();
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	afx_msg void OnDestroy();
 	DECLARE_MESSAGE_MAP()
 };
 

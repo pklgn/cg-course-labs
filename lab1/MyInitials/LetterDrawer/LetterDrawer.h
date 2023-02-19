@@ -12,10 +12,11 @@ public:
 		K,
 	};
 
-	LetterDrawer(LineThickness lineThickness);
+	LetterDrawer(LineThickness lineThickness = 1);
 
 	void SetFrame(const CRect& frame);
 	void SetColor(COLORREF color);
+	void SetLineThickness(LineThickness lineThickness);
 
 	void DrawLetter(CDC& pDC, Letter letter);
 
