@@ -7,6 +7,7 @@
 #include "MyInitials.h"
 #include "ChildView.h"
 #include "MyInitialsDrawer/MyInitialsDrawer.h"
+#include "CommandLineParser/CommandLineParser.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -45,16 +46,20 @@ BOOL CChildView::PreCreateWindow(CREATESTRUCT& cs)
 	return TRUE;
 }
 
-void CChildView::OnPaint() 
+void CChildView::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
 	
 	// TODO: Add your message handler code here
 	
 	// Do not call CWnd::OnPaint() for painting messages
-	MyInitialsDrawer myInitialsDrawer({ CPoint{ 0, 20 }, CSize{ 330, 300 } }, 20);
-	myInitialsDrawer.DrawInitial(dc, LetterDrawer::Letter::E, RGB(255, 0, 0));
-	myInitialsDrawer.DrawInitial(dc, LetterDrawer::Letter::P, RGB(255, 255, 0));
-	myInitialsDrawer.DrawInitial(dc, LetterDrawer::Letter::K, RGB(30, 120, 0));
+
+	CommandLineParser cmdLineParser;
+	cmdLineParser.Parse();
+
+	MyInitialsDrawer myInitialsDrawer({ cmdLineParser.GetLeftTop(), cmdLineParser.GetFrameSize() }, cmdLineParser.GetLineThickness());
+	myInitialsDrawer.DrawInitial(dc, LetterDrawer::Letter::E, RGB(33, 115, 70));
+	myInitialsDrawer.DrawInitial(dc, LetterDrawer::Letter::P, RGB(43, 87, 154));
+	myInitialsDrawer.DrawInitial(dc, LetterDrawer::Letter::K, RGB(183, 71, 42));
 }
 

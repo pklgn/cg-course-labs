@@ -90,8 +90,8 @@ void LetterDrawer::DrawLetterK(CDC& pDC)
 	pDC.Polygon(upperPoints, 4);
 
 	const CPoint lowerPoints[] = { CPoint{ m_frame.left, m_frame.top + m_frame.Height() / 2 },
-		CPoint{(m_frame.left + m_frame.Width() - m_lineThickness),(m_frame.top + m_frame.Height()) },
-		CPoint{(m_frame.left + m_frame.Width()),(m_frame.top + m_frame.Height()) },
-		CPoint{(m_frame.left + m_lineThickness),(m_frame.top + m_frame.Height() / 2) } };
+		CPoint{ m_frame.left + m_frame.Width() - m_lineThickness, m_frame.top + m_frame.Height() },
+		CPoint{ m_frame.left + m_frame.Width(), m_frame.top + m_frame.Height() },
+		CPoint{ m_frame.left + m_lineThickness, m_frame.top + m_frame.Height() / 2 } };
 	pDC.Polygon(lowerPoints, 4);
 }

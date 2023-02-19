@@ -47,4 +47,8 @@ void MyInitialsDrawer::DrawInitial(CDC& pDC, LetterDrawer::Letter initial, COLOR
 	m_activeFrame.left += m_frame.Width() / MY_INITIALS_LENGTH;
 	m_activeFrame.right += m_frame.Width() / MY_INITIALS_LENGTH;
 
+	if (m_activeFrame.left == m_frame.right)
+	{
+		m_isFrameFull = true;
+	}
 }
