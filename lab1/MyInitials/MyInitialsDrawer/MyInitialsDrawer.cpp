@@ -30,12 +30,15 @@ void MyInitialsDrawer::DrawInitial(CDC& pDC, LetterDrawer::Letter initial, COLOR
 	CPen* pOldPen = pDC.SelectObject(&pen);
 	CBrush* pOldBrush = pDC.SelectObject(&brush);
 
+	m_activeFrame.top += m_initialShiftY;
+	m_activeFrame.bottom += m_initialShiftY;
+
 	m_letterDrawer.SetColor(color);
 	m_letterDrawer.SetFrame(m_activeFrame);
 
-	// TODO: использовать static_cast либо gsl, либо использовать класс CRect там нужные координаты
-	// TODO: вынести код рисования каждой буквы в отдельный метод
-	// TODO: не использовать Doc/View
+	// FIXED: использовать static_cast либо gsl, либо использовать класс CRect там нужные координаты
+	// FIXED: вынести код рисования каждой буквы в отдельный метод
+	// FIXED: не использовать Doc/View
 	switch (initial)
 	{
 	case LetterDrawer::Letter::E:
