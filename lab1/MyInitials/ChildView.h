@@ -24,6 +24,7 @@ private:
 	MyInitialsDrawer m_myInitialsDrawer;
 	CRect m_frame;
 	double m_wavePhase;
+	CBitmap m_bitmap;
 
 // Operations
 public:
@@ -45,6 +46,7 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnDestroy();
+	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	DECLARE_MESSAGE_MAP()
 };
 

@@ -38,6 +38,7 @@ BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_WM_PAINT()
 	ON_WM_TIMER()
 	ON_WM_DESTROY()
+	//ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
 
@@ -67,17 +68,48 @@ int CChildView::OnCreate(LPCREATESTRUCT /*lpCreateStruct*/)
 void CChildView::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
+	//auto dc = GetDC();
 	
 	// TODO: Add your message handler code here
 	
 	// Do not call CWnd::OnPaint() for painting messages
 
-	CommandLineParser cmdLineParser;
-	cmdLineParser.Parse();
+	// https://mykbn.wordpress.com/2013/06/24/double-buffering-technique-in-mfc-for-flicker-free-drawing/
+	//CreateCompatibleDC(dc);
+	//m_bitmap.CreateCompatibleBitmap(&dc, m_frame.Width(), m_frame.Height());
+	//auto pOldBmp = dc.SelectObject(m_bitmap);
+	//dc.FillSolidRect(m_frame, dc.GetBkColor());
+	//dc.BitBlt(m_frame.left, m_frame.top, m_frame.Width(), m_frame.Height(), &dc, m_frame.left, m_frame.top, SRCCOPY);
+	//dc.SelectObject(pOldBmp); 
 
-	m_myInitialsDrawer.DrawInitial(dc, LetterDrawer::Letter::E, RGB(33, 115, 70));
-	m_myInitialsDrawer.DrawInitial(dc, LetterDrawer::Letter::P, RGB(43, 87, 154));
-	m_myInitialsDrawer.DrawInitial(dc, LetterDrawer::Letter::K, RGB(183, 71, 42));
+	// https://stackoverflow.com/questions/11448118/memdc-in-onpaint-function
+	CDC dcMem;
+	CBitmap bmpDC;
+	CBitmap* pOldBmp;
+
+	CRect rcClient;
+	GetClientRect(&rcClient);
+
+	//auto bkBrush = CBrush(RGB(0, 0, 0));
+	//FillRect(dcMem, rcClient, bkBrush);
+	dcMem.CreateCompatibleDC(&dc);
+	dcMem.FillSolidRect(0, 0, rcClient.right, rcClient.bottom, RGB(255, 255, 255));
+
+	//bmpDC.CreateCompatibleBitmap(&dc, rcClient.Width(), rcClient.Height());
+	bmpDC.CreateCompatibleBitmap(&dc, rcClient.right, rcClient.bottom);
+	pOldBmp = dcMem.SelectObject(&bmpDC);
+
+	if (dcMem.GetSafeHdc() != NULL)
+	{
+		m_myInitialsDrawer.DrawInitial(dcMem, LetterDrawer::Letter::E, RGB(33, 115, 70));
+		m_myInitialsDrawer.DrawInitial(dcMem, LetterDrawer::Letter::P, RGB(43, 87, 154));
+		m_myInitialsDrawer.DrawInitial(dcMem, LetterDrawer::Letter::K, RGB(183, 71, 42));
+
+		dc.BitBlt(0, 0, rcClient.right, rcClient.bottom, &dcMem, 0, 0, SRCCOPY);
+	}
+
+	//dc.BitBlt(0, 0, rcClient.Width(), rcClient.Height(), &dcMem, 0, 0, SRCCOPY);
+	dcMem.SelectObject(pOldBmp);
 }
 
 void CChildView::OnTimer(UINT_PTR nIDEvent)
@@ -108,6 +140,17 @@ void CChildView::Animate(void)
 	m_myInitialsDrawer.SetInitialShiftY(shiftY);
 	m_myInitialsDrawer.SetFrame(m_frame);
 
-	Invalidate();
+	CRect invalidateRect = {
+		(int)floor(m_frame.left),
+		m_frame.top - abs(m_myInitialsDrawer.MY_INITIALS_LENGTH * shiftY),
+		m_frame.right,
+		m_frame.bottom + abs(m_myInitialsDrawer.MY_INITIALS_LENGTH * shiftY)
+	};
+	InvalidateRect(&invalidateRect, FALSE);
 	UpdateWindow();
+}
+
+BOOL CChildView::OnEraseBkgnd(CDC* pDC)
+{
+	return true;
 }

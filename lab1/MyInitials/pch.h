@@ -12,5 +12,6 @@
 #include <stdexcept>
 #include <string>
 #include <format>
+#include <math.h>
 
 #endif //PCH_H
