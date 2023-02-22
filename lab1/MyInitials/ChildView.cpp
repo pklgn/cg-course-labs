@@ -24,7 +24,6 @@ CChildView::CChildView()
 	CommandLineParser cmdLineParser;
 	cmdLineParser.Parse();
 	m_frame = { cmdLineParser.GetLeftTop(), cmdLineParser.GetFrameSize() };
-	m_myInitialsDrawer.SetFrame(m_frame);
 	m_myInitialsDrawer.SetLineThickness(cmdLineParser.GetLineThickness());
 }
 
@@ -60,7 +59,7 @@ BOOL CChildView::PreCreateWindow(CREATESTRUCT& cs)
 
 int CChildView::OnCreate(LPCREATESTRUCT /*lpCreateStruct*/)
 {
-	m_nTimerID = SetTimer(1, 100, 0);
+	m_nTimerID = SetTimer(1, 95, 0);
 
 	return 0;
 }
@@ -68,39 +67,25 @@ int CChildView::OnCreate(LPCREATESTRUCT /*lpCreateStruct*/)
 void CChildView::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
-	//auto dc = GetDC();
-	
-	// TODO: Add your message handler code here
-	
-	// Do not call CWnd::OnPaint() for painting messages
-
-	// https://mykbn.wordpress.com/2013/06/24/double-buffering-technique-in-mfc-for-flicker-free-drawing/
-	//CreateCompatibleDC(dc);
-	//m_bitmap.CreateCompatibleBitmap(&dc, m_frame.Width(), m_frame.Height());
-	//auto pOldBmp = dc.SelectObject(m_bitmap);
-	//dc.FillSolidRect(m_frame, dc.GetBkColor());
-	//dc.BitBlt(m_frame.left, m_frame.top, m_frame.Width(), m_frame.Height(), &dc, m_frame.left, m_frame.top, SRCCOPY);
-	//dc.SelectObject(pOldBmp); 
-
-	// https://stackoverflow.com/questions/11448118/memdc-in-onpaint-function
 	CDC dcMem;
 	CBitmap bmpDC;
 	CBitmap* pOldBmp;
 
 	CRect rcClient;
 	GetClientRect(&rcClient);
+	CBrush brush(RGB(255, 255, 255));
 
-	//auto bkBrush = CBrush(RGB(0, 0, 0));
-	//FillRect(dcMem, rcClient, bkBrush);
 	dcMem.CreateCompatibleDC(&dc);
-	dcMem.FillSolidRect(0, 0, rcClient.right, rcClient.bottom, RGB(255, 255, 255));
-
-	//bmpDC.CreateCompatibleBitmap(&dc, rcClient.Width(), rcClient.Height());
 	bmpDC.CreateCompatibleBitmap(&dc, rcClient.right, rcClient.bottom);
+	
 	pOldBmp = dcMem.SelectObject(&bmpDC);
+	// https://stackoverflow.com/questions/11037228/gdi-how-to-create-and-fill-bitmap
+	dcMem.FillRect(&rcClient, &brush);
 
 	if (dcMem.GetSafeHdc() != NULL)
 	{
+		m_myInitialsDrawer.SetFrame(m_frame);
+
 		m_myInitialsDrawer.DrawInitial(dcMem, LetterDrawer::Letter::E, RGB(33, 115, 70));
 		m_myInitialsDrawer.DrawInitial(dcMem, LetterDrawer::Letter::P, RGB(43, 87, 154));
 		m_myInitialsDrawer.DrawInitial(dcMem, LetterDrawer::Letter::K, RGB(183, 71, 42));
@@ -108,7 +93,6 @@ void CChildView::OnPaint()
 		dc.BitBlt(0, 0, rcClient.right, rcClient.bottom, &dcMem, 0, 0, SRCCOPY);
 	}
 
-	//dc.BitBlt(0, 0, rcClient.Width(), rcClient.Height(), &dcMem, 0, 0, SRCCOPY);
 	dcMem.SelectObject(pOldBmp);
 }
 
@@ -132,16 +116,16 @@ void CChildView::Animate(void)
 	m_lastTick = currentTick;
 
 	m_wavePhase += ROTATION_SPEED * delta;
-	m_wavePhase = fmod(m_wavePhase, 3.14);
+	m_wavePhase = std::fmod(m_wavePhase, 3.14);
 
 	auto shiftY = static_cast<int>(cos(m_wavePhase) * 20);
-	m_frame.top += shiftY;
-	m_frame.bottom += shiftY;
+	//m_frame.top += shiftY;
+	//m_frame.bottom += shiftY;
 	m_myInitialsDrawer.SetInitialShiftY(shiftY);
-	m_myInitialsDrawer.SetFrame(m_frame);
+	//m_myInitialsDrawer.SetFrame(m_frame);
 
 	CRect invalidateRect = {
-		(int)floor(m_frame.left),
+		m_frame.left,
 		m_frame.top - abs(m_myInitialsDrawer.MY_INITIALS_LENGTH * shiftY),
 		m_frame.right,
 		m_frame.bottom + abs(m_myInitialsDrawer.MY_INITIALS_LENGTH * shiftY)
@@ -152,5 +136,5 @@ void CChildView::Animate(void)
 
 BOOL CChildView::OnEraseBkgnd(CDC* pDC)
 {
-	return true;
+	return TRUE;
 }
