@@ -16,7 +16,7 @@
 
 // CChildView
 
-const double ROTATION_SPEED = 30;
+const UINT_PTR MILLISECONDS_IN_SECOND = 1000;
 
 CChildView::CChildView()
 	: m_lastTick(GetTickCount())
@@ -37,7 +37,7 @@ BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_WM_PAINT()
 	ON_WM_TIMER()
 	ON_WM_DESTROY()
-	//ON_WM_ERASEBKGND()
+	ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
 
@@ -51,7 +51,7 @@ BOOL CChildView::PreCreateWindow(CREATESTRUCT& cs)
 
 	cs.dwExStyle |= WS_EX_CLIENTEDGE;
 	cs.style &= ~WS_BORDER;
-	cs.lpszClass = AfxRegisterWndClass(CS_HREDRAW|CS_VREDRAW|CS_DBLCLKS, 
+	cs.lpszClass = AfxRegisterWndClass(CS_HREDRAW|CS_VREDRAW|CS_DBLCLKS,
 		::LoadCursor(nullptr, IDC_ARROW), reinterpret_cast<HBRUSH>(COLOR_WINDOW+1), nullptr);
 
 	return TRUE;
@@ -59,7 +59,9 @@ BOOL CChildView::PreCreateWindow(CREATESTRUCT& cs)
 
 int CChildView::OnCreate(LPCREATESTRUCT /*lpCreateStruct*/)
 {
-	m_nTimerID = SetTimer(1, 95, 0);
+	m_nTimerID = SetTimer(m_myInitialsAnimation.TIMER_ID,
+		(UINT)(MILLISECONDS_IN_SECOND / m_myInitialsAnimation.FPS),
+		NULL);
 
 	return 0;
 }
@@ -73,13 +75,13 @@ void CChildView::OnPaint()
 
 	CRect rcClient;
 	GetClientRect(&rcClient);
-	CBrush brush(RGB(255, 255, 255));
 
 	dcMem.CreateCompatibleDC(&dc);
 	bmpDC.CreateCompatibleBitmap(&dc, rcClient.right, rcClient.bottom);
 	
 	pOldBmp = dcMem.SelectObject(&bmpDC);
 	// https://stackoverflow.com/questions/11037228/gdi-how-to-create-and-fill-bitmap
+	CBrush brush(RGB(255, 255, 255));
 	dcMem.FillRect(&rcClient, &brush);
 
 	if (dcMem.GetSafeHdc() != NULL)
@@ -106,31 +108,24 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 
 void CChildView::OnDestroy()
 {
-	KillTimer(1);
+	KillTimer(m_myInitialsAnimation.TIMER_ID);
 }
 
 void CChildView::Animate(void)
 {
 	auto currentTick = GetTickCount();
-	double delta = (currentTick - m_lastTick) * 0.001;
-	m_lastTick = currentTick;
+	auto deltaTime = (currentTick - m_lastTick) / static_cast<double>(MILLISECONDS_IN_SECOND);
 
-	m_wavePhase += ROTATION_SPEED * delta;
-	m_wavePhase = std::fmod(m_wavePhase, 3.14);
+	auto deltaHeight = deltaTime * (m_myInitialsAnimation.START_SPEED - m_myInitialsAnimation.VELOCITY * deltaTime / 2);
+	m_frame.bottom = m_frame.Height() + deltaHeight;
+	m_frame.top = deltaHeight;
 
-	auto shiftY = static_cast<int>(cos(m_wavePhase) * 20);
-	//m_frame.top += shiftY;
-	//m_frame.bottom += shiftY;
-	m_myInitialsDrawer.SetInitialShiftY(shiftY);
-	//m_myInitialsDrawer.SetFrame(m_frame);
+	if (deltaHeight < 0)
+	{
+		m_lastTick = currentTick;
+	}
 
-	CRect invalidateRect = {
-		m_frame.left,
-		m_frame.top - abs(m_myInitialsDrawer.MY_INITIALS_LENGTH * shiftY),
-		m_frame.right,
-		m_frame.bottom + abs(m_myInitialsDrawer.MY_INITIALS_LENGTH * shiftY)
-	};
-	InvalidateRect(&invalidateRect, FALSE);
+	Invalidate(FALSE);
 	UpdateWindow();
 }
 

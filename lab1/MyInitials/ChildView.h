@@ -19,12 +19,26 @@ public:
 public:
 
 private:
+	enum
+	{
+		ANIMATION_TIMER_ID = 1
+	};
+
+	struct MyInitialsAnimation
+	{
+		UINT FPS = 60;
+		UINT TIMER_ID = 1;
+		INT START_SPEED = 250;
+		INT VELOCITY = 100;
+	};
+
 	DWORD m_lastTick;
 	UINT_PTR m_nTimerID = 0;
 	MyInitialsDrawer m_myInitialsDrawer;
+	MyInitialsAnimation m_myInitialsAnimation;
 	CRect m_frame;
+
 	double m_wavePhase;
-	CBitmap m_bitmap;
 
 // Operations
 public:
