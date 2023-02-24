@@ -30,6 +30,12 @@ private:
 		UINT TIMER_ID = 1;
 		INT START_SPEED = 250;
 		INT VELOCITY = 100;
+
+		double GetAngularFrequency()
+		{
+			return 2 * M_PI / START_SPEED * VELOCITY;
+		}
+
 	};
 
 	DWORD m_lastTick;

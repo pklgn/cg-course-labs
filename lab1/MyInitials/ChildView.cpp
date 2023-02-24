@@ -120,12 +120,15 @@ void CChildView::Animate(void)
 	m_frame.bottom = m_frame.Height() + deltaHeight;
 	m_frame.top = deltaHeight;
 
+	auto animationAngularFrequency = m_myInitialsAnimation.GetAngularFrequency();
+	m_myInitialsDrawer.SetInitialShiftY(static_cast<int>(std::sin(animationAngularFrequency * deltaTime) * 30));
+
 	if (deltaHeight < 0)
 	{
 		m_lastTick = currentTick;
 	}
 
-	Invalidate(FALSE);
+	Invalidate();
 	UpdateWindow();
 }
 
