@@ -185,6 +185,7 @@
   <ItemGroup>
     <ClInclude Include="ChildView.h" />
     <ClInclude Include="Ellipse.h" />
+    <ClInclude Include="Circle\Circle.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="pch.h" />
@@ -194,6 +195,7 @@
   <ItemGroup>
     <ClCompile Include="ChildView.cpp" />
     <ClCompile Include="Ellipse.cpp" />
+    <ClCompile Include="Circle\Circle.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

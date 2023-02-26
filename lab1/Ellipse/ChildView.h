@@ -17,6 +17,12 @@ public:
 // Attributes
 public:
 
+private:
+	COLORREF m_circleColor = RGB(255, 0, 0); // Красный цвет по умолчанию
+	int m_centerX = 200; // Центр окружности по горизонтали
+	int m_centerY = 200; // Центр окружности по вертикали
+	int m_radius = 100; // Радиус окружности
+
 // Operations
 public:
 

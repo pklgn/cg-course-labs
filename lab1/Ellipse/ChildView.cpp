@@ -51,6 +51,32 @@ void ChildView::OnPaint()
 	// TODO: Add your message handler code here
 	
 	// Do not call CWnd::OnPaint() for painting messages
-
+	// Рисование окружности
+	int x = 0;
+	int y = m_radius;
+	int delta = 1 - 2 * m_radius;
+	int error = 0;
+	while (y >= 0)
+	{
+		dc.SetPixel(m_centerX + x, m_centerY + y, m_circleColor);
+		dc.SetPixel(m_centerX + x, m_centerY - y, m_circleColor);
+		dc.SetPixel(m_centerX - x, m_centerY + y, m_circleColor);
+		dc.SetPixel(m_centerX - x, m_centerY - y, m_circleColor);
+		error = 2 * (delta + y) - 1;
+		if ((delta < 0) && (error <= 0))
+		{
+			delta += 2 * ++x + 1;
+			continue;
+		}
+		error = 2 * (delta - x) - 1;
+		if ((delta > 0) && (error > 0))
+		{
+			delta += 1 - 2 * --y;
+			continue;
+		}
+		x++;
+		delta += 2 * (x - y);
+		y--;
+	}
 }
 
