@@ -1,8 +1,9 @@
-// Viewer.cpp : This file contains the 'main' function. Program execution begins and ends there.
+п»ї// Viewer.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
 #include <tchar.h>
 #include <windows.h>
+#include <winuser.h>
 #include <windowsx.h>
 #include <gdiplus.h>
 #include <memory>
@@ -10,11 +11,16 @@
 
 TCHAR const CLASS_NAME[] = _T("MainWndClass");
 TCHAR const WINDOW_TITLE[] = _T("Drawing raster images");
+UINT const IDM_NEW = 1;
+
+HINSTANCE g_hInstance = NULL;
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 int MainLoop();
 bool RegisterWndClass(HINSTANCE hInstance);
 HWND CreateMainWindow(HINSTANCE hInstance);
+
+using namespace Gdiplus;
 
 class CGdiplusInitializer
 {
@@ -26,7 +32,7 @@ public:
 
 		if (Gdiplus::GdiplusStartup(&m_token, &input, &output) != Gdiplus::Ok)
 		{
-			// Не удалось инициализировать GDI+
+			// РќРµ СѓРґР°Р»РѕСЃСЊ РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°С‚СЊ GDI+
 			throw std::runtime_error("Failed to initialize GDI+");
 		}
 	}
@@ -40,7 +46,7 @@ private:
 	ULONG_PTR m_token;
 };
 
-Gdiplus::Bitmap* g_pBitmap = NULL;
+std::unique_ptr<Bitmap> g_pBitmap = NULL;
 
 int WINAPI WinMain(
 	HINSTANCE hInstance,
@@ -48,51 +54,60 @@ int WINAPI WinMain(
 	LPSTR /*lpCmdLine*/,
 	int nCmdShow)
 {
-	// Выполняем инициализацию GDI+
+	// Р’С‹РїРѕР»РЅСЏРµРј РёРЅРёС†РёР°Р»РёР·Р°С†РёСЋ GDI+
 	try
 	{
 		CGdiplusInitializer initializer;
 
-		// Создаем объект Image в динамической памяти и сохраняем
-		// указатель на него в умном указателе std::auto_ptr
+		// РЎРѕР·РґР°РµРј РѕР±СЉРµРєС‚ Image РІ РґРёРЅР°РјРёС‡РµСЃРєРѕР№ РїР°РјСЏС‚Рё Рё СЃРѕС…СЂР°РЅСЏРµРј
+		// СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РЅРµРіРѕ РІ СѓРјРЅРѕРј СѓРєР°Р·Р°С‚РµР»Рµ std::auto_ptr
 		std::auto_ptr<Gdiplus::Image> pImage(new Gdiplus::Image(L"car.jpg"));
 
-		// Создаем растровое изображение соответствующего размера
-		// с форматом пикселей RGBA 32 bit
-		Gdiplus::Bitmap bmp(pImage->GetWidth(), pImage->GetHeight(), PixelFormat32bppARGB);
+		// РЎРѕР·РґР°РµРј СЂР°СЃС‚СЂРѕРІРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РµРіРѕ СЂР°Р·РјРµСЂР°
+		// СЃ С„РѕСЂРјР°С‚РѕРј РїРёРєСЃРµР»РµР№ RGBA 32 bit
+		std::unique_ptr<Gdiplus::Bitmap> bmp = std::make_unique<Gdiplus::Bitmap>(pImage->GetWidth(), pImage->GetHeight(), PixelFormat32bppARGB);
 
-		// Создаем объект Graphics дли рисования в растре bmp
-		Gdiplus::Graphics g(&bmp);
+		// РЎРѕР·РґР°РµРј РѕР±СЉРµРєС‚ Graphics РґР»Рё СЂРёСЃРѕРІР°РЅРёСЏ РІ СЂР°СЃС‚СЂРµ bmp
+		Gdiplus::Graphics g(bmp.get());
 
-		// Рисуем исходное изображение внутрь созданного нами растра
+		// Р РёСЃСѓРµРј РёСЃС…РѕРґРЅРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ РІРЅСѓС‚СЂСЊ СЃРѕР·РґР°РЅРЅРѕРіРѕ РЅР°РјРё СЂР°СЃС‚СЂР°
 		g.DrawImage(pImage.get(), 0, 0);
 
-		// удаляем объект Image
+		// СѓРґР°Р»СЏРµРј РѕР±СЉРµРєС‚ Image
 		pImage.release();
 
-		// Сохраняем указатель на раст в глобальной переменной
-		// для функции OnPaint
-		g_pBitmap = &bmp;
+		// РЎРѕС…СЂР°РЅСЏРµРј СѓРєР°Р·Р°С‚РµР»СЊ РЅР° СЂР°СЃС‚ РІ РіР»РѕР±Р°Р»СЊРЅРѕР№ РїРµСЂРµРјРµРЅРЅРѕР№
+		// РґР»СЏ С„СѓРЅРєС†РёРё OnPaint
+		g_pBitmap = std::move(bmp);
 
-		// Регистрируем класс главного окна
+		// Р РµРіРёСЃС‚СЂРёСЂСѓРµРј РєР»Р°СЃСЃ РіР»Р°РІРЅРѕРіРѕ РѕРєРЅР°
 		if (!RegisterWndClass(hInstance))
 		{
 			return 1;
 		}
 
-		// Создаем главное окно приложения
+		// РЎРѕР·РґР°СЋ РјРµРЅСЋ РґР»СЏ РѕРєРЅР° РїСЂРёР»РѕР¶РµРЅРёСЏ
+		HMENU hMenu = CreateMenu();
+		HMENU hSubMenu = CreatePopupMenu();
+		AppendMenu(hSubMenu, MF_STRING, IDM_NEW, L"New");
+		AppendMenu(hMenu, MF_POPUP, (UINT_PTR)hSubMenu, L"File");
+
+		// РЎРѕР·РґР°РµРј РіР»Р°РІРЅРѕРµ РѕРєРЅРѕ РїСЂРёР»РѕР¶РµРЅРёСЏ
 		HWND hMainWindow = CreateMainWindow(hInstance);
 		if (hMainWindow == NULL)
 		{
 			return 1;
 		}
 
-		// Показываем главное окно приложения
+		//Р”РѕР±Р°РІР»СЏРµРј РјРµРЅСЋ Рє РіР»Р°РІРЅРѕРјСѓ РѕРєРЅСѓ РїСЂРёР»РѕР¶РµРЅРёСЏ
+		SetMenu(hMainWindow, hMenu);
+
+		// РџРѕРєР°Р·С‹РІР°РµРј РіР»Р°РІРЅРѕРµ РѕРєРЅРѕ РїСЂРёР»РѕР¶РµРЅРёСЏ
 		ShowWindow(hMainWindow, nCmdShow);
 		UpdateWindow(hMainWindow);
 
-		// Запускаем цикл выборки сообщений, пока не получим
-		// сигнал о завершении приложения
+		// Р—Р°РїСѓСЃРєР°РµРј С†РёРєР» РІС‹Р±РѕСЂРєРё СЃРѕРѕР±С‰РµРЅРёР№, РїРѕРєР° РЅРµ РїРѕР»СѓС‡РёРј
+		// СЃРёРіРЅР°Р» Рѕ Р·Р°РІРµСЂС€РµРЅРёРё РїСЂРёР»РѕР¶РµРЅРёСЏ
 		return MainLoop();
 	}
 	catch (std::runtime_error&)
@@ -126,27 +141,28 @@ int MainLoop()
 	{
 		if (res == -1)
 		{
-			// произошла ошибка - нужно обработать ее и, вероятно,
-			// завершить работу приложения
+			// РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР° - РЅСѓР¶РЅРѕ РѕР±СЂР°Р±РѕС‚Р°С‚СЊ РµРµ Рё, РІРµСЂРѕСЏС‚РЅРѕ,
+			// Р·Р°РІРµСЂС€РёС‚СЊ СЂР°Р±РѕС‚Сѓ РїСЂРёР»РѕР¶РµРЅРёСЏ
 		}
 		else
 		{
-			// Если это сообщение о нажатии виртуальной клавиши,
-			// то добавляем в очередь сообщений сообщения, несущие информацию о
-			// коде вводимого пользователем символа
+			// Р•СЃР»Рё СЌС‚Рѕ СЃРѕРѕР±С‰РµРЅРёРµ Рѕ РЅР°Р¶Р°С‚РёРё РІРёСЂС‚СѓР°Р»СЊРЅРѕР№ РєР»Р°РІРёС€Рё,
+			// С‚Рѕ РґРѕР±Р°РІР»СЏРµРј РІ РѕС‡РµСЂРµРґСЊ СЃРѕРѕР±С‰РµРЅРёР№ СЃРѕРѕР±С‰РµРЅРёСЏ, РЅРµСЃСѓС‰РёРµ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ
+			// РєРѕРґРµ РІРІРѕРґРёРјРѕРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј СЃРёРјРІРѕР»Р°
 			TranslateMessage(&msg);
-			// передаем сообщение в соответствующую оконную процедуру
+			// РїРµСЂРµРґР°РµРј СЃРѕРѕР±С‰РµРЅРёРµ РІ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰СѓСЋ РѕРєРѕРЅРЅСѓСЋ РїСЂРѕС†РµРґСѓСЂСѓ
 			DispatchMessage(&msg);
 		}
 	}
 
-	// сюда мы попадем только в том случае извлечения сообщения WM_QUIT
-	// msg.wParam содержит код возврата, помещенный при помощи функции PostQuitMessage()
+	// СЃСЋРґР° РјС‹ РїРѕРїР°РґРµРј С‚РѕР»СЊРєРѕ РІ С‚РѕРј СЃР»СѓС‡Р°Рµ РёР·РІР»РµС‡РµРЅРёСЏ СЃРѕРѕР±С‰РµРЅРёСЏ WM_QUIT
+	// msg.wParam СЃРѕРґРµСЂР¶РёС‚ РєРѕРґ РІРѕР·РІСЂР°С‚Р°, РїРѕРјРµС‰РµРЅРЅС‹Р№ РїСЂРё РїРѕРјРѕС‰Рё С„СѓРЅРєС†РёРё PostQuitMessage()
 	return msg.wParam;
 }
 
 void OnDestroy(HWND /*hWnd*/)
 {
+	g_pBitmap.reset();
 	PostQuitMessage(0);
 }
 
@@ -155,13 +171,103 @@ void OnPaint(HWND hwnd)
 	PAINTSTRUCT ps;
 	HDC dc = BeginPaint(hwnd, &ps);
 
-	// Создаем объект Graphics
+	// РЎРѕР·РґР°РµРј РѕР±СЉРµРєС‚ Graphics
 	Gdiplus::Graphics g(dc);
 
-	// Рисуем изображение в Graphics
-	g.DrawImage(g_pBitmap, 20, 20);
+	// Р·РґРµСЃСЊ РЅСѓР¶РЅРѕ РїРѕСЃС‡РёС‚Р°С‚СЊ СЂР°Р·РјРµСЂС‹ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ Рё РІ СЃР»СѓС‡Р°Рµ РЅРµС…РІР°С‚РєРё РјРµСЃС‚Р° СѓРјРµРЅРёС€РёС‚СЊ СЂР°Р·РјРµСЂ СЃ СЃРѕС…СЂР°РЅРµРЅРёРµРј РїСЂРѕРїРѕСЂС†РёР№
+	auto bitmapWidth = g_pBitmap->GetWidth();
+	auto bitmapHeight = g_pBitmap->GetHeight();
+	auto aspectRatio = g_pBitmap->GetWidth() / static_cast<double>(g_pBitmap->GetHeight());
+	RECT clientRect;
+	GetClientRect(hwnd, &clientRect);
+	auto clientWidth = clientRect.right - clientRect.left;
+	auto clientHeight = clientRect.bottom - clientRect.top;
+	UINT clientAspectRatio = clientWidth / static_cast<double>(clientHeight);
+
+	double resizeCoef = 1;
+
+	if (clientWidth < g_pBitmap->GetWidth())
+	{
+		if (aspectRatio < 1)
+		{
+			resizeCoef *= clientHeight / static_cast<double>(g_pBitmap->GetHeight());
+		}
+		else
+		{
+			resizeCoef *= clientWidth / static_cast<double>(g_pBitmap->GetWidth());
+		}
+	}
+	if (clientHeight < g_pBitmap->GetHeight() * resizeCoef)
+	{
+		// СЃРјС‹СЃР»Р° РїСЂРѕРІРµСЂСЏС‚СЊ РЅР° РѕР±Р° РІР°СЂРёР°РЅС‚Р° Р°СЃРїРµРєС‚ СЂРµС€РёРѕ РЅРµС‚, РїРѕС‚РѕРјСѓ С‡С‚Рѕ РІ РїСЂРµРґС‹РґСѓС‰РµР№ РІРµС‚РєРµ РёС„Р° РїСЂРѕРІРµСЂРёР»Рё, С‡С‚Рѕ
+		// С€РёСЂРёРЅР° Р±РёС‚РјР°РїС‹ РўРћР§РќРћ РјРµРЅСЊС€Рµ С€РёСЂРёРЅС‹ РєР»РёРµРЅС‚СЃРєРѕРіРѕ РѕРєРЅР°, Р·РЅР°С‡РёС‚ С‚РѕР»СЊРєРѕ РѕРґРёРЅ РІР°СЂРёР°РЅС‚, РєРѕРіРґР° РІС‹СЃРѕС‚Р° Р±РёС‚РјР°РїС‹ Р±РѕР»СЊС€Рµ РєР»Р°Р№РµРЅС‚Р°
+		resizeCoef *= clientHeight / (static_cast<double>(g_pBitmap->GetHeight() * resizeCoef));
+	}
+
+	Image* scaleImage = new Bitmap(g_pBitmap->GetWidth() * resizeCoef, g_pBitmap->GetHeight() * resizeCoef, PixelFormat32bppARGB);
+
+	Gdiplus::Graphics scaleG(scaleImage);
+
+	scaleG.ScaleTransform(resizeCoef, resizeCoef);
+	scaleG.DrawImage(g_pBitmap.get(), 0, 0);
+
+	//Р РёСЃСѓРµРј РёР·РѕР±СЂР°Р¶РµРЅРёРµ РІ Graphics
+	auto testWidth = g_pBitmap->GetWidth() * resizeCoef / 2;
+	auto testHeight = g_pBitmap->GetHeight() * resizeCoef / 2;
+
+	auto allWidth = (clientWidth / 2 - g_pBitmap->GetWidth() * resizeCoef / 2);
+	auto allHeight = (clientHeight / 2 - g_pBitmap->GetHeight() * resizeCoef / 2);
+
+	auto sw1 = scaleImage->GetWidth();
+	auto sh1 = scaleImage->GetHeight();
+	g.DrawImage(scaleImage, (INT)(clientWidth / 2 - g_pBitmap->GetWidth() * resizeCoef / 2), (INT)(clientHeight / 2 - g_pBitmap->GetHeight() * resizeCoef / 2));
 
 	EndPaint(hwnd, &ps);
+}
+
+void InitFileNameStructure(HWND hwndOwner, OPENFILENAME* pOpenFileName, TCHAR* pFileName, DWORD maxFileName)
+{
+	ZeroMemory(pOpenFileName, sizeof(OPENFILENAME));
+
+	pOpenFileName->lStructSize = sizeof(OPENFILENAME);
+	pOpenFileName->hwndOwner = hwndOwner;
+	pOpenFileName->hInstance = g_hInstance;
+	pOpenFileName->nMaxFile = maxFileName;
+	pOpenFileName->lpstrFile = pFileName;
+	pOpenFileName->lpstrFilter = _T("Images (BMP, PNG, JPG, TIFF)\0*.bmp;*.png;*.jpg;*.tif\0")
+								 _T("All files\0*.*\0")
+								 _T("\0");
+}
+
+void OnOpenFile(HWND hwnd, UINT /*codeNotify*/)
+{
+	OPENFILENAME ofn;
+	TCHAR fileName[MAX_PATH + 1] = _T("");
+	InitFileNameStructure(hwnd, &ofn, fileName, MAX_PATH);
+
+	if (GetOpenFileName(&ofn))
+	{
+		Image img(ofn.lpstrFile);
+
+		if (img.GetLastStatus() == Ok)
+		{
+			g_pBitmap.reset(std::move(new Bitmap(img.GetWidth(), img.GetHeight(), PixelFormat32bppARGB)));
+
+
+			Gdiplus::Graphics g(g_pBitmap.get());
+			g.DrawImage(&img, 0, 0);
+
+			InvalidateRect(hwnd, NULL, TRUE);
+		}
+	}
+}
+
+void OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify)
+{
+	if (id == IDM_NEW)
+	{
+		OnOpenFile(hwnd, codeNotify);
+	}
 }
 
 LRESULT CALLBACK WindowProc(
@@ -174,6 +280,7 @@ LRESULT CALLBACK WindowProc(
 	{
 		HANDLE_MSG(hwnd, WM_DESTROY, OnDestroy);
 		HANDLE_MSG(hwnd, WM_PAINT, OnPaint);
+		HANDLE_MSG(hwnd, WM_COMMAND, OnCommand);
 	}
 	return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
