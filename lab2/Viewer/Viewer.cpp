@@ -186,21 +186,26 @@ void OnPaint(HWND hwnd)
 
 	double resizeCoef = 1;
 
+	/* если ШИРИНА выходит за рамки изображения, то мы обращаем внимание
+	* на соотношение сторон:
+	*	если оно портретное, то вычисляем соотношение ВЫСОТ
+	*	иначе в качестве коэффициента берем соотношение ШИРИН
+	* после этого коэф масштабирования уменьшит изображение по БОЛЬШЕМУ из двух
+	* параметров
+	* 
+	* однако после этой операции может оказаться так, что МЕНЬШИЙ из параметров
+	* все равно будет выходить за границы окна по своей оси
+	* связано это с тем, что в общем случае соотношение сторон окна 
+	* не совпадает с соотношением сторон изображения
+	*/
 	if (clientWidth < g_pBitmap->GetWidth())
 	{
-		if (aspectRatio < 1)
-		{
-			resizeCoef *= clientHeight / static_cast<double>(g_pBitmap->GetHeight());
-		}
-		else
-		{
-			resizeCoef *= clientWidth / static_cast<double>(g_pBitmap->GetWidth());
-		}
+		resizeCoef *= (aspectRatio < 1)
+			? clientHeight / static_cast<double>(g_pBitmap->GetHeight())
+			: clientWidth / static_cast<double>(g_pBitmap->GetWidth());
 	}
 	if (clientHeight < g_pBitmap->GetHeight() * resizeCoef)
 	{
-		// смысла проверять на оба варианта аспект решио нет, потому что в предыдущей ветке ифа проверили, что
-		// ширина битмапы ТОЧНО меньше ширины клиентского окна, значит только один вариант, когда высота битмапы больше клайента
 		resizeCoef *= clientHeight / (static_cast<double>(g_pBitmap->GetHeight() * resizeCoef));
 	}
 
@@ -212,14 +217,6 @@ void OnPaint(HWND hwnd)
 	scaleG.DrawImage(g_pBitmap.get(), 0, 0);
 
 	//Рисуем изображение в Graphics
-	auto testWidth = g_pBitmap->GetWidth() * resizeCoef / 2;
-	auto testHeight = g_pBitmap->GetHeight() * resizeCoef / 2;
-
-	auto allWidth = (clientWidth / 2 - g_pBitmap->GetWidth() * resizeCoef / 2);
-	auto allHeight = (clientHeight / 2 - g_pBitmap->GetHeight() * resizeCoef / 2);
-
-	auto sw1 = scaleImage->GetWidth();
-	auto sh1 = scaleImage->GetHeight();
 	g.DrawImage(scaleImage, (INT)(clientWidth / 2 - g_pBitmap->GetWidth() * resizeCoef / 2), (INT)(clientHeight / 2 - g_pBitmap->GetHeight() * resizeCoef / 2));
 
 	EndPaint(hwnd, &ps);
