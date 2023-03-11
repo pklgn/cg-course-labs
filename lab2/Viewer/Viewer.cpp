@@ -8,6 +8,7 @@
 #include <gdiplus.h>
 #include <memory>
 #include <stdexcept>
+#include <functional>
 
 TCHAR const CLASS_NAME[] = _T("MainWndClass");
 TCHAR const WINDOW_TITLE[] = _T("Drawing raster images");
@@ -216,8 +217,9 @@ void OnPaint(HWND hwnd)
 	scaleG.ScaleTransform(resizeCoef, resizeCoef);
 	scaleG.DrawImage(g_pBitmap.get(), 0, 0);
 
+	auto thumbnail = g_pBitmap->GetThumbnailImage(g_pBitmap->GetWidth() * resizeCoef, g_pBitmap->GetHeight() * resizeCoef, NULL, NULL);
 	//Рисуем изображение в Graphics
-	g.DrawImage(scaleImage, (INT)(clientWidth / 2 - g_pBitmap->GetWidth() * resizeCoef / 2), (INT)(clientHeight / 2 - g_pBitmap->GetHeight() * resizeCoef / 2));
+	g.DrawImage(thumbnail, (INT)(clientWidth / 2 - g_pBitmap->GetWidth() * resizeCoef / 2), (INT)(clientHeight / 2 - g_pBitmap->GetHeight() * resizeCoef / 2));
 
 	EndPaint(hwnd, &ps);
 }

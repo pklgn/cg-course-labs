@@ -15,5 +15,6 @@
 #include <gdiplus.h>
 #include <memory>
 #include <stdexcept>
+#include <vector>
 
 #endif //PCH_H
