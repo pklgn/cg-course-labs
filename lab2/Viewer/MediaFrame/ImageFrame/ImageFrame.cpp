@@ -1,11 +1,42 @@
 #include "../../pch.h"
 #include "ImageFrame.h"
 
-ImageFrame::ImageFrame(HWND hwnd, const WCHAR* filename, RECT frame)
-	: m_frame(frame)
-	, m_gdiplusInitializer()
+ImageFrame::ImageFrame(const WCHAR* filename)
 {
-	std::auto_ptr<Gdiplus::Image> pImage(new Gdiplus::Image(L"car.jpg"));
+	SetBitmap(filename);
+}
+
+ImageFrame::ImageFrame(std::unique_ptr<Gdiplus::Bitmap> bitmap)
+{
+	SetBitmap(std::move(bitmap));
+}
+
+void ImageFrame::Display(HWND hwnd)
+{
+	PAINTSTRUCT ps;
+	HDC dc = BeginPaint(hwnd, &ps);
+
+	// Создаем объект Graphics
+	Gdiplus::Graphics g(dc);
+
+	WndFit(hwnd);
+
+	g.DrawImage(m_pBitmap.get(), static_cast<INT>(m_leftTop.x), static_cast<INT>(m_leftTop.y));
+
+	EndPaint(hwnd, &ps);
+}
+
+void ImageFrame::Resize(POINT size)
+{
+}
+
+void ImageFrame::Move(POINT dst)
+{
+}
+
+void ImageFrame::SetBitmap(const WCHAR* filename)
+{
+	std::auto_ptr<Gdiplus::Image> pImage(new Gdiplus::Image(filename));
 
 	// Создаем растровое изображение соответствующего размера
 	// с форматом пикселей RGBA 32 bit
@@ -19,8 +50,53 @@ ImageFrame::ImageFrame(HWND hwnd, const WCHAR* filename, RECT frame)
 
 	// удаляем объект Image
 	pImage.release();
+
+	m_pBitmap = std::move(bmp);
 }
 
-void ImageFrame::Display(HWND hwnd)
+void ImageFrame::SetBitmap(std::unique_ptr<Gdiplus::Bitmap> bitmap)
 {
+	m_pBitmap = std::move(bitmap);
+}
+
+void ImageFrame::WndFit(HWND hwnd)
+{
+	// здесь нужно посчитать размеры изображения и в случае нехватки места уменишить размер с сохранением пропорций
+	SIZE bitmapSize = { m_pBitmap->GetWidth(),
+		m_pBitmap->GetHeight() };
+	auto bitmapAspectRatio = bitmapSize.cx / static_cast<double>(bitmapSize.cy);
+
+	RECT clientRect;
+	GetClientRect(hwnd, &clientRect);
+	SIZE clientSize = { clientRect.right - clientRect.left,
+		clientRect.bottom - clientRect.top };
+
+	double resizeCoef = 1;
+
+	/* если ШИРИНА выходит за рамки изображения, то мы обращаем внимание
+	 * на соотношение сторон:
+	 *	если оно портретное, то вычисляем соотношение ВЫСОТ
+	 *	иначе в качестве коэффициента берем соотношение ШИРИН
+	 * после этого коэф масштабирования уменьшит изображение по БОЛЬШЕМУ из двух
+	 * параметров
+	 *
+	 * однако после этой операции может оказаться так, что МЕНЬШИЙ из параметров
+	 * все равно будет выходить за границы окна по своей оси
+	 * связано это с тем, что в общем случае соотношение сторон окна
+	 * не совпадает с соотношением сторон изображения
+	 */
+	if (clientSize.cx < bitmapSize.cx)
+	{
+		resizeCoef *= (bitmapAspectRatio < 1)
+			? clientSize.cy / static_cast<double>(bitmapSize.cy)
+			: clientSize.cx / static_cast<double>(bitmapSize.cx);
+	}
+	if (clientSize.cy < bitmapSize.cy * resizeCoef)
+	{
+		resizeCoef *= clientSize.cy / (static_cast<double>(bitmapSize.cy * resizeCoef));
+	}
+
+	auto thumbnailImage = m_pBitmap->GetThumbnailImage(bitmapSize.cx * resizeCoef, bitmapSize.cy * resizeCoef, NULL, NULL);
+
+	m_pBitmap.reset(static_cast<Gdiplus::Bitmap*>(thumbnailImage));
 }

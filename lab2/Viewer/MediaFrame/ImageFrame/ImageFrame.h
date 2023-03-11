@@ -7,15 +7,19 @@
 class ImageFrame : public IMediaFrame
 {
 public:
-	ImageFrame(HWND hwnd, const WCHAR* filename, RECT frame);
+	ImageFrame(const WCHAR* filename);
+	ImageFrame(std::unique_ptr<Gdiplus::Bitmap> bitmap);
 
 	void Display(HWND hwnd) override;
 	void Resize(POINT size) override;
 	void Move(POINT dst) override;
-	void ChangeSource() override;
+	void SetBitmap(const WCHAR* filename);
+	void SetBitmap(std::unique_ptr<Gdiplus::Bitmap> bitmap);
 
 private:
+	void WndFit(HWND hwnd);
+
 	std::unique_ptr<Gdiplus::Bitmap> m_pBitmap;
-	RECT m_frame;
 	GdiplusInitializer m_gdiplusInitializer;
+	POINT m_leftTop;
 };

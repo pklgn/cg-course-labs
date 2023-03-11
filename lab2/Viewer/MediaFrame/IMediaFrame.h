@@ -9,5 +9,4 @@ public:
 	virtual void Display(HWND hwnd) = 0;
 	virtual void Resize(POINT size) = 0;
 	virtual void Move(POINT dst) = 0;
-	virtual void ChangeSource() = 0;
 };
