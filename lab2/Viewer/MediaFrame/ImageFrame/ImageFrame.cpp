@@ -20,18 +20,28 @@ void ImageFrame::Display(HWND hwnd)
 	Gdiplus::Graphics g(dc);
 
 	WndFit(hwnd);
-
-	g.DrawImage(m_pBitmap.get(), static_cast<INT>(m_leftTop.x), static_cast<INT>(m_leftTop.y));
+	Center(hwnd);
+	auto thumbnailImage = m_pBitmap->GetThumbnailImage(m_size.cx, m_size.cy, NULL, NULL);
+	g.DrawImage(thumbnailImage, static_cast<INT>(m_leftTop.x), static_cast<INT>(m_leftTop.y));
 
 	EndPaint(hwnd, &ps);
 }
 
-void ImageFrame::Resize(POINT size)
+void ImageFrame::Resize(SIZE size)
 {
 }
 
 void ImageFrame::Move(POINT dst)
 {
+}
+
+void ImageFrame::Center(HWND hwnd, UINT resizeCoef)
+{
+	RECT clientRect;
+	GetClientRect(hwnd, &clientRect);
+
+	m_leftTop = { static_cast<LONG>((clientRect.right - clientRect.left) / 2 - m_pBitmap->GetWidth() * resizeCoef / 2),
+		static_cast<LONG>((clientRect.bottom - clientRect.top) / 2 - m_pBitmap->GetHeight() * resizeCoef / 2) };
 }
 
 void ImageFrame::SetBitmap(const WCHAR* filename)
@@ -96,7 +106,9 @@ void ImageFrame::WndFit(HWND hwnd)
 		resizeCoef *= clientSize.cy / (static_cast<double>(bitmapSize.cy * resizeCoef));
 	}
 
-	auto thumbnailImage = m_pBitmap->GetThumbnailImage(bitmapSize.cx * resizeCoef, bitmapSize.cy * resizeCoef, NULL, NULL);
+	//auto thumbnailImage = m_pBitmap->GetThumbnailImage(bitmapSize.cx * resizeCoef, bitmapSize.cy * resizeCoef, NULL, NULL);
+	m_size = { static_cast<LONG>(bitmapSize.cx * resizeCoef),
+		static_cast<LONG>(bitmapSize.cy * resizeCoef) };
 
-	m_pBitmap.reset(static_cast<Gdiplus::Bitmap*>(thumbnailImage));
+	//m_pBitmap.reset(static_cast<Gdiplus::Bitmap*>(thumbnailImage));
 }
