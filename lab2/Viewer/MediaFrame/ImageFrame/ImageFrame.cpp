@@ -19,8 +19,8 @@ void ImageFrame::Display(HWND hwnd)
 	// Создаем объект Graphics
 	Gdiplus::Graphics g(dc);
 
-	WndFit(hwnd);
-	Center(hwnd);
+	auto resizeCoef = WndFit(hwnd);
+	Center(hwnd, resizeCoef);
 	auto thumbnailImage = m_pBitmap->GetThumbnailImage(m_size.cx, m_size.cy, NULL, NULL);
 	g.DrawImage(thumbnailImage, static_cast<INT>(m_leftTop.x), static_cast<INT>(m_leftTop.y));
 
@@ -35,7 +35,7 @@ void ImageFrame::Move(POINT dst)
 {
 }
 
-void ImageFrame::Center(HWND hwnd, UINT resizeCoef)
+void ImageFrame::Center(HWND hwnd, double resizeCoef)
 {
 	RECT clientRect;
 	GetClientRect(hwnd, &clientRect);
@@ -69,7 +69,7 @@ void ImageFrame::SetBitmap(std::unique_ptr<Gdiplus::Bitmap> bitmap)
 	m_pBitmap = std::move(bitmap);
 }
 
-void ImageFrame::WndFit(HWND hwnd)
+double ImageFrame::WndFit(HWND hwnd)
 {
 	// здесь нужно посчитать размеры изображения и в случае нехватки места уменишить размер с сохранением пропорций
 	SIZE bitmapSize = { m_pBitmap->GetWidth(),
@@ -111,4 +111,5 @@ void ImageFrame::WndFit(HWND hwnd)
 		static_cast<LONG>(bitmapSize.cy * resizeCoef) };
 
 	//m_pBitmap.reset(static_cast<Gdiplus::Bitmap*>(thumbnailImage));
+	return resizeCoef;
 }
