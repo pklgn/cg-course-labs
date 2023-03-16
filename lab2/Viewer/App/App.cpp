@@ -2,8 +2,8 @@
 #include "../common/GdiplusInitializer.h"
 #include "../common/WndConfig.h"
 #include "../common/MnConfig.h"
+#include "../ImageFrame/ImageFrame.h"
 #include "App.h"
-#include "../MediaFrame/ImageFrame/ImageFrame.h"
 
 int MainLoop();
 bool RegisterWndClass(HINSTANCE hInstance);
@@ -101,13 +101,14 @@ void App::OnOpenFile(HWND hwnd, UINT)
 		if (img.GetLastStatus() == Gdiplus::Ok)
 		{
 			SIZE imgSize = {
-				img.GetWidth(),
-				img.GetHeight()
+				static_cast<LONG>(img.GetWidth()),
+				static_cast<LONG>(img.GetHeight())
 			};
 			auto bitmap = std::make_unique<Gdiplus::Bitmap>(imgSize.cx, imgSize.cy, PixelFormat32bppARGB);
 			Gdiplus::Graphics g(bitmap.get());
 			// https://stackoverflow.com/questions/18643504/gdi-image-scaling-issue решение проблемы, что пнг изображение загружалось не полностью
 			Gdiplus::ImageAttributes attrs;
+			attrs.SetWrapMode(Gdiplus::WrapModeTileFlipXY);
 			Gdiplus::Rect dest(0, 0, imgSize.cx, imgSize.cy);
 			g.DrawImage(&img, dest, 0, 0, static_cast<INT>(imgSize.cx), static_cast<INT>(imgSize.cy), Gdiplus::UnitPixel, &attrs);
 
@@ -139,8 +140,8 @@ void App::OnPaint(HWND hwnd)
 
 	for (auto&& mediaFrame : m_mediaFrames)
 	{
-		auto resizeCoef = mediaFrame->WndFit(hwnd);
-		mediaFrame->Center(hwnd, resizeCoef);
+		auto resizeCoef = mediaFrame->WndFit(clientRect);
+		mediaFrame->Center(clientRect, resizeCoef);
 		mediaFrame->Display(g);
 	}
 
@@ -165,7 +166,7 @@ void App::OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify)
 LRESULT App::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	auto instance = reinterpret_cast<App*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
-
+	// TODO: функции-переходники в ATL: мини блок кода, который знает про this
 	switch (uMsg)
 	{
 		HANDLE_MSG(hwnd, WM_DESTROY, instance->OnDestroy);

@@ -1,4 +1,4 @@
-#include "../../pch.h"
+п»ї#include "../pch.h"
 #include "ImageFrame.h"
 
 ImageFrame::ImageFrame(const WCHAR* filename)
@@ -12,25 +12,14 @@ ImageFrame::ImageFrame(std::unique_ptr<Gdiplus::Bitmap> bitmap)
 	SetBitmap(std::move(bitmap));
 }
 
-void ImageFrame::Display(Gdiplus::Graphics& g)
+void ImageFrame::Display(Gdiplus::Graphics& g) const
 {
 	auto thumbnailImage = m_pBitmap->GetThumbnailImage(m_size.cx, m_size.cy, NULL, NULL);
 	g.DrawImage(thumbnailImage, static_cast<INT>(m_leftTop.x), static_cast<INT>(m_leftTop.y));
 }
 
-void ImageFrame::Resize(SIZE size)
+void ImageFrame::Center(const RECT& clientRect, double resizeCoef)
 {
-}
-
-void ImageFrame::Move(POINT dst)
-{
-}
-
-void ImageFrame::Center(HWND hwnd, double resizeCoef)
-{
-	RECT clientRect;
-	GetClientRect(hwnd, &clientRect);
-
 	m_leftTop = { static_cast<LONG>((clientRect.right - clientRect.left) / 2 - m_pBitmap->GetWidth() * resizeCoef / 2),
 		static_cast<LONG>((clientRect.bottom - clientRect.top) / 2 - m_pBitmap->GetHeight() * resizeCoef / 2) };
 }
@@ -39,17 +28,17 @@ void ImageFrame::SetBitmap(const WCHAR* filename)
 {
 	std::auto_ptr<Gdiplus::Image> pImage(new Gdiplus::Image(filename));
 
-	// Создаем растровое изображение соответствующего размера
-	// с форматом пикселей RGBA 32 bit
+	// РЎРѕР·РґР°РµРј СЂР°СЃС‚СЂРѕРІРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РµРіРѕ СЂР°Р·РјРµСЂР°
+	// СЃ С„РѕСЂРјР°С‚РѕРј РїРёРєСЃРµР»РµР№ RGBA 32 bit
 	std::unique_ptr<Gdiplus::Bitmap> bmp = std::make_unique<Gdiplus::Bitmap>(pImage->GetWidth(), pImage->GetHeight(), PixelFormat32bppARGB);
 
-	// Создаем объект Graphics дли рисования в растре bmp
+	// РЎРѕР·РґР°РµРј РѕР±СЉРµРєС‚ Graphics РґР»Рё СЂРёСЃРѕРІР°РЅРёСЏ РІ СЂР°СЃС‚СЂРµ bmp
 	Gdiplus::Graphics g(bmp.get());
 
-	// Рисуем исходное изображение внутрь созданного нами растра
+	// Р РёСЃСѓРµРј РёСЃС…РѕРґРЅРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ РІРЅСѓС‚СЂСЊ СЃРѕР·РґР°РЅРЅРѕРіРѕ РЅР°РјРё СЂР°СЃС‚СЂР°
 	g.DrawImage(pImage.get(), 0, 0);
 
-	// удаляем объект Image
+	// СѓРґР°Р»СЏРµРј РѕР±СЉРµРєС‚ Image
 	pImage.release();
 
 	m_pBitmap = std::move(bmp);
@@ -60,31 +49,29 @@ void ImageFrame::SetBitmap(std::unique_ptr<Gdiplus::Bitmap> bitmap)
 	m_pBitmap = std::move(bitmap);
 }
 
-double ImageFrame::WndFit(HWND hwnd)
+double ImageFrame::WndFit(const RECT& clientRect)
 {
-	// здесь нужно посчитать размеры изображения и в случае нехватки места уменишить размер с сохранением пропорций
+	// Р·РґРµСЃСЊ РЅСѓР¶РЅРѕ РїРѕСЃС‡РёС‚Р°С‚СЊ СЂР°Р·РјРµСЂС‹ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ Рё РІ СЃР»СѓС‡Р°Рµ РЅРµС…РІР°С‚РєРё РјРµСЃС‚Р° СѓРјРµРЅРёС€РёС‚СЊ СЂР°Р·РјРµСЂ СЃ СЃРѕС…СЂР°РЅРµРЅРёРµРј РїСЂРѕРїРѕСЂС†РёР№
 	SIZE bitmapSize = { static_cast<LONG>(m_pBitmap->GetWidth()),
 		static_cast<LONG>(m_pBitmap->GetHeight()) };
 	auto bitmapAspectRatio = bitmapSize.cx / static_cast<double>(bitmapSize.cy);
 
-	RECT clientRect;
-	GetClientRect(hwnd, &clientRect);
 	SIZE clientSize = { clientRect.right - clientRect.left,
 		clientRect.bottom - clientRect.top };
 
 	double resizeCoef = 1;
 
-	/* если ШИРИНА выходит за рамки изображения, то мы обращаем внимание
-	 * на соотношение сторон:
-	 *	если оно портретное, то вычисляем соотношение ВЫСОТ
-	 *	иначе в качестве коэффициента берем соотношение ШИРИН
-	 * после этого коэф масштабирования уменьшит изображение по БОЛЬШЕМУ из двух
-	 * параметров
+	/* РµСЃР»Рё РЁРР РРќРђ РІС‹С…РѕРґРёС‚ Р·Р° СЂР°РјРєРё РёР·РѕР±СЂР°Р¶РµРЅРёСЏ, С‚Рѕ РјС‹ РѕР±СЂР°С‰Р°РµРј РІРЅРёРјР°РЅРёРµ
+	 * РЅР° СЃРѕРѕС‚РЅРѕС€РµРЅРёРµ СЃС‚РѕСЂРѕРЅ:
+	 *	РµСЃР»Рё РѕРЅРѕ РїРѕСЂС‚СЂРµС‚РЅРѕРµ, С‚Рѕ РІС‹С‡РёСЃР»СЏРµРј СЃРѕРѕС‚РЅРѕС€РµРЅРёРµ Р’Р«РЎРћРў
+	 *	РёРЅР°С‡Рµ РІ РєР°С‡РµСЃС‚РІРµ РєРѕСЌС„С„РёС†РёРµРЅС‚Р° Р±РµСЂРµРј СЃРѕРѕС‚РЅРѕС€РµРЅРёРµ РЁРР РРќ
+	 * РїРѕСЃР»Рµ СЌС‚РѕРіРѕ РєРѕСЌС„ РјР°СЃС€С‚Р°Р±РёСЂРѕРІР°РЅРёСЏ СѓРјРµРЅСЊС€РёС‚ РёР·РѕР±СЂР°Р¶РµРЅРёРµ РїРѕ Р‘РћР›Р¬РЁР•РњРЈ РёР· РґРІСѓС…
+	 * РїР°СЂР°РјРµС‚СЂРѕРІ
 	 *
-	 * однако после этой операции может оказаться так, что МЕНЬШИЙ из параметров
-	 * все равно будет выходить за границы окна по своей оси
-	 * связано это с тем, что в общем случае соотношение сторон окна
-	 * не совпадает с соотношением сторон изображения
+	 * РѕРґРЅР°РєРѕ РїРѕСЃР»Рµ СЌС‚РѕР№ РѕРїРµСЂР°С†РёРё РјРѕР¶РµС‚ РѕРєР°Р·Р°С‚СЊСЃСЏ С‚Р°Рє, С‡С‚Рѕ РњР•РќР¬РЁРР™ РёР· РїР°СЂР°РјРµС‚СЂРѕРІ
+	 * РІСЃРµ СЂР°РІРЅРѕ Р±СѓРґРµС‚ РІС‹С…РѕРґРёС‚СЊ Р·Р° РіСЂР°РЅРёС†С‹ РѕРєРЅР° РїРѕ СЃРІРѕРµР№ РѕСЃРё
+	 * СЃРІСЏР·Р°РЅРѕ СЌС‚Рѕ СЃ С‚РµРј, С‡С‚Рѕ РІ РѕР±С‰РµРј СЃР»СѓС‡Р°Рµ СЃРѕРѕС‚РЅРѕС€РµРЅРёРµ СЃС‚РѕСЂРѕРЅ РѕРєРЅР°
+	 * РЅРµ СЃРѕРІРїР°РґР°РµС‚ СЃ СЃРѕРѕС‚РЅРѕС€РµРЅРёРµРј СЃС‚РѕСЂРѕРЅ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ
 	 */
 	if (clientSize.cx < bitmapSize.cx)
 	{

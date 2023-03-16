@@ -18,7 +18,7 @@
     <ClCompile Include="Viewer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MediaFrame\ImageFrame\ImageFrame.cpp">
+    <ClCompile Include="ImageFrame\ImageFrame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
@@ -29,13 +29,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MediaFrame\IMediaFrame.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="common\WndConfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MediaFrame\ImageFrame\ImageFrame.h">
+    <ClInclude Include="ImageFrame\ImageFrame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="common\GdiplusInitializer.h">
@@ -48,9 +45,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="common\MnConfig.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="common\EnumClassHash.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

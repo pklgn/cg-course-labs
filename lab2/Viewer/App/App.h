@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
-#include <memory>
-#include "../MediaFrame/IMediaFrame.h"
+#include "../ImageFrame/ImageFrame.h"
 
 class App
 {
@@ -21,10 +20,8 @@ public:
 private:
 	void InitFileNameStructure(HWND hwndOwner, OPENFILENAME* pOpenFileName, TCHAR* pFileName, DWORD maxFileName);
 
-	
-
 	bool m_isRunning = false;
 	HINSTANCE m_hInstance;
 	int m_nCmdShow;
-	std::vector<std::unique_ptr<IMediaFrame>> m_mediaFrames;
+	std::vector<std::unique_ptr<ImageFrame>> m_mediaFrames;
 };

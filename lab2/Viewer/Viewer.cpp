@@ -11,5 +11,5 @@ int WINAPI WinMain(
 	int nCmdShow)
 {
 	App app(hInstance, nCmdShow);
-	app.Run();
+	return app.Run();
 }
