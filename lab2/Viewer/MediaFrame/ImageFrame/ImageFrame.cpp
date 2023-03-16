@@ -8,23 +8,14 @@ ImageFrame::ImageFrame(const WCHAR* filename)
 
 ImageFrame::ImageFrame(std::unique_ptr<Gdiplus::Bitmap> bitmap)
 {
+	m_size = { static_cast<LONG>(bitmap->GetWidth()), static_cast<LONG>(bitmap->GetHeight()) };
 	SetBitmap(std::move(bitmap));
 }
 
-void ImageFrame::Display(HWND hwnd)
+void ImageFrame::Display(Gdiplus::Graphics& g)
 {
-	PAINTSTRUCT ps;
-	HDC dc = BeginPaint(hwnd, &ps);
-
-	// Создаем объект Graphics
-	Gdiplus::Graphics g(dc);
-
-	auto resizeCoef = WndFit(hwnd);
-	Center(hwnd, resizeCoef);
 	auto thumbnailImage = m_pBitmap->GetThumbnailImage(m_size.cx, m_size.cy, NULL, NULL);
 	g.DrawImage(thumbnailImage, static_cast<INT>(m_leftTop.x), static_cast<INT>(m_leftTop.y));
-
-	EndPaint(hwnd, &ps);
 }
 
 void ImageFrame::Resize(SIZE size)
@@ -72,8 +63,8 @@ void ImageFrame::SetBitmap(std::unique_ptr<Gdiplus::Bitmap> bitmap)
 double ImageFrame::WndFit(HWND hwnd)
 {
 	// здесь нужно посчитать размеры изображения и в случае нехватки места уменишить размер с сохранением пропорций
-	SIZE bitmapSize = { m_pBitmap->GetWidth(),
-		m_pBitmap->GetHeight() };
+	SIZE bitmapSize = { static_cast<LONG>(m_pBitmap->GetWidth()),
+		static_cast<LONG>(m_pBitmap->GetHeight()) };
 	auto bitmapAspectRatio = bitmapSize.cx / static_cast<double>(bitmapSize.cy);
 
 	RECT clientRect;
@@ -106,10 +97,8 @@ double ImageFrame::WndFit(HWND hwnd)
 		resizeCoef *= clientSize.cy / (static_cast<double>(bitmapSize.cy * resizeCoef));
 	}
 
-	//auto thumbnailImage = m_pBitmap->GetThumbnailImage(bitmapSize.cx * resizeCoef, bitmapSize.cy * resizeCoef, NULL, NULL);
 	m_size = { static_cast<LONG>(bitmapSize.cx * resizeCoef),
 		static_cast<LONG>(bitmapSize.cy * resizeCoef) };
 
-	//m_pBitmap.reset(static_cast<Gdiplus::Bitmap*>(thumbnailImage));
 	return resizeCoef;
 }
