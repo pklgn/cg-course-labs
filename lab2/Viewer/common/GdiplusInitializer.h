@@ -1,5 +1,6 @@
 #pragma once
-#include "../pch.h"
+#include <gdiplus.h>
+#include <stdexcept>
 
 class GdiplusInitializer
 {
