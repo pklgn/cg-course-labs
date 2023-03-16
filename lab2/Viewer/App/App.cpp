@@ -100,11 +100,18 @@ void App::OnOpenFile(HWND hwnd, UINT)
 
 		if (img.GetLastStatus() == Gdiplus::Ok)
 		{
-			auto bitmap = std::make_unique<Gdiplus::Bitmap>(img.GetWidth(), img.GetHeight(), PixelFormat32bppARGB);
+			SIZE imgSize = {
+				img.GetWidth(),
+				img.GetHeight()
+			};
+			auto bitmap = std::make_unique<Gdiplus::Bitmap>(imgSize.cx, imgSize.cy, PixelFormat32bppARGB);
 			Gdiplus::Graphics g(bitmap.get());
-			g.DrawImage(&img, 0, 0);
-			//TODO: исправить мув на муве
-			m_mediaFrames.push_front(std::move(std::make_unique<ImageFrame>(std::move(bitmap))));
+			// https://stackoverflow.com/questions/18643504/gdi-image-scaling-issue решение проблемы, что пнг изображение загружалось не полностью
+			Gdiplus::ImageAttributes attrs;
+			Gdiplus::Rect dest(0, 0, imgSize.cx, imgSize.cy);
+			g.DrawImage(&img, dest, 0, 0, static_cast<INT>(imgSize.cx), static_cast<INT>(imgSize.cy), Gdiplus::UnitPixel, &attrs);
+
+			m_mediaFrames.push_back(std::move(std::make_unique<ImageFrame>(std::move(bitmap))));
 
 			// триггерим событие перерисовки
 			InvalidateRect(hwnd, NULL, TRUE);
@@ -116,10 +123,19 @@ void App::OnPaint(HWND hwnd)
 {
 	PAINTSTRUCT ps;
 	HDC dc = BeginPaint(hwnd, &ps);
+	HDC hdcBuffer = CreateCompatibleDC(dc);
 
-	Gdiplus::Graphics g(dc);
+	RECT clientRect;
+	GetClientRect(hwnd, &clientRect);
+	SIZE clientSize = { clientRect.right - clientRect.left,
+		clientRect.bottom - clientRect.top };
+	HBITMAP hBitmap = CreateCompatibleBitmap(dc, clientSize.cx, clientSize.cy);
+	SelectObject(hdcBuffer, hBitmap);
 
+	Gdiplus::SolidBrush brush(Gdiplus::Color(255, 255, 255));
 
+	Gdiplus::Graphics g(hdcBuffer);
+	g.FillRectangle(&brush, static_cast<INT>(clientRect.left), static_cast<INT>(clientRect.top), static_cast<INT>(clientSize.cx), static_cast<INT>(clientSize.cy));
 
 	for (auto&& mediaFrame : m_mediaFrames)
 	{
@@ -127,6 +143,15 @@ void App::OnPaint(HWND hwnd)
 		mediaFrame->Center(hwnd, resizeCoef);
 		mediaFrame->Display(g);
 	}
+
+	BitBlt(dc, 0, 0, clientSize.cx, clientSize.cy, hdcBuffer, 0, 0, SRCCOPY);
+
+	EndPaint(hwnd, &ps);
+}
+
+BOOL App::OnEraseBkgnd(HWND hwnd, HDC wParam)
+{
+	return TRUE;
 }
 
 void App::OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify)
@@ -137,7 +162,7 @@ void App::OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify)
 	}
 }
 
-LRESULT WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+LRESULT App::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	auto instance = reinterpret_cast<App*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
 
@@ -146,6 +171,7 @@ LRESULT WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		HANDLE_MSG(hwnd, WM_DESTROY, instance->OnDestroy);
 		HANDLE_MSG(hwnd, WM_PAINT, instance->OnPaint);
 		HANDLE_MSG(hwnd, WM_COMMAND, instance->OnCommand);
+		HANDLE_MSG(hwnd, WM_ERASEBKGND, instance->OnEraseBkgnd);
 	}
 	return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
@@ -172,7 +198,7 @@ bool RegisterWndClass(HINSTANCE hInstance)
 	WNDCLASSEX wndClass = {
 		sizeof(wndClass), // UINT cbSize;
 		CS_HREDRAW | CS_VREDRAW, // UINT style;
-		&WindowProc, // WNDPROC lpfnWndProc;
+		&App::WindowProc, // WNDPROC lpfnWndProc;
 		0, // int cbClsExtra;
 		static_cast<LONG_PTR>(sizeof(App*)), // int cbWndExtra;
 		hInstance, // HINSTANCE hInstance;

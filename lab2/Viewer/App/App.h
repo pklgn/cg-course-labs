@@ -1,5 +1,5 @@
 #pragma once
-#include <deque>
+#include <vector>
 #include <memory>
 #include "../MediaFrame/IMediaFrame.h"
 
@@ -14,16 +14,17 @@ public:
 	void OnOpenFile(HWND hwnd, UINT /*codeNotify*/);
 	void OnPaint(HWND hwnd);
 	void OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify);
+	BOOL OnEraseBkgnd(HWND hwnd, HDC wParam);
 
+	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 private:
 	void InitFileNameStructure(HWND hwndOwner, OPENFILENAME* pOpenFileName, TCHAR* pFileName, DWORD maxFileName);
 
-	//LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+	
 
 	bool m_isRunning = false;
 	HINSTANCE m_hInstance;
 	int m_nCmdShow;
-	std::deque<std::unique_ptr<IMediaFrame>> m_mediaFrames;
-	UINT m_mediaFrameIndex;
+	std::vector<std::unique_ptr<IMediaFrame>> m_mediaFrames;
 };
