@@ -141,7 +141,7 @@ void App::OnPaint(HWND hwnd)
 	for (auto&& mediaFrame : m_mediaFrames)
 	{
 		auto resizeCoef = mediaFrame->WndFit(clientRect);
-		mediaFrame->Center(clientRect, resizeCoef);
+		//mediaFrame->Center(clientRect, resizeCoef);
 		mediaFrame->Display(g);
 	}
 
@@ -163,6 +163,41 @@ void App::OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify)
 	}
 }
 
+void App::OnMouseMove(HWND hwnd, int x, int y, UINT keyFlags)
+{
+	if (!m_isDragging)
+	{
+		return;
+	}
+
+	POINT deltaPosition = {
+		static_cast<LONG>(x - m_prevMousePosition.x),
+		static_cast<LONG>(y - m_prevMousePosition.y)
+	};
+
+	auto selectedFrameIndex = m_mediaFrames.size() - 1;
+	m_mediaFrames.at(selectedFrameIndex)->Move(deltaPosition);
+	m_prevMousePosition = {
+		static_cast<LONG>(x),
+		static_cast<LONG>(y)
+	};
+	InvalidateRect(hwnd, NULL, TRUE);
+}
+
+void App::OnLButtonDown(HWND hwnd, BOOL fDoubleClick, int x, int y, UINT keyFlags)
+{
+	m_isDragging = true;
+	m_prevMousePosition = {
+		static_cast<LONG>(x),
+		static_cast<LONG>(y)
+	};
+}
+
+void App::OnLButtonUp(HWND hwnd, int x, int y, UINT keyFlags)
+{
+	m_isDragging = false;
+}
+
 LRESULT App::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	auto instance = reinterpret_cast<App*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
@@ -173,6 +208,9 @@ LRESULT App::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		HANDLE_MSG(hwnd, WM_PAINT, instance->OnPaint);
 		HANDLE_MSG(hwnd, WM_COMMAND, instance->OnCommand);
 		HANDLE_MSG(hwnd, WM_ERASEBKGND, instance->OnEraseBkgnd);
+		HANDLE_MSG(hwnd, WM_LBUTTONDOWN, instance->OnLButtonDown);
+		HANDLE_MSG(hwnd, WM_MOUSEMOVE, instance->OnMouseMove);
+		HANDLE_MSG(hwnd, WM_LBUTTONUP, instance->OnLButtonUp);
 	}
 	return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }

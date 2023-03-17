@@ -89,3 +89,9 @@ double ImageFrame::WndFit(const RECT& clientRect)
 
 	return resizeCoef;
 }
+
+void ImageFrame::Move(POINT deltaPosition)
+{
+	m_leftTop.x += deltaPosition.x;
+	m_leftTop.y += deltaPosition.y;
+}

@@ -18,6 +18,8 @@ public:
 	void SetBitmap(std::unique_ptr<Gdiplus::Bitmap> bitmap);
 	double WndFit(const RECT& clientRect);
 
+	void Move(POINT deltaPosition);
+
 private:
 	std::unique_ptr<Gdiplus::Bitmap> m_pBitmap;
 	POINT m_leftTop;
