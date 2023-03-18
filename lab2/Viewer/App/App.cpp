@@ -79,6 +79,25 @@ void App::InitFileNameStructure(HWND hwndOwner, OPENFILENAME* pOpenFileName, TCH
 								 _T("\0");
 }
 
+bool App::SelectActiveImageFrame(POINT clickPosition)
+{
+	for (std::vector<std::unique_ptr<ImageFrame>>::reverse_iterator it = m_mediaFrames.rbegin();
+		 it != m_mediaFrames.rend(); ++it)
+	{
+		auto leftTop = it->get()->GetLeftTop();
+		auto size = it->get()->GetSize();
+		RECT frame = {
+			leftTop.x,
+			leftTop.y,
+			size.cx,
+			size.cy,
+		};
+		bool containClickPosition = PtInRect(&frame, clickPosition);
+	}
+
+	return true;
+}
+
 void App::OnDestroy(HWND)
 {
 	for (auto&& mediaFrame : m_mediaFrames)
@@ -186,11 +205,12 @@ void App::OnMouseMove(HWND hwnd, int x, int y, UINT keyFlags)
 
 void App::OnLButtonDown(HWND hwnd, BOOL fDoubleClick, int x, int y, UINT keyFlags)
 {
-	m_isDragging = true;
+	//m_isDragging = true;
 	m_prevMousePosition = {
 		static_cast<LONG>(x),
 		static_cast<LONG>(y)
 	};
+	m_isDragging = SelectActiveImageFrame({});
 }
 
 void App::OnLButtonUp(HWND hwnd, int x, int y, UINT keyFlags)
@@ -278,3 +298,4 @@ int MainLoop()
 	// msg.wParam содержит код возврата, помещенный при помощи функции PostQuitMessage()
 	return static_cast<int>(msg.wParam);
 }
+

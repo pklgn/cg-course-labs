@@ -22,6 +22,7 @@ public:
 
 private:
 	void InitFileNameStructure(HWND hwndOwner, OPENFILENAME* pOpenFileName, TCHAR* pFileName, DWORD maxFileName);
+	bool SelectActiveImageFrame(POINT clickPosition);
 
 	bool m_isRunning = false;
 	HINSTANCE m_hInstance;
