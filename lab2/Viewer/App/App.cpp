@@ -138,6 +138,11 @@ void App::OnOpenFile(HWND hwnd, UINT)
 
 			m_mediaFrames.push_back(std::move(std::make_unique<ImageFrame>(std::move(bitmap))));
 
+			RECT clientRect;
+			GetClientRect(hwnd, &clientRect);
+			auto resizeCoef = m_mediaFrames.back()->WndFit(clientRect);
+			m_mediaFrames.back()->Center(clientRect, resizeCoef);
+
 			// триггерим событие перерисовки
 			InvalidateRect(hwnd, NULL, TRUE);
 		}
@@ -165,7 +170,6 @@ void App::OnPaint(HWND hwnd)
 	for (auto&& mediaFrame : m_mediaFrames)
 	{
 		auto resizeCoef = mediaFrame->WndFit(clientRect);
-		//mediaFrame->Center(clientRect, resizeCoef);
 		mediaFrame->Display(g);
 	}
 
@@ -215,12 +219,11 @@ void App::OnMouseMove(HWND hwnd, int x, int y, UINT keyFlags)
 		leftTop.y + size.cy + std::abs(deltaPosition.y)
 	};
 
-	InvalidateRect(hwnd, &invalidRect, TRUE);
+	InvalidateRect(hwnd, &invalidRect, FALSE);
 }
 
 void App::OnLButtonDown(HWND hwnd, BOOL fDoubleClick, int x, int y, UINT keyFlags)
 {
-	//m_isDragging = true;
 	m_prevMousePosition = {
 		static_cast<LONG>(x),
 		static_cast<LONG>(y)
