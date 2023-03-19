@@ -12,10 +12,13 @@ ImageFrame::ImageFrame(std::unique_ptr<Gdiplus::Bitmap> bitmap)
 	SetBitmap(std::move(bitmap));
 }
 
-void ImageFrame::Display(Gdiplus::Graphics& g) const
+void ImageFrame::Display(Gdiplus::Graphics& g)
 {
-	auto thumbnailImage = m_pBitmap->GetThumbnailImage(m_size.cx, m_size.cy, NULL, NULL);
-	g.DrawImage(thumbnailImage, static_cast<INT>(m_leftTop.x), static_cast<INT>(m_leftTop.y));
+	if (m_thumbnailImage.get() == nullptr)
+	{
+		m_thumbnailImage = std::make_unique<Gdiplus::Image*>(m_pBitmap->GetThumbnailImage(m_size.cx, m_size.cy, NULL, NULL));
+	}
+	g.DrawImage(*m_thumbnailImage.get(), static_cast<INT>(m_leftTop.x), static_cast<INT>(m_leftTop.y));
 }
 
 void ImageFrame::Center(const RECT& clientRect, double resizeCoef)
@@ -83,9 +86,15 @@ double ImageFrame::WndFit(const RECT& clientRect)
 	{
 		resizeCoef *= clientSize.cy / (static_cast<double>(bitmapSize.cy * resizeCoef));
 	}
-
+	auto prevSize = m_size;
 	m_size = { static_cast<LONG>(bitmapSize.cx * resizeCoef),
 		static_cast<LONG>(bitmapSize.cy * resizeCoef) };
+
+	if (prevSize.cx != m_size.cx ||
+		prevSize.cy != m_size.cy)
+	{
+		m_thumbnailImage = nullptr;
+	}
 
 	return resizeCoef;
 }
@@ -94,4 +103,14 @@ void ImageFrame::Move(POINT deltaPosition)
 {
 	m_leftTop.x += deltaPosition.x;
 	m_leftTop.y += deltaPosition.y;
+}
+
+POINT ImageFrame::GetLeftTop() const
+{
+	return m_leftTop;
+}
+
+SIZE ImageFrame::GetSize() const
+{
+	return m_size;
 }

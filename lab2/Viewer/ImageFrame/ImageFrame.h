@@ -11,7 +11,7 @@ public:
 	ImageFrame(std::unique_ptr<Gdiplus::Bitmap> bitmap);
 
 	// FIXED: пометить конст методом
-	void Display(Gdiplus::Graphics& g) const;
+	void Display(Gdiplus::Graphics& g);
 	// FIXED: убрать зависимость от HWND и передавать прямоугольник
 	void Center(const RECT& clientRect, double resizeCoef = 1);
 	void SetBitmap(const WCHAR* filename);
@@ -20,7 +20,11 @@ public:
 
 	void Move(POINT deltaPosition);
 
+	POINT GetLeftTop() const;
+	SIZE GetSize() const;
+
 private:
+	std::unique_ptr<Gdiplus::Image*> m_thumbnailImage;
 	std::unique_ptr<Gdiplus::Bitmap> m_pBitmap;
 	POINT m_leftTop;
 	SIZE m_size;
