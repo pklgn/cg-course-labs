@@ -31,4 +31,6 @@ private:
 	// dnd
 	bool m_isDragging = false;
 	POINT m_prevMousePosition;
+	//activeFrame
+	size_t m_activeFrameIndex;
 };

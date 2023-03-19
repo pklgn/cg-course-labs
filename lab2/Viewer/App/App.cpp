@@ -89,13 +89,18 @@ bool App::SelectActiveImageFrame(POINT clickPosition)
 		RECT frame = {
 			leftTop.x,
 			leftTop.y,
-			size.cx,
-			size.cy,
+			leftTop.x + size.cx,
+			leftTop.y + size.cy,
 		};
 		bool containClickPosition = PtInRect(&frame, clickPosition);
+		if (containClickPosition)
+		{
+			m_activeFrameIndex = m_mediaFrames.size() - std::distance(m_mediaFrames.rbegin(), it) - 1;
+			return true;
+		}
 	}
 
-	return true;
+	return false;
 }
 
 void App::OnDestroy(HWND)
@@ -194,13 +199,23 @@ void App::OnMouseMove(HWND hwnd, int x, int y, UINT keyFlags)
 		static_cast<LONG>(y - m_prevMousePosition.y)
 	};
 
-	auto selectedFrameIndex = m_mediaFrames.size() - 1;
-	m_mediaFrames.at(selectedFrameIndex)->Move(deltaPosition);
+	m_mediaFrames.at(m_activeFrameIndex)->Move(deltaPosition);
 	m_prevMousePosition = {
 		static_cast<LONG>(x),
 		static_cast<LONG>(y)
 	};
-	InvalidateRect(hwnd, NULL, TRUE);
+
+	auto leftTop = m_mediaFrames.at(m_activeFrameIndex)->GetLeftTop();
+	auto size = m_mediaFrames.at(m_activeFrameIndex)->GetSize();
+
+	RECT invalidRect = {
+		leftTop.x - deltaPosition.x,
+		leftTop.y - deltaPosition.y,
+		leftTop.x + size.cx + std::abs(deltaPosition.x),
+		leftTop.y + size.cy + std::abs(deltaPosition.y)
+	};
+
+	InvalidateRect(hwnd, &invalidRect, TRUE);
 }
 
 void App::OnLButtonDown(HWND hwnd, BOOL fDoubleClick, int x, int y, UINT keyFlags)
@@ -210,7 +225,7 @@ void App::OnLButtonDown(HWND hwnd, BOOL fDoubleClick, int x, int y, UINT keyFlag
 		static_cast<LONG>(x),
 		static_cast<LONG>(y)
 	};
-	m_isDragging = SelectActiveImageFrame({});
+	m_isDragging = SelectActiveImageFrame({x, y});
 }
 
 void App::OnLButtonUp(HWND hwnd, int x, int y, UINT keyFlags)
