@@ -1,3 +1,4 @@
+#include "../../pch.h"
 #include "ImageFrame.h"
 
 ImageFrame::ImageFrame(const WCHAR* filename)

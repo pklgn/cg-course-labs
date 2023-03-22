@@ -2,8 +2,9 @@
 #include <memory>
 #include <windows.h>
 #include <gdiplus.h>
+#include "../../Common/Observer/IObservable.h"
 
-class ImageFrame
+class ImageFrame : public IObservable
 {
 public:
 	ImageFrame(const WCHAR* filename);
