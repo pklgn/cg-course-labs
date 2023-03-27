@@ -1,8 +1,9 @@
 #pragma once
+#include <optional>
 #include "../../ImageFrame/ImageFrame.h"
 
 struct CollageData
 {
-	ImageFrame* imageFrame;
-	size_t collageIndex;
+	std::optional<ImageFrame*> imageFrame;
+	std::optional<size_t> collageIndex;
 };
