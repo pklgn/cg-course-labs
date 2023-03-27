@@ -1,14 +1,16 @@
 #include "../../pch.h"
 #include "../../Common/WndConfig.h"
+#include "../../Common/MnConfig.h"
 #include "WindowView.h"
+#include "../../Common/GdiplusInitializer.h"
 
-void InitFileNameStructure(HWND hwndOwner, OPENFILENAME* pOpenFileName, TCHAR* pFileName, DWORD maxFileName)
+void WindowView::InitFileNameStructure(HWND hwndOwner, OPENFILENAME* pOpenFileName, TCHAR* pFileName, DWORD maxFileName)
 {
 	ZeroMemory(pOpenFileName, sizeof(OPENFILENAME));
 
 	pOpenFileName->lStructSize = sizeof(OPENFILENAME);
 	pOpenFileName->hwndOwner = hwndOwner;
-	//pOpenFileName->hInstance = m_hInstance;
+	pOpenFileName->hInstance = m_hInstance;
 	pOpenFileName->nMaxFile = maxFileName;
 	pOpenFileName->lpstrFile = pFileName;
 	pOpenFileName->lpstrFilter = _T("Images (BMP, PNG, JPG, TIFF)\0*.bmp;*.png;*.jpg;*.tif\0")
@@ -16,8 +18,104 @@ void InitFileNameStructure(HWND hwndOwner, OPENFILENAME* pOpenFileName, TCHAR* p
 								 _T("\0");
 }
 
+HWND CreateMainWindow(HINSTANCE hInstance)
+{
+	HWND hMainWindow = CreateWindowEx(
+		0,
+		WNDENTITIES.at(WndKeyEntities::CLASS_NAME),
+		WNDENTITIES.at(WndKeyEntities::WINDOW_TITLE),
+		WS_OVERLAPPEDWINDOW,
+		CW_USEDEFAULT, CW_USEDEFAULT,
+		CW_USEDEFAULT, CW_USEDEFAULT,
+		NULL,
+		NULL,
+		hInstance,
+		NULL);
+
+	return hMainWindow;
+}
+
+int MainLoop()
+{
+	MSG msg;
+	BOOL res;
+	while ((res = GetMessage(&msg, NULL, 0, 0)) != 0)
+	{
+		if (res == -1)
+		{
+			// произошла ошибка - нужно обработать ее и, веро€тно,
+			// завершить работу приложени€
+		}
+		else
+		{
+			// ≈сли это сообщение о нажатии виртуальной клавиши,
+			// то добавл€ем в очередь сообщений сообщени€, несущие информацию о
+			// коде вводимого пользователем символа
+			TranslateMessage(&msg);
+			// передаем сообщение в соответствующую оконную процедуру
+			DispatchMessage(&msg);
+		}
+	}
+
+	// сюда мы попадем только в том случае извлечени€ сообщени€ WM_QUIT
+	// msg.wParam содержит код возврата, помещенный при помощи функции PostQuitMessage()
+	return static_cast<int>(msg.wParam);
+}
+
+WindowView::WindowView(CollageController& collageController, HINSTANCE hInstance, int nCmdShow)
+	: m_hInstance(hInstance)
+	, m_nCmdShow(nCmdShow)
+	, m_collageController(collageController)
+{
+}
+
+int WindowView::Show()
+{
+	try
+	{
+		GdiplusInitializer gdiplusInitializer;
+
+		// –егистрируем класс главного окна
+		if (!RegisterWndClass(m_hInstance))
+		{
+			return 1;
+		}
+
+		// —оздаю меню дл€ окна приложени€
+		HMENU hMenu = CreateMenu();
+		HMENU hSubMenu = CreatePopupMenu();
+		AppendMenu(hSubMenu, MF_STRING, MenuID.at(MenuIDKey::NEW), L"New");
+		AppendMenu(hMenu, MF_POPUP, (UINT_PTR)hSubMenu, L"File");
+
+		// —оздаем главное окно приложени€
+		HWND hMainWindow = CreateMainWindow(m_hInstance);
+		if (hMainWindow == NULL)
+		{
+			return 1;
+		}
+
+		SetWindowLongPtr(hMainWindow, GWLP_USERDATA, (LONG_PTR)(this));
+
+		//ƒобавл€ем меню к главному окну приложени€
+		SetMenu(hMainWindow, hMenu);
+
+		// ѕоказываем главное окно приложени€
+		ShowWindow(hMainWindow, m_nCmdShow);
+		UpdateWindow(hMainWindow);
+
+		// «апускаем цикл выборки сообщений, пока не получим
+		// сигнал о завершении приложени€
+		return MainLoop();
+	}
+	catch (std::runtime_error&)
+	{
+		return 2;
+	}
+}
+
 void WindowView::OnDestroy(HWND)
 {
+	m_collageController.OnDestroy();
 	PostQuitMessage(0);
 }
 
@@ -33,24 +131,7 @@ void WindowView::OnOpenFile(HWND hwnd, UINT)
 
 		if (img.GetLastStatus() == Gdiplus::Ok)
 		{
-			SIZE imgSize = {
-				static_cast<LONG>(img.GetWidth()),
-				static_cast<LONG>(img.GetHeight())
-			};
-			auto bitmap = std::make_unique<Gdiplus::Bitmap>(imgSize.cx, imgSize.cy, PixelFormat32bppARGB);
-			Gdiplus::Graphics g(bitmap.get());
-			// https://stackoverflow.com/questions/18643504/gdi-image-scaling-issue решение проблемы, что пнг изображение загружалось не полностью
-			Gdiplus::ImageAttributes attrs;
-			attrs.SetWrapMode(Gdiplus::WrapModeTileFlipXY);
-			Gdiplus::Rect dest(0, 0, imgSize.cx, imgSize.cy);
-			g.DrawImage(&img, dest, 0, 0, static_cast<INT>(imgSize.cx), static_cast<INT>(imgSize.cy), Gdiplus::UnitPixel, &attrs);
-
-			m_mediaFrames.push_back(std::move(std::make_unique<ImageFrame>(std::move(bitmap))));
-
-			RECT clientRect;
-			GetClientRect(hwnd, &clientRect);
-			auto resizeCoef = m_mediaFrames.back()->WndFit(clientRect);
-			m_mediaFrames.back()->Center(clientRect, resizeCoef);
+			m_collageController.AppendImage(img);
 
 			// триггерим событие перерисовки
 			InvalidateRect(hwnd, NULL, TRUE);
@@ -76,11 +157,7 @@ void WindowView::OnPaint(HWND hwnd)
 	Gdiplus::Graphics g(hdcBuffer);
 	g.FillRectangle(&brush, static_cast<INT>(clientRect.left), static_cast<INT>(clientRect.top), static_cast<INT>(clientSize.cx), static_cast<INT>(clientSize.cy));
 
-	for (auto&& mediaFrame : m_mediaFrames)
-	{
-		auto resizeCoef = mediaFrame->WndFit(clientRect);
-		mediaFrame->Display(g);
-	}
+	m_collageController.OnPaint(g, clientRect);
 
 	BitBlt(dc, 0, 0, clientSize.cx, clientSize.cy, hdcBuffer, 0, 0, SRCCOPY);
 
@@ -97,47 +174,19 @@ void WindowView::OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify)
 
 void WindowView::OnMouseMove(HWND hwnd, int x, int y, UINT keyFlags)
 {
-	if (!m_isDragging)
-	{
-		return;
-	}
-
-	POINT deltaPosition = {
-		static_cast<LONG>(x - m_prevMousePosition.x),
-		static_cast<LONG>(y - m_prevMousePosition.y)
-	};
-
-	m_mediaFrames.at(m_activeFrameIndex)->Move(deltaPosition);
-	m_prevMousePosition = {
-		static_cast<LONG>(x),
-		static_cast<LONG>(y)
-	};
-
-	auto leftTop = m_mediaFrames.at(m_activeFrameIndex)->GetLeftTop();
-	auto size = m_mediaFrames.at(m_activeFrameIndex)->GetSize();
-
-	RECT invalidRect = {
-		leftTop.x - deltaPosition.x,
-		leftTop.y - deltaPosition.y,
-		leftTop.x + size.cx + std::abs(deltaPosition.x),
-		leftTop.y + size.cy + std::abs(deltaPosition.y)
-	};
+	auto invalidRect = m_collageController.OnMouseMove({ x, y });
 
 	InvalidateRect(hwnd, &invalidRect, FALSE);
 }
 
 void WindowView::OnLButtonDown(HWND hwnd, BOOL fDoubleClick, int x, int y, UINT keyFlags)
 {
-	m_prevMousePosition = {
-		static_cast<LONG>(x),
-		static_cast<LONG>(y)
-	};
-	m_isDragging = SelectActiveImageFrame({ x, y });
+	m_collageController.OnLButtonDown({ x, y });
 }
 
 void WindowView::OnLButtonUp(HWND hwnd, int x, int y, UINT keyFlags)
 {
-	m_isDragging = false;
+	m_collageController.OnLButtonUp();
 }
 
 BOOL WindowView::OnEraseBkgnd(HWND hwnd, HDC wParam)
@@ -147,7 +196,19 @@ BOOL WindowView::OnEraseBkgnd(HWND hwnd, HDC wParam)
 
 LRESULT WindowView::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	return LRESULT();
+	auto instance = reinterpret_cast<WindowView*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
+	// TODO: функции-переходники в ATL: мини блок кода, который знает про this
+	switch (uMsg)
+	{
+		HANDLE_MSG(hwnd, WM_DESTROY, instance->OnDestroy);
+		HANDLE_MSG(hwnd, WM_PAINT, instance->OnPaint);
+		HANDLE_MSG(hwnd, WM_COMMAND, instance->OnCommand);
+		HANDLE_MSG(hwnd, WM_ERASEBKGND, instance->OnEraseBkgnd);
+		HANDLE_MSG(hwnd, WM_LBUTTONDOWN, instance->OnLButtonDown);
+		HANDLE_MSG(hwnd, WM_MOUSEMOVE, instance->OnMouseMove);
+		HANDLE_MSG(hwnd, WM_LBUTTONUP, instance->OnLButtonUp);
+	}
+	return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
 
 bool WindowView::RegisterWndClass(HINSTANCE hInstance)
