@@ -45,9 +45,16 @@ double ImageFrame::WndFit(const RECT& clientRect)
 	{
 		resizeCoef *= clientSize.cy / (static_cast<double>(bitmapSize.cy * resizeCoef));
 	}
-	auto prevSize = m_size;
+
 	m_size = { static_cast<LONG>(bitmapSize.cx * resizeCoef),
 		static_cast<LONG>(bitmapSize.cy * resizeCoef) };
+
+	m_changedData = {
+		std::nullopt,
+		std::nullopt,
+		m_size
+	};
+	NotifyObservers();
 
 	return resizeCoef;
 }
@@ -56,12 +63,26 @@ void ImageFrame::Center(const RECT& clientRect, double resizeCoef)
 {
 	m_leftTop = { static_cast<LONG>((clientRect.right - clientRect.left) / 2 - m_pBitmap->GetWidth() * resizeCoef / 2),
 		static_cast<LONG>((clientRect.bottom - clientRect.top) / 2 - m_pBitmap->GetHeight() * resizeCoef / 2) };
+
+	m_changedData = {
+		std::nullopt,
+		m_leftTop,
+		std::nullopt
+	};
+	NotifyObservers();
 }
 
 void ImageFrame::Move(POINT deltaPosition)
 {
 	m_leftTop.x += deltaPosition.x;
 	m_leftTop.y += deltaPosition.y;
+
+	m_changedData = {
+		std::nullopt,
+		m_leftTop,
+		std::nullopt
+	};
+	NotifyObservers();
 }
 
 void ImageFrame::SetBitmap(const WCHAR* filename)
@@ -88,6 +109,13 @@ void ImageFrame::SetBitmap(const WCHAR* filename)
 
 	m_size = imageSize;
 	m_pBitmap = std::move(bmp);
+
+	m_changedData = {
+		m_pBitmap.get(),
+		std::nullopt,
+		m_size
+	};
+	NotifyObservers();
 }
 
 void ImageFrame::SetBitmap(std::unique_ptr<Gdiplus::Bitmap> bitmap)
@@ -97,6 +125,13 @@ void ImageFrame::SetBitmap(std::unique_ptr<Gdiplus::Bitmap> bitmap)
 		static_cast<LONG>(bitmap->GetHeight()),
 	};
 	m_pBitmap = std::move(bitmap);
+
+	m_changedData = {
+		m_pBitmap.get(),
+		std::nullopt,
+		m_size
+	};
+	NotifyObservers();
 }
 
 POINT ImageFrame::GetLeftTop() const
@@ -112,4 +147,9 @@ SIZE ImageFrame::GetSize() const
 Gdiplus::Image* ImageFrame::GetThumbnailImage(SIZE thumbnailSize) const
 {
 	return m_pBitmap->GetThumbnailImage(thumbnailSize.cx, thumbnailSize.cy, NULL, NULL);
+}
+
+ImageFrameData ImageFrame::GetChangedData() const
+{
+	return m_changedData;
 }

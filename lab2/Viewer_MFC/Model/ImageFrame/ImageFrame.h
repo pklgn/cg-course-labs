@@ -1,10 +1,11 @@
 #pragma once
 #include <memory>
-#include <windows.h>
-#include <gdiplus.h>
-#include "../../Common/Observer/IObservable.h"
+//#include <windows.h>
+//#include <gdiplus.h>
+#include "../../Common/Observer/Observable.h"
+#include "ImageFrameData/ImageFrameData.h"
 
-class ImageFrame : public IObservable
+class ImageFrame : public Observable<ImageFrameData>
 {
 public:
 	ImageFrame(const WCHAR* filename);
@@ -21,7 +22,11 @@ public:
 	SIZE GetSize() const;
 	Gdiplus::Image* GetThumbnailImage(SIZE thumbnailSize) const;
 
+protected:
+	ImageFrameData GetChangedData() const override;
+
 private:
+	ImageFrameData m_changedData;
 	std::unique_ptr<Gdiplus::Bitmap> m_pBitmap;
 	POINT m_leftTop;
 	SIZE m_size;
