@@ -1,14 +1,6 @@
 ﻿#include "../../pch.h"
 #include "Collage.h"
 
-Collage::~Collage()
-{
-	for (auto&& imageFrame : m_imageFrames)
-	{
-		imageFrame.reset();
-	}
-}
-
 void Collage::AddImageFrameAtIndex(std::unique_ptr<ImageFrame>&& imageFrame, size_t index)
 {
 	if (index == SIZE_MAX)

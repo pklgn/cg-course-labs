@@ -8,8 +8,6 @@
 class Collage : public Observable<CollageData>
 {
 public:
-	~Collage();
-
 	void AddImageFrameAtIndex(std::unique_ptr<ImageFrame>&& imageFrame, size_t index = SIZE_MAX);
 	void RemoveImageFrameAtIndex(size_t index);
 
