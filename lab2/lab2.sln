@@ -5,7 +5,7 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Viewer", "Viewer\Viewer.vcxproj", "{3DA2318D-5A4A-43D0-8B9A-728EB0A678D5}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Viewer_MFC", "Viewer_MFC\Viewer_MFC.vcxproj", "{C43916C8-3388-4F93-B4FD-1BC314517E8C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Viewer_MVC", "Viewer_MVC\Viewer_MVC.vcxproj", "{C43916C8-3388-4F93-B4FD-1BC314517E8C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

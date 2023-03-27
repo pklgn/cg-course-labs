@@ -11,7 +11,7 @@ public:
 	CollageView(Collage& collage);
 	~CollageView();
 
-	size_t GetCount();
+	size_t GetSize();
 	void AddImageFrameViewAtIndex(std::unique_ptr<ImageFrameView>&& imageFrameView, size_t index);
 	void RemoveImageFrameViewAtIndex(size_t index);
 	void Display(Gdiplus::Graphics& g);

@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Viewer_MFC.cpp">
+    <ClCompile Include="Viewer_MVC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Model\ImageFrame\ImageFrame.cpp">
@@ -27,9 +27,6 @@
     <ClCompile Include="Model\Collage\Collage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Common\Observer\Observable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="View\ImageFrameView\ImageFrameView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -39,7 +36,10 @@
     <ClCompile Include="Controller\CollageController\CollageController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Controller\ImageFrameController\ImageFrameController.cpp">
+    <ClCompile Include="View\CollageView\CollageView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Model\ImageFrame\ImageFrameData\ImageFrameData.h">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -80,7 +80,10 @@
     <ClInclude Include="Controller\CollageController\CollageController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Controller\ImageFrameController\ImageFrameController.h">
+    <ClInclude Include="View\CollageView\CollageView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\Collage\CollageData\CollageData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

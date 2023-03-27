@@ -11,14 +11,14 @@ CollageController::CollageController(Collage& collage, CollageView& collageView)
 void CollageController::OnDestroy()
 {
 	// TODO: определиться с правильным порядком удаления и отписки, чтобы избежать access violation ошибок
-	auto count = m_collageView.GetCount();
-	for (int i = count - 1; 0 <= i; --i)
+	auto collageViewSize = static_cast<int>(m_collageView.GetSize());
+	for (int i = collageViewSize - 1; 0 <= i; --i)
 	{
 		m_collageView.RemoveImageFrameViewAtIndex(i);
 	}
 
-	auto size = m_collage.GetSize();
-	for (int i = size - 1; 0 <= i; --i)
+	auto collageSize = static_cast<int>(m_collage.GetSize());
+	for (int i = collageSize - 1; 0 <= i; --i)
 	{
 		m_collage.RemoveImageFrameAtIndex(i);
 	}
@@ -27,7 +27,8 @@ void CollageController::OnDestroy()
 void CollageController::OnPaint(Gdiplus::Graphics& g, const RECT& clientRect)
 {
 	// TODO: возможно, не следует при каждом событии рисования вызывать функцию, подсчитывающую размеры изображения на основании размера окна
-	for (int i = m_collage.GetSize() - 1; 0 <= i; --i)
+	auto collageSize = static_cast<int>(m_collage.GetSize());
+	for (int i = collageSize - 1; 0 <= i; --i)
 	{
 		m_collage.GetImageFrameAtIndex(i)->WndFit(clientRect);
 	}
@@ -95,7 +96,8 @@ void CollageController::AppendImage(Gdiplus::Image& img)
 
 ImageFrame* CollageController::FindActiveImageFrame(POINT mousePosition)
 {
-	for (int i = m_collage.GetSize() - 1; 0 <= i; --i)
+	auto collageSize = static_cast<int>(m_collage.GetSize());
+	for (int i = collageSize - 1; 0 <= i; --i)
 	{
 		auto imageFrame = m_collage.GetImageFrameAtIndex(i);
 		auto leftTop = imageFrame->GetLeftTop();

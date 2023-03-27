@@ -23,7 +23,7 @@ void CollageView::RemoveImageFrameViewAtIndex(size_t index)
 	m_imageFrameViews.erase(m_imageFrameViews.begin() + index);
 }
 
-size_t CollageView::GetCount()
+size_t CollageView::GetSize()
 {
 	return m_imageFrameViews.size();
 }

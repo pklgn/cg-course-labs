@@ -20,5 +20,6 @@
 #pragma comment(lib, "Gdiplus.lib")
 #include <windowsx.h>
 #include <winuser.h>
+#include <optional>
 
 #endif // PCH_H
