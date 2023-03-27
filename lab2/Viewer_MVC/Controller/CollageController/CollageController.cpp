@@ -111,6 +111,8 @@ ImageFrame* CollageController::FindActiveImageFrame(POINT mousePosition)
 		bool containMousePosition = PtInRect(&frame, mousePosition);
 		if (containMousePosition)
 		{
+			m_prevMousePosition = mousePosition;
+
 			return imageFrame;
 		}
 	}

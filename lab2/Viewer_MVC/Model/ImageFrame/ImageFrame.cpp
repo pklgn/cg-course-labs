@@ -45,16 +45,22 @@ double ImageFrame::WndFit(const RECT& clientRect)
 	{
 		resizeCoef *= clientSize.cy / (static_cast<double>(bitmapSize.cy * resizeCoef));
 	}
-
+	SIZE prevSize = m_size;
 	m_size = { static_cast<LONG>(bitmapSize.cx * resizeCoef),
 		static_cast<LONG>(bitmapSize.cy * resizeCoef) };
 
-	m_changedData = {
-		std::nullopt,
-		std::nullopt,
-		m_size
-	};
-	NotifyObservers();
+
+	if (prevSize.cx != m_size.cx ||
+		prevSize.cy != m_size.cy)
+	{
+		m_changedData = {
+			std::nullopt,
+			std::nullopt,
+			m_size
+		};
+
+		NotifyObservers();
+	}
 
 	return resizeCoef;
 }
@@ -76,13 +82,6 @@ void ImageFrame::Move(POINT deltaPosition)
 {
 	m_leftTop.x += deltaPosition.x;
 	m_leftTop.y += deltaPosition.y;
-
-	m_changedData = {
-		std::nullopt,
-		m_leftTop,
-		std::nullopt
-	};
-	NotifyObservers();
 }
 
 void ImageFrame::SetBitmap(const WCHAR* filename)

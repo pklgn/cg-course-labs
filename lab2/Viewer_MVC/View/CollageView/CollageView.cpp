@@ -44,7 +44,7 @@ void CollageView::Update(const CollageData& data)
 
 		return;
 	}
-	auto&& test = **data.imageFrame;
-	auto imageFrameView = std::make_unique<ImageFrameView>(test);
+
+	auto imageFrameView = std::make_unique<ImageFrameView>(**data.imageFrame);
 	AddImageFrameViewAtIndex(std::move(imageFrameView), data.collageIndex.value());
 }
