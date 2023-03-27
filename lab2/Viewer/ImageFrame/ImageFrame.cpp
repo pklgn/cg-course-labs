@@ -14,6 +14,7 @@ ImageFrame::ImageFrame(std::unique_ptr<Gdiplus::Bitmap> bitmap)
 
 void ImageFrame::Display(Gdiplus::Graphics& g)
 {
+	// TODO сделать мутабельным поле миниатюры и пометить метод конст
 	if (m_thumbnailImage.get() == nullptr)
 	{
 		m_thumbnailImage = std::make_unique<Gdiplus::Image*>(m_pBitmap->GetThumbnailImage(m_size.cx, m_size.cy, NULL, NULL));
@@ -33,7 +34,12 @@ void ImageFrame::SetBitmap(const WCHAR* filename)
 
 	// Создаем растровое изображение соответствующего размера
 	// с форматом пикселей RGBA 32 bit
-	std::unique_ptr<Gdiplus::Bitmap> bmp = std::make_unique<Gdiplus::Bitmap>(pImage->GetWidth(), pImage->GetHeight(), PixelFormat32bppARGB);
+
+	SIZE imageSize = {
+		pImage->GetWidth(),
+		pImage->GetHeight()
+	};
+	std::unique_ptr<Gdiplus::Bitmap> bmp = std::make_unique<Gdiplus::Bitmap>(imageSize.cx, imageSize.cy, PixelFormat32bppARGB);
 
 	// Создаем объект Graphics дли рисования в растре bmp
 	Gdiplus::Graphics g(bmp.get());
@@ -45,6 +51,7 @@ void ImageFrame::SetBitmap(const WCHAR* filename)
 	pImage.release();
 
 	m_pBitmap = std::move(bmp);
+	m_size = imageSize;
 }
 
 void ImageFrame::SetBitmap(std::unique_ptr<Gdiplus::Bitmap> bitmap)
