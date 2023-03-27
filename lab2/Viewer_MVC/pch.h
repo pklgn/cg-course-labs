@@ -8,18 +8,18 @@
 #define PCH_H
 
 // add headers that you want to pre-compile here
-//https://stackoverflow.com/questions/48882439/how-to-restore-auto-ptr-in-visual-studio-c17 решает проблему отсутствующего auto_ptr в std:c++17
+// https://stackoverflow.com/questions/48882439/how-to-restore-auto-ptr-in-visual-studio-c17 решает проблему отсутствующего auto_ptr в std:c++17
 #define _HAS_AUTO_PTR_ETC 1
 
+#include <windows.h>
+#include <gdiplus.h>
+#pragma comment(lib, "Gdiplus.lib")
 #include <memory>
 #include <stdexcept>
 #include <tchar.h>
 #include <vector>
-#include <windows.h>
-#include <gdiplus.h>
-#pragma comment(lib, "Gdiplus.lib")
+#include <optional>
 #include <windowsx.h>
 #include <winuser.h>
-#include <optional>
 
 #endif // PCH_H

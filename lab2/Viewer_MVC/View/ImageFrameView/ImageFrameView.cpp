@@ -5,7 +5,7 @@
 ImageFrameView::ImageFrameView(ImageFrame& imageFrame)
 	: m_imageFrame(imageFrame)
 {
-	imageFrame.AddObserver(*this);
+	m_imageFrame.AddObserver(*this);
 }
 
 ImageFrameView::~ImageFrameView()

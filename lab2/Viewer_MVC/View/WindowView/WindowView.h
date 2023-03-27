@@ -1,6 +1,6 @@
 #pragma once
-#include <windows.h>
 #include "../../Controller/CollageController/CollageController.h"
+#include <windows.h>
 
 class WindowView
 {
@@ -9,23 +9,23 @@ public:
 
 	int Show();
 
-	void OnDestroy(HWND /*hWnd*/);
-	void OnOpenFile(HWND hwnd, UINT /*codeNotify*/);
-	void OnPaint(HWND hwnd);
+	static BOOL OnEraseBkgnd(HWND hwnd, HDC wParam);
 	void OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify);
-	void OnMouseMove(HWND hwnd, int x, int y, UINT keyFlags);
+	void OnDestroy(HWND /*hWnd*/);
 	void OnLButtonDown(HWND hwnd, BOOL fDoubleClick, int x, int y, UINT keyFlags);
 	void OnLButtonUp(HWND hwnd, int x, int y, UINT keyFlags);
-	BOOL OnEraseBkgnd(HWND hwnd, HDC wParam);
+	void OnMouseMove(HWND hwnd, int x, int y, UINT keyFlags);
+	void OnOpenFile(HWND hwnd, UINT /*codeNotify*/);
+	void OnPaint(HWND hwnd);
+	void OnSize(HWND hwnd, UINT state, int cx, int cy);
 
 	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 private:
-	bool RegisterWndClass(HINSTANCE hInstance);
-	void InitFileNameStructure(HWND hwndOwner, OPENFILENAME* pOpenFileName, TCHAR* pFileName, DWORD maxFileName);
+	void InitFileNameStructure(HWND hwndOwner, OPENFILENAME* pOpenFileName, TCHAR* pFileName, DWORD maxFileName) const;
 
-	HINSTANCE m_hInstance;
 	int m_nCmdShow;
+	HINSTANCE m_hInstance;
 
 	CollageController& m_collageController;
 };

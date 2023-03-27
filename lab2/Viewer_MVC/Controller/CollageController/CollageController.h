@@ -7,13 +7,14 @@ class CollageController
 public:
 	CollageController(Collage& collage, CollageView& collageView);
 
-	void OnDestroy();
-	void OnPaint(Gdiplus::Graphics& g, const RECT& clientRect);
-	RECT OnMouseMove(POINT mousePosition);
-	void OnLButtonDown(POINT mousePosition);
-	void OnLButtonUp();
+	void AppendImage(Gdiplus::Image& img, const RECT& clientRect);
 
-	void AppendImage(Gdiplus::Image& img);
+	void OnSize(int cx, int cy);
+	void OnPaint(Gdiplus::Graphics& g, const RECT& clientRect);
+	void OnLButtonUp();
+	void OnLButtonDown(POINT mousePosition);
+	void OnDestroy();
+	RECT OnMouseMove(POINT mousePosition);
 
 private:
 	ImageFrame* FindActiveImageFrame(POINT mousePosition);

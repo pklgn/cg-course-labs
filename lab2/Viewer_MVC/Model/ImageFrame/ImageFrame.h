@@ -26,8 +26,8 @@ protected:
 	ImageFrameData GetChangedData() const override;
 
 private:
-	ImageFrameData m_changedData;
 	std::unique_ptr<Gdiplus::Bitmap> m_pBitmap;
 	POINT m_leftTop;
 	SIZE m_size;
+	ImageFrameData m_changedData;
 };

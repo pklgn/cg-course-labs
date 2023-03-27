@@ -4,7 +4,7 @@
 #include "WindowView.h"
 #include "../../Common/GdiplusInitializer.h"
 
-void WindowView::InitFileNameStructure(HWND hwndOwner, OPENFILENAME* pOpenFileName, TCHAR* pFileName, DWORD maxFileName)
+void WindowView::InitFileNameStructure(HWND hwndOwner, OPENFILENAME* pOpenFileName, TCHAR* pFileName, DWORD maxFileName) const
 {
 	ZeroMemory(pOpenFileName, sizeof(OPENFILENAME));
 
@@ -69,6 +69,7 @@ WindowView::WindowView(CollageController& collageController, HINSTANCE hInstance
 {
 }
 
+bool RegisterWndClass(HINSTANCE hInstance);
 int WindowView::Show()
 {
 	try
@@ -131,7 +132,9 @@ void WindowView::OnOpenFile(HWND hwnd, UINT)
 
 		if (img.GetLastStatus() == Gdiplus::Ok)
 		{
-			m_collageController.AppendImage(img);
+			RECT clientRect;
+			GetClientRect(hwnd, &clientRect);
+			m_collageController.AppendImage(img, clientRect);
 
 			// триггерим событие перерисовки
 			InvalidateRect(hwnd, NULL, TRUE);
@@ -194,6 +197,11 @@ BOOL WindowView::OnEraseBkgnd(HWND hwnd, HDC wParam)
 	return TRUE;
 }
 
+void WindowView::OnSize(HWND hwnd, UINT state, int cx, int cy)
+{
+	m_collageController.OnSize(cx, cy);
+}
+
 LRESULT WindowView::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	auto instance = reinterpret_cast<WindowView*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
@@ -207,11 +215,12 @@ LRESULT WindowView::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 		HANDLE_MSG(hwnd, WM_LBUTTONDOWN, instance->OnLButtonDown);
 		HANDLE_MSG(hwnd, WM_MOUSEMOVE, instance->OnMouseMove);
 		HANDLE_MSG(hwnd, WM_LBUTTONUP, instance->OnLButtonUp);
+		HANDLE_MSG(hwnd, WM_SIZE, instance->OnSize);
 	}
 	return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
 
-bool WindowView::RegisterWndClass(HINSTANCE hInstance)
+bool RegisterWndClass(HINSTANCE hInstance)
 {
 	WNDCLASSEX wndClass = {
 		sizeof(wndClass), // UINT cbSize;

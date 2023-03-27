@@ -5,6 +5,7 @@
 CollageController::CollageController(Collage& collage, CollageView& collageView)
 	: m_collage(collage)
 	, m_collageView(collageView)
+	, m_prevMousePosition({0, 0})
 {
 }
 
@@ -26,13 +27,8 @@ void CollageController::OnDestroy()
 
 void CollageController::OnPaint(Gdiplus::Graphics& g, const RECT& clientRect)
 {
-	// TODO: возможно, не следует при каждом событии рисования вызывать функцию, подсчитывающую размеры изображения на основании размера окна
-	auto collageSize = static_cast<int>(m_collage.GetSize());
-	for (int i = collageSize - 1; 0 <= i; --i)
-	{
-		m_collage.GetImageFrameAtIndex(i)->WndFit(clientRect);
-	}
-
+	// FIXED: возможно, не следует при каждом событии рисования вызывать функцию, подсчитывающую размеры изображения на основании размера окна
+	// FIXED: перенес цикл пересчета размеров миниатюры в обработчик события OnSize (WM_SIZE у winapi)
 	m_collageView.Display(g);
 }
 
@@ -77,7 +73,16 @@ void CollageController::OnLButtonUp()
 	m_activeImageFrame = nullptr;
 }
 
-void CollageController::AppendImage(Gdiplus::Image& img)
+void CollageController::OnSize(int cx, int cy)
+{
+	auto collageSize = static_cast<int>(m_collage.GetSize());
+	for (auto i = collageSize - 1; 0 <= i; --i)
+	{
+		m_collage.GetImageFrameAtIndex(i)->WndFit({0, 0, static_cast<LONG>(cx), static_cast<LONG>(cy)});
+	}
+}
+
+void CollageController::AppendImage(Gdiplus::Image& img, const RECT& clientRect)
 {
 	SIZE imgSize = {
 		static_cast<LONG>(img.GetWidth()),
@@ -92,6 +97,7 @@ void CollageController::AppendImage(Gdiplus::Image& img)
 	g.DrawImage(&img, dest, 0, 0, static_cast<INT>(imgSize.cx), static_cast<INT>(imgSize.cy), Gdiplus::UnitPixel, &attrs);
 
 	m_collage.AddImageFrameAtIndex(std::make_unique<ImageFrame>(std::move(bitmap)));
+	m_collage.GetImageFrameAtIndex(m_collage.GetSize() - 1)->WndFit(clientRect);
 }
 
 ImageFrame* CollageController::FindActiveImageFrame(POINT mousePosition)
