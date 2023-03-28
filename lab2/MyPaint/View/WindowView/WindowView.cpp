@@ -4,8 +4,8 @@
 #include "WindowView.h"
 #include "../../Common/GdiplusInitializer.h"
 
-const UINT MAX_WINDOW_WIDTH = 800;
-const UINT MAX_WINDOW_HEIGHT = 600;
+const LONG MAX_WINDOW_WIDTH = 800;
+const LONG MAX_WINDOW_HEIGHT = 600;
 
 void WindowView::InitFileNameStructure(HWND hwndOwner, OPENFILENAME* pOpenFileName, TCHAR* pFileName, DWORD maxFileName) const
 {
@@ -124,7 +124,7 @@ void WindowView::OnDestroy(HWND)
 }
 
 std::once_flag flag;
-void AdjustWindow(HWND hwnd, UINT imageWidth, UINT imageHeight);
+void AdjustWindow(HWND hwnd, LONG imageWidth, LONG imageHeight);
 void WindowView::OnOpenFile(HWND hwnd, UINT)
 {
 	OPENFILENAME ofn;
@@ -190,7 +190,12 @@ void WindowView::OnMouseMove(HWND hwnd, int x, int y, UINT keyFlags)
 
 void WindowView::OnLButtonDown(HWND hwnd, BOOL fDoubleClick, int x, int y, UINT keyFlags)
 {
-	m_collageController.OnLButtonDown({ x, y });
+	//m_collageController.OnLButtonDown({ x, y }, fDoubleClick);
+}
+
+void WindowView::OnLButtonDblClk(HWND hwnd, BOOL fDoubleClick, int x, int y, UINT keyFlags)
+{
+	m_collageController.OnLButtonDblClk({ x, y }, fDoubleClick);
 }
 
 void WindowView::OnLButtonUp(HWND hwnd, int x, int y, UINT keyFlags)
@@ -222,6 +227,7 @@ LRESULT WindowView::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 		HANDLE_MSG(hwnd, WM_MOUSEMOVE, instance->OnMouseMove);
 		HANDLE_MSG(hwnd, WM_LBUTTONUP, instance->OnLButtonUp);
 		HANDLE_MSG(hwnd, WM_SIZE, instance->OnSize);
+		HANDLE_MSG(hwnd, WM_LBUTTONDBLCLK, instance->OnLButtonDblClk);
 	}
 	return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
@@ -230,7 +236,7 @@ bool RegisterWndClass(HINSTANCE hInstance)
 {
 	WNDCLASSEX wndClass = {
 		sizeof(wndClass), // UINT cbSize;
-		CS_HREDRAW | CS_VREDRAW, // UINT style;
+		CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS, // UINT style;
 		&WindowView::WindowProc, // WNDPROC lpfnWndProc;
 		0, // int cbClsExtra;
 		static_cast<LONG_PTR>(sizeof(WindowView*)), // int cbWndExtra;
@@ -246,7 +252,7 @@ bool RegisterWndClass(HINSTANCE hInstance)
 	return RegisterClassEx(&wndClass) != FALSE;
 }
 
-void AdjustWindow(HWND hwnd, UINT imageWidth, UINT imageHeight)
+void AdjustWindow(HWND hwnd, LONG imageWidth, LONG imageHeight)
 {
 	auto bitmapAspectRatio = imageWidth / static_cast<double>(imageHeight);
 

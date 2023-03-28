@@ -12,7 +12,8 @@ public:
 	void OnSize(int cx, int cy);
 	void OnPaint(Gdiplus::Graphics& g, const RECT& clientRect);
 	void OnLButtonUp();
-	void OnLButtonDown(POINT mousePosition);
+	void OnLButtonDown(POINT mousePosition, BOOL fDoubleClick);
+	void OnLButtonDblClk(POINT mousePosition, BOOL fDoubleClick);
 	void OnDestroy();
 	RECT OnMouseMove(POINT mousePosition);
 

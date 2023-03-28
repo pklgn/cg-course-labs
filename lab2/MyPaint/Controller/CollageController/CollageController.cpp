@@ -66,7 +66,12 @@ RECT CollageController::OnMouseMove(POINT mousePosition)
 	return RECT();
 }
 
-void CollageController::OnLButtonDown(POINT mousePosition)
+void CollageController::OnLButtonDown(POINT mousePosition, BOOL fDoubleClick)
+{
+	// TODO: реализовать логику рисования
+}
+
+void CollageController::OnLButtonDblClk(POINT mousePosition, BOOL fDoubleClick)
 {
 	m_pActiveImageFrame = FindActiveImageFrame(mousePosition);
 }

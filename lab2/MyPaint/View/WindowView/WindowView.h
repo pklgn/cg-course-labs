@@ -18,6 +18,7 @@ public:
 	void OnOpenFile(HWND hwnd, UINT /*codeNotify*/);
 	void OnPaint(HWND hwnd);
 	void OnSize(HWND hwnd, UINT state, int cx, int cy);
+	void OnLButtonDblClk(HWND hwnd, BOOL fDoubleClick, int x, int y, UINT keyFlags);
 
 	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
