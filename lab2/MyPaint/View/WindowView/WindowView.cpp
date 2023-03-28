@@ -4,6 +4,9 @@
 #include "WindowView.h"
 #include "../../Common/GdiplusInitializer.h"
 
+const UINT MAX_WINDOW_WIDTH = 800;
+const UINT MAX_WINDOW_HEIGHT = 600;
+
 void WindowView::InitFileNameStructure(HWND hwndOwner, OPENFILENAME* pOpenFileName, TCHAR* pFileName, DWORD maxFileName) const
 {
 	ZeroMemory(pOpenFileName, sizeof(OPENFILENAME));
@@ -24,7 +27,7 @@ HWND CreateMainWindow(HINSTANCE hInstance)
 		0,
 		WNDENTITIES.at(WndKeyEntities::CLASS_NAME),
 		WNDENTITIES.at(WndKeyEntities::WINDOW_TITLE),
-		WS_OVERLAPPEDWINDOW,
+		WS_OVERLAPPEDWINDOW & ~WS_THICKFRAME & ~WS_MAXIMIZEBOX,
 		CW_USEDEFAULT, CW_USEDEFAULT,
 		CW_USEDEFAULT, CW_USEDEFAULT,
 		NULL,
@@ -120,6 +123,8 @@ void WindowView::OnDestroy(HWND)
 	PostQuitMessage(0);
 }
 
+std::once_flag flag;
+void AdjustWindow(HWND hwnd, UINT imageWidth, UINT imageHeight);
 void WindowView::OnOpenFile(HWND hwnd, UINT)
 {
 	OPENFILENAME ofn;
@@ -135,6 +140,7 @@ void WindowView::OnOpenFile(HWND hwnd, UINT)
 			RECT clientRect;
 			GetClientRect(hwnd, &clientRect);
 			m_collageController.AppendImage(img, clientRect);
+			std::call_once(flag, AdjustWindow, hwnd, img.GetWidth(), img.GetHeight());
 
 			// триггерим событие перерисовки
 			InvalidateRect(hwnd, NULL, TRUE);
@@ -240,4 +246,34 @@ bool RegisterWndClass(HINSTANCE hInstance)
 	return RegisterClassEx(&wndClass) != FALSE;
 }
 
+void AdjustWindow(HWND hwnd, UINT imageWidth, UINT imageHeight)
+{
+	auto bitmapAspectRatio = imageWidth / static_cast<double>(imageHeight);
 
+	SIZE clientSize = { MAX_WINDOW_WIDTH,
+		MAX_WINDOW_HEIGHT };
+
+	double resizeCoef = 1;
+
+	if (clientSize.cx < imageWidth)
+	{
+		resizeCoef *= (bitmapAspectRatio < 1)
+			? clientSize.cy / static_cast<double>(imageHeight)
+			: clientSize.cx / static_cast<double>(imageWidth);
+	}
+	if (clientSize.cy < imageHeight * resizeCoef)
+	{
+		resizeCoef *= clientSize.cy / (static_cast<double>(imageHeight * resizeCoef));
+	}
+	SIZE imageSize = { static_cast<LONG>(imageWidth * resizeCoef),
+		static_cast<LONG>(imageHeight * resizeCoef) };
+
+	RECT windowRect;
+	GetWindowRect(hwnd, &windowRect);
+	POINT screenLeftTop{ windowRect.left, windowRect.top };
+	ScreenToClient(hwnd, &screenLeftTop);
+	// TODO: решить проблему с точностью вычислений размеров окна (сейчас сделано деление на 2 по OX чтобы минимизировать ошибку)
+	SetWindowPos(hwnd, NULL, windowRect.left, windowRect.top, imageSize.cx - screenLeftTop.x / 2, imageSize.cy - screenLeftTop.y, NULL);
+	UpdateWindow(hwnd);
+}
+// TODO: решить проблему при отладке с "no PDB file for ntdll.dll"

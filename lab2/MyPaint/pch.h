@@ -15,6 +15,7 @@
 #include <gdiplus.h>
 #pragma comment(lib, "Gdiplus.lib")
 #include <memory>
+#include <mutex>
 #include <stdexcept>
 #include <tchar.h>
 #include <vector>
