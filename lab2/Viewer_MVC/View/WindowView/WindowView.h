@@ -26,6 +26,5 @@ private:
 
 	int m_nCmdShow;
 	HINSTANCE m_hInstance;
-
 	CollageController& m_collageController;
 };

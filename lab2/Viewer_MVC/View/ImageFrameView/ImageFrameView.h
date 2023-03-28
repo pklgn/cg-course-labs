@@ -12,10 +12,9 @@ public:
 	~ImageFrameView();
 
 	void Display(Gdiplus::Graphics& g);
-
 	void Update(const ImageFrameData& data);
 
 private:
-	std::unique_ptr<Gdiplus::Image*> m_pThumbnailImage;
+	std::unique_ptr<Gdiplus::Image> m_pThumbnailImage;
 	ImageFrame& m_imageFrame;
 };

@@ -23,5 +23,5 @@ private:
 	CollageView& m_collageView;
 
 	POINT m_prevMousePosition;
-	ImageFrame* m_activeImageFrame = nullptr;
+	ImageFrame* m_pActiveImageFrame = nullptr;
 };

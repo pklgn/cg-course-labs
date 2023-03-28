@@ -4,6 +4,6 @@
 
 struct CollageData
 {
-	std::optional<ImageFrame*> imageFrame;
+	std::optional<ImageFrame*> pImageFrame;
 	std::optional<size_t> collageIndex;
 };

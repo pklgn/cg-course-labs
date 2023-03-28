@@ -32,23 +32,26 @@ void CollageController::OnPaint(Gdiplus::Graphics& g, const RECT& clientRect)
 	m_collageView.Display(g);
 }
 
+/*
+* Возвращает прямоугольник, который требует перерисовки
+*/
 RECT CollageController::OnMouseMove(POINT mousePosition)
 {
-	if (m_activeImageFrame)
+	if (m_pActiveImageFrame)
 	{
 		POINT deltaPosition = {
 			static_cast<LONG>(mousePosition.x - m_prevMousePosition.x),
 			static_cast<LONG>(mousePosition.y - m_prevMousePosition.y)
 		};
 
-		m_activeImageFrame->Move(deltaPosition);
+		m_pActiveImageFrame->Move(deltaPosition);
 		m_prevMousePosition = {
 			static_cast<LONG>(mousePosition.x),
 			static_cast<LONG>(mousePosition.y)
 		};
 
-		auto leftTop = m_activeImageFrame->GetLeftTop();
-		auto size = m_activeImageFrame->GetSize();
+		auto leftTop = m_pActiveImageFrame->GetLeftTop();
+		auto size = m_pActiveImageFrame->GetSize();
 
 		RECT invalidRect = {
 			leftTop.x - deltaPosition.x,
@@ -65,12 +68,12 @@ RECT CollageController::OnMouseMove(POINT mousePosition)
 
 void CollageController::OnLButtonDown(POINT mousePosition)
 {
-	m_activeImageFrame = FindActiveImageFrame(mousePosition);
+	m_pActiveImageFrame = FindActiveImageFrame(mousePosition);
 }
 
 void CollageController::OnLButtonUp()
 {
-	m_activeImageFrame = nullptr;
+	m_pActiveImageFrame = nullptr;
 }
 
 void CollageController::OnSize(int cx, int cy)

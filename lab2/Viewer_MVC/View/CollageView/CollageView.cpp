@@ -38,13 +38,13 @@ void CollageView::Display(Gdiplus::Graphics& g)
 
 void CollageView::Update(const CollageData& data)
 {
-	if (data.imageFrame == std::nullopt)
+	if (data.pImageFrame == std::nullopt)
 	{
 		RemoveImageFrameViewAtIndex(data.collageIndex.value());
 
 		return;
 	}
 
-	auto imageFrameView = std::make_unique<ImageFrameView>(**data.imageFrame);
+	auto imageFrameView = std::make_unique<ImageFrameView>(**data.pImageFrame);
 	AddImageFrameViewAtIndex(std::move(imageFrameView), data.collageIndex.value());
 }

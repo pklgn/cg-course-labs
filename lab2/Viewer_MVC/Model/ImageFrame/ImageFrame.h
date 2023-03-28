@@ -1,7 +1,5 @@
 #pragma once
 #include <memory>
-//#include <windows.h>
-//#include <gdiplus.h>
 #include "../../Common/Observer/Observable.h"
 #include "ImageFrameData/ImageFrameData.h"
 
