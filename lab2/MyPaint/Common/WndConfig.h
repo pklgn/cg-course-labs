@@ -21,5 +21,5 @@ struct EnumClassHash
 
 const std::unordered_map<WndKeyEntities, LPCWSTR, EnumClassHash> WNDENTITIES = {
 	{ WndKeyEntities::CLASS_NAME, _T("MainWndClass") },
-	{ WndKeyEntities::WINDOW_TITLE, _T("Drawing raster images") },
+	{ WndKeyEntities::WINDOW_TITLE, _T("Painting raster images") },
 };

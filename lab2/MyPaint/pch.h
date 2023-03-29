@@ -11,6 +11,7 @@
 // https://stackoverflow.com/questions/48882439/how-to-restore-auto-ptr-in-visual-studio-c17 решает проблему отсутствующего auto_ptr в std:c++17
 #define _HAS_AUTO_PTR_ETC 1
 
+#include <algorithm>
 #include <windows.h>
 #include <gdiplus.h>
 #pragma comment(lib, "Gdiplus.lib")

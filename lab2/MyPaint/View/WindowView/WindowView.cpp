@@ -185,12 +185,17 @@ void WindowView::OnMouseMove(HWND hwnd, int x, int y, UINT keyFlags)
 {
 	auto invalidRect = m_collageController.OnMouseMove({ x, y });
 
-	InvalidateRect(hwnd, &invalidRect, FALSE);
+	InvalidateRect(hwnd, NULL, FALSE);
 }
 
 void WindowView::OnLButtonDown(HWND hwnd, BOOL fDoubleClick, int x, int y, UINT keyFlags)
 {
 	//m_collageController.OnLButtonDown({ x, y }, fDoubleClick);
+	RECT clientRect;
+	GetClientRect(hwnd, &clientRect);
+
+	//m_collageController.AppendCanvas(clientRect);
+	m_collageController.OnLButtonDown({ x, y }, fDoubleClick);
 }
 
 void WindowView::OnLButtonDblClk(HWND hwnd, BOOL fDoubleClick, int x, int y, UINT keyFlags)
@@ -208,6 +213,7 @@ BOOL WindowView::OnEraseBkgnd(HWND hwnd, HDC wParam)
 	return TRUE;
 }
 
+// TODO: избавиться от обработчика событий OnSize, так как в этой версии приложения нет возможности ресайзить окно
 void WindowView::OnSize(HWND hwnd, UINT state, int cx, int cy)
 {
 	m_collageController.OnSize(cx, cy);

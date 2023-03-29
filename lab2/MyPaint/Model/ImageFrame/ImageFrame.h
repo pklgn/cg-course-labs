@@ -20,11 +20,14 @@ public:
 	SIZE GetSize() const;
 	Gdiplus::Image* GetThumbnailImage(SIZE thumbnailSize) const;
 
+	void DrawLine(POINT from, POINT to);
+
 protected:
 	ImageFrameData GetChangedData() const override;
 
 private:
 	std::unique_ptr<Gdiplus::Bitmap> m_pBitmap;
+	double m_resizeBitmapCoef = 1;
 	POINT m_leftTop;
 	SIZE m_size;
 	ImageFrameData m_changedData;

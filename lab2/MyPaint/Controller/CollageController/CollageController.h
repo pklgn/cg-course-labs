@@ -8,6 +8,7 @@ public:
 	CollageController(Collage& collage, CollageView& collageView);
 
 	void AppendImage(Gdiplus::Image& img, const RECT& clientRect);
+	void AppendCanvas(const RECT& clientRect);
 
 	void OnSize(int cx, int cy);
 	void OnPaint(Gdiplus::Graphics& g, const RECT& clientRect);
@@ -25,4 +26,6 @@ private:
 
 	POINT m_prevMousePosition;
 	ImageFrame* m_pActiveImageFrame = nullptr;
+	bool m_isDrawing = false;
+	UINT m_redrawBuffer = 0;
 };

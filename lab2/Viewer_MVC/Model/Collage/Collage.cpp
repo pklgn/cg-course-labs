@@ -40,7 +40,7 @@ void Collage::RemoveImageFrameAtIndex(size_t index)
 	//NotifyObservers();
 }
 
-size_t Collage::GetSize() const
+size_t Collage::GetImageFrameCount() const
 {
 	return m_imageFrames.size();
 }

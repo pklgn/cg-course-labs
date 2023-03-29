@@ -68,7 +68,10 @@ RECT CollageController::OnMouseMove(POINT mousePosition)
 
 void CollageController::OnLButtonDown(POINT mousePosition)
 {
-	m_pActiveImageFrame = FindActiveImageFrame(mousePosition);
+	if (!m_pActiveImageFrame)
+	{
+		m_pActiveImageFrame = FindActiveImageFrame(mousePosition);
+	}
 }
 
 void CollageController::OnLButtonUp()
