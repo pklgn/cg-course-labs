@@ -16,6 +16,7 @@ public:
 	void OnLButtonUp(HWND hwnd, int x, int y, UINT keyFlags);
 	void OnMouseMove(HWND hwnd, int x, int y, UINT keyFlags);
 	void OnOpenFile(HWND hwnd, UINT /*codeNotify*/);
+	void OnSaveFile(HWND hwnd, UINT /*codeNotify*/);
 	void OnPaint(HWND hwnd);
 	void OnSize(HWND hwnd, UINT state, int cx, int cy);
 	void OnLButtonDblClk(HWND hwnd, BOOL fDoubleClick, int x, int y, UINT keyFlags);

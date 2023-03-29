@@ -89,6 +89,7 @@ int WindowView::Show()
 		HMENU hMenu = CreateMenu();
 		HMENU hSubMenu = CreatePopupMenu();
 		AppendMenu(hSubMenu, MF_STRING, MenuID.at(MenuIDKey::NEW), L"New");
+		AppendMenu(hSubMenu, MF_STRING, MenuID.at(MenuIDKey::SAVE), L"Save");
 		AppendMenu(hMenu, MF_POPUP, (UINT_PTR)hSubMenu, L"File");
 
 		// Создаем главное окно приложения
@@ -148,6 +149,142 @@ void WindowView::OnOpenFile(HWND hwnd, UINT)
 	}
 }
 
+std::wstring GetFileExtension(std::wstring const& fileName)
+{
+	size_t dotPos = fileName.find_last_of(L'.');
+	if (dotPos != std::wstring::npos)
+	{
+		return fileName.substr(dotPos + 1);
+	}
+	else
+	{
+		return std::wstring();
+	}
+}
+
+std::wstring WStringToLower(std::wstring const& str)
+{
+	std::wstring result(str);
+
+	std::transform(result.begin(), result.end(), result.begin(), std::tolower);
+
+	return result;
+}
+
+
+CLSID GetEncoderCLSID(std::wstring const& fileExtension)
+{
+	// Приводим разрешение к виду "*.разрешение"
+	std::wstring extensionMask = L"*." + WStringToLower(fileExtension) + L";";
+
+	// Запрашиваем у GDI+ количество кодировщиков изображений
+	// и размер блока данных для хранения их описания
+	UINT numEncoders;
+	UINT encodersSize;
+	Gdiplus::GetImageEncodersSize(&numEncoders, &encodersSize);
+
+	// Выделяем буфер для хранения информации о кодировщиках
+	std::vector<BYTE> encodersBuffer(encodersSize);
+
+	// Запрашиваем у GDI+ информацию обо всех кодировщиков
+	Gdiplus::ImageCodecInfo* pInstalledCodecs = reinterpret_cast<Gdiplus::ImageCodecInfo*>(&encodersBuffer[0]);
+	Gdiplus::GetImageEncoders(numEncoders, encodersSize, pInstalledCodecs);
+
+	Gdiplus::ImageCodecInfo* pMatchedCodec = NULL;
+
+	// ищем подходящий кодировщик изображений
+	for (unsigned i = 0; i < numEncoders; ++i)
+	{
+		Gdiplus::ImageCodecInfo& codec = pInstalledCodecs[i];
+
+		// получаем расширения файлов, поддерживаемых данным кодировщиком
+		// в формате: *.jpg;*.jpe;*.jpeg;
+		std::wstring extensions = WStringToLower(codec.FilenameExtension) + L";";
+
+		// Если в списке расширений содержится маска расширения файла
+		// то кодек считается найденным
+		if (extensions.find(extensionMask) != std::wstring::npos)
+		{
+			return codec.Clsid;
+		}
+	}
+
+	// не нашли подходящий кодировщик, возвращаем нулевой идентификатор
+	return CLSID_NULL;
+}
+
+bool SaveBMPFile(const std::wstring& filename, HBITMAP hBitmap, HDC hDC, int width, int height)
+{
+	Gdiplus::Graphics* graphics = Gdiplus::Graphics::FromHDC(hDC);
+	Gdiplus::Bitmap* bitmap = Gdiplus::Bitmap::FromHBITMAP(hBitmap, NULL);
+	graphics->DrawImage(bitmap, 0, 0, width, height);
+
+	// получаем расширение выходного файла
+	std::wstring fileExtension = GetFileExtension(filename);
+
+	// Получаем идентификатор по расширению файла
+	CLSID codecId = GetEncoderCLSID(fileExtension);
+
+	// Если вернули CLSID_NULL (кодек не найден), то выходим
+	if (IsEqualCLSID(codecId, CLSID_NULL))
+	{
+		return false;
+	}
+
+	// заполняем параметры кодировщика
+	Gdiplus::EncoderParameters params;
+	params.Count = 1; // у нас только один параметр (степень компресии 0-100)
+
+	// заполняем характеристики параметра качество сжатия
+	Gdiplus::EncoderParameter& param0 = params.Parameter[0];
+
+	LONG qualityParam = 75;
+
+	param0.Guid = Gdiplus::EncoderCompression; // идентификатор параметра "компрессия"
+	param0.NumberOfValues = 1; // в массиве параметров содержится одно значение
+	param0.Type = Gdiplus::EncoderParameterValueTypeLong; // тип значений LONG
+	param0.Value = &qualityParam; // адрес массива параметров
+
+	// сохраняем изображение с использованием подобранного кодировщика
+	// и параметра Quality (на практике используется только в JPEG-е)
+	auto status = bitmap->Save(filename.c_str(), &codecId, &params);
+	status;
+
+	delete bitmap;
+	delete graphics;
+
+	return true;
+}
+
+void WindowView::OnSaveFile(HWND hwnd, UINT)
+{
+	HDC hDC = GetDC(hwnd);
+	HDC hTargetDC = CreateCompatibleDC(hDC);
+	RECT rect = { 0 };
+
+	GetClientRect(hwnd, &rect);
+
+	HBITMAP hBitmap = CreateCompatibleBitmap(hDC, rect.right - rect.left,
+		rect.bottom - rect.top);
+	SelectObject(hTargetDC, hBitmap);
+	PrintWindow(hwnd, hTargetDC, PW_CLIENTONLY);
+
+	OPENFILENAME ofn;
+	TCHAR fileName[MAX_PATH + 1] = _T("");
+	InitFileNameStructure(hwnd, &ofn, fileName, MAX_PATH);
+
+	if (GetSaveFileName(&ofn))
+	{
+		SaveBMPFile(fileName, hBitmap, hTargetDC, rect.right - rect.left,
+			rect.bottom - rect.top);
+	}
+		
+
+	DeleteObject(hBitmap);
+	ReleaseDC(hwnd, hDC);
+	DeleteDC(hTargetDC);
+}
+
 void WindowView::OnPaint(HWND hwnd)
 {
 	PAINTSTRUCT ps;
@@ -178,6 +315,10 @@ void WindowView::OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify)
 	if (id == MenuID.at(MenuIDKey::NEW))
 	{
 		OnOpenFile(hwnd, codeNotify);
+	}
+	if (id == MenuID.at(MenuIDKey::SAVE))
+	{
+		OnSaveFile(hwnd, codeNotify);
 	}
 }
 

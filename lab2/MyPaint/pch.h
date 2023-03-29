@@ -12,6 +12,7 @@
 #define _HAS_AUTO_PTR_ETC 1
 
 #include <algorithm>
+#include <fstream>
 #include <windows.h>
 #include <gdiplus.h>
 #pragma comment(lib, "Gdiplus.lib")
