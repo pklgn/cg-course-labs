@@ -152,7 +152,7 @@ Gdiplus::Image* ImageFrame::GetThumbnailImage(SIZE thumbnailSize) const
 void ImageFrame::DrawLine(POINT from, POINT to)
 {
 	Gdiplus::Graphics graphics(m_pBitmap.get());
-	Gdiplus::Pen pen(Gdiplus::Color(255, 255, 0, 0), 3 / m_resizeBitmapCoef);
+	Gdiplus::Pen pen(Gdiplus::Color(255, 255, 0, 0), static_cast<Gdiplus::REAL>(3 / m_resizeBitmapCoef));
 	graphics.DrawLine(&pen, static_cast<INT>(from.x / m_resizeBitmapCoef), static_cast<INT>(from.y / m_resizeBitmapCoef), static_cast<INT>(to.x / m_resizeBitmapCoef), static_cast<INT>(to.y / m_resizeBitmapCoef));
 	
 	m_changedData = {

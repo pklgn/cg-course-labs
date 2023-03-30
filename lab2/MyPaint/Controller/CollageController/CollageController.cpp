@@ -174,6 +174,7 @@ ImageFrame* CollageController::FindActiveImageFrame(POINT mousePosition)
 			return imageFrame;
 		}
 	}
+	// TODO: SetCapture - чтобы отслеживать события вне окна 
 
 	return nullptr;
 }
