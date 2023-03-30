@@ -278,7 +278,6 @@ void WindowView::OnSaveFile(HWND hwnd, UINT)
 		SaveBMPFile(fileName, hBitmap, hTargetDC, rect.right - rect.left,
 			rect.bottom - rect.top);
 	}
-		
 
 	DeleteObject(hBitmap);
 	ReleaseDC(hwnd, hDC);
@@ -331,11 +330,16 @@ void WindowView::OnMouseMove(HWND hwnd, int x, int y, UINT keyFlags)
 
 void WindowView::OnLButtonDown(HWND hwnd, BOOL fDoubleClick, int x, int y, UINT keyFlags)
 {
-	//m_collageController.OnLButtonDown({ x, y }, fDoubleClick);
 	RECT clientRect;
 	GetClientRect(hwnd, &clientRect);
+	if (MAX_WINDOW_WIDTH < clientRect.right - clientRect.left ||
+		MAX_WINDOW_HEIGHT < clientRect.bottom - clientRect.top)
+	{
+		AdjustWindow(hwnd, clientRect.right - clientRect.left, clientRect.bottom - clientRect.top);
+		GetClientRect(hwnd, &clientRect);
+		m_collageController.AppendCanvas(clientRect);
+	}
 
-	//m_collageController.AppendCanvas(clientRect);
 	m_collageController.OnLButtonDown({ x, y }, fDoubleClick);
 }
 

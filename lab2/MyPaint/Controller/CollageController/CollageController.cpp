@@ -74,30 +74,8 @@ RECT CollageController::OnMouseMove(POINT mousePosition)
 			m_redrawBuffer = 0;
 			imageFrame->NotifyObservers();
 		}
-		
-
-		LONG left = (m_prevMousePosition.x < mousePosition.x)
-			? m_prevMousePosition.x
-			: mousePosition.x;
-		LONG top = (m_prevMousePosition.y < mousePosition.y)
-			? m_prevMousePosition.y
-			: mousePosition.y;
-		LONG right = (m_prevMousePosition.x < mousePosition.x)
-			? mousePosition.x
-			: m_prevMousePosition.x;
-		LONG bottom = (m_prevMousePosition.y < mousePosition.y)
-			? mousePosition.y
-			: m_prevMousePosition.y;
+		// TODO: определиться с invalidateRect
 		m_prevMousePosition = mousePosition;
-
-		RECT invalidRect = {
-			left,
-			top,
-			right,
-			bottom
-		};
-
-		return invalidRect;
 	}
 
 	return RECT();
@@ -105,7 +83,6 @@ RECT CollageController::OnMouseMove(POINT mousePosition)
 
 void CollageController::OnLButtonDown(POINT mousePosition, BOOL fDoubleClick)
 {
-	// TODO: реализовать логику рисования
 	if (m_collage.GetImageFrameCount() == 0)
 	{
 		auto size = m_collage.GetSize();
@@ -131,11 +108,6 @@ void CollageController::OnLButtonDblClk(POINT mousePosition, BOOL fDoubleClick)
 
 void CollageController::OnLButtonUp()
 {
-	if (m_isDrawing)
-	{
-		auto imageFrame = m_collage.GetImageFrameAtIndex(m_collage.GetImageFrameCount() - 1);
-	/*	imageFrame->WndFit()*/
-	}
 	m_pActiveImageFrame = nullptr;
 	m_isDrawing = false;
 }
@@ -174,12 +146,10 @@ void CollageController::AppendCanvas(const RECT& clientRect)
 		clientRect.right - clientRect.left,
 		clientRect.bottom - clientRect.top,
 	};
-	Gdiplus::Bitmap bitmap(static_cast<INT>(canvasSize.cx), static_cast<INT>(canvasSize.cy), PixelFormat32bppARGB);
-	Gdiplus::Graphics graphics(&bitmap);
+	std::unique_ptr<Gdiplus::Bitmap> pbitmap = std::make_unique<Gdiplus::Bitmap>(static_cast<INT>(canvasSize.cx), static_cast<INT>(canvasSize.cy), PixelFormat32bppARGB);
+	Gdiplus::Graphics graphics(pbitmap.get());
 	graphics.Clear(Gdiplus::Color(0, 0, 0, 0));
-	std::unique_ptr<Gdiplus::Bitmap> pBitmap;
-	pBitmap.reset(&bitmap);
-	m_collage.AddImageFrameAtIndex(std::make_unique<ImageFrame>(std::move(pBitmap)));
+	m_collage.AddImageFrameAtIndex(std::make_unique<ImageFrame>(std::move(pbitmap)));
 }
 
 ImageFrame* CollageController::FindActiveImageFrame(POINT mousePosition)
