@@ -5,6 +5,7 @@
   "dependencies": [
     "glfw3",
     "glad",
-    "glm"
+    "glm",
+    "glew"
   ]
 }
