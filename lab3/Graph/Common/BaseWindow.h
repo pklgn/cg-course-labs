@@ -1,6 +1,9 @@
 #pragma once
+#include <gl/glew.h>
 #include <GLFW/glfw3.h>
+#include <iostream>
 #include <stdexcept>
+
 
 class BaseWindow
 {
@@ -24,6 +27,12 @@ public:
 	void Run()
 	{
 		glfwMakeContextCurrent(m_window);
+
+		if (glewInit() != GLEW_OK)
+		{
+			std::cout << "Error!\n";
+		}
+
 		while (!glfwWindowShouldClose(m_window))
 		{
 			int w, h;
