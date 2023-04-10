@@ -33,6 +33,8 @@ public:
 			std::cout << "Error!\n";
 		}
 
+		glfwSwapInterval(1);
+
 		while (!glfwWindowShouldClose(m_window))
 		{
 			int w, h;

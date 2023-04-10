@@ -26,6 +26,9 @@ constexpr GLfloat MIN_X_RANGE_BOUND = -6 * M_PI;
 constexpr GLfloat MAX_X_RANGE_BOUND = 6 * M_PI;
 constexpr float X_STEP = 0.0001f;
 
+float r = 0.0f;
+float increment = 0.05f;
+
 static void GLClearError()
 {
 	while (glGetError() != GL_NO_ERROR)
@@ -258,11 +261,21 @@ void GraphWindow::Draw(int width, int height)
 
 	int location = glGetUniformLocation(shader, "u_Color");
 	ASSERT(location != -1);
-	GLCall(glUniform4f(location, 0.2f, 0.3f, 0.8f, 1.0f));
+	GLCall(glUniform4f(location, r, 0.3f, 0.8f, 1.0f));
 
 	//GLClearError();
 	//glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr);
 	//ASSERT(GLLogCall());
 	// Заменяем этот код на вызов аналогичного через макрос
 	GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
+	if (r > 1.0f)
+	{
+		increment = -0.05f;
+	}
+	else if (r < 0.0f)
+	{
+		increment = 0.05f;
+	}
+
+	r += increment;
 }
