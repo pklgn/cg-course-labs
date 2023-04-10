@@ -175,6 +175,9 @@ copy "$(ProjectDir)vcpkg_installed\x86-windows\bin\glew32.dll" "$(OutDir)glew32.
     <ClInclude Include="GraphWindow\GraphWindow.h" />
     <ClInclude Include="GraphWindow\IDrawable.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shaders\Shader.shader" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
