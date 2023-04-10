@@ -7,6 +7,14 @@
 
 #pragma comment(lib, "glew32.lib")
 
+#define ASSERT(x) \
+	if (!(x))     \
+	__debugbreak();
+
+#define GLCall(x) GLClearError();\
+	x;\
+	ASSERT(GLLogCall(#x, __FILE__, __LINE__));
+
 constexpr GLfloat X_MIN = -1;
 constexpr GLfloat X_MAX = 1;
 constexpr GLfloat Y_MIN = -1;
@@ -17,6 +25,27 @@ constexpr float GRID_STEP = 0.1f;
 constexpr GLfloat MIN_X_RANGE_BOUND = -6 * M_PI;
 constexpr GLfloat MAX_X_RANGE_BOUND = 6 * M_PI;
 constexpr float X_STEP = 0.0001f;
+
+static void GLClearError()
+{
+	while (glGetError() != GL_NO_ERROR)
+	{
+	}
+}
+
+static bool GLLogCall(const char* function, const char* file, int line)
+{
+	while (GLenum error = glGetError())
+	{
+		std::cout << "[OpenGL Error] " << error
+				  << function << "\n"
+				  << file << "\n"
+				  << line << "\n";
+		return false;
+	}
+
+	return true;
+}
 
 struct ShaderProgramSource
 {
@@ -173,16 +202,15 @@ void GraphWindow::Draw(int width, int height)
 		-0.5f,  0.5f  // 3
 	};
 
-	// NEW
 	unsigned int indices[] = {
 		0, 1, 2,
 		2, 3, 0
 	};
 
 	unsigned int buffer;
-	glGenBuffers(1, &buffer);
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferData(GL_ARRAY_BUFFER, 8 * sizeof(float), positions, GL_STATIC_DRAW);
+	GLCall(glGenBuffers(1, &buffer));
+	GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
+	GLCall(glBufferData(GL_ARRAY_BUFFER, 8 * sizeof(float), positions, GL_STATIC_DRAW));
 
 	// index = 0, потому что это первый из наших атрибутов с начальным индексом 0
 	// size = 2, так как нашим первым атрибутом будет позиция в двухмерной системе кооординат (x, y), например (-0.5f, -0.5f)
@@ -191,9 +219,9 @@ void GraphWindow::Draw(int width, int height)
 	// stride = 8, это количество байт, которое мы имеем между каждой вершиной, это величина именно до следующей ВЕРШИНЫ (vertex), НЕ АТРБИБУТА (attribute)
 	// pointer = 0 помним, что указатель это тоже число, которое мы передаем для КОНКРЕТНОЙ ВЕРШИНЫ и в рамках этой вершины прибавляем к ее стартовому адресу
 	// указатель, чтобы получить доступ к конкретному атрибуту, можно использовать offsetof макрос, если у нас уже определена конкретная структура в качестве текущего атрибута
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(positions[0]) * 2, 0);
+	GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(positions[0]) * 2, 0));
 	// MEM: нужно заэнейблить этот атрибут
-	glEnableVertexAttribArray(0);
+	GLCall(glEnableVertexAttribArray(0));
 
 	// есть два основных типов шейдеров: vertex-шейдер и fragment-шейдер (также известных как pixel-шейдеры)
 	/*
@@ -218,17 +246,20 @@ void GraphWindow::Draw(int width, int height)
 	 * Опять ниточка со стейт машиной, которая нам напоминает, что нужно ЗАЭНЕЙБЛИТЬ шейдер, чтобы его использовать
 	 */
 
-	// NEW
 	unsigned int ibo;
-	glGenBuffers(1, &ibo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
+	GLCall(glGenBuffers(1, &ibo));
+	GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
+	GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW));
 
 	ShaderProgramSource shaderProgramSource = ParseShader("Resources/Shaders/Shader.shader");
 
 	auto shader = CreateShader(shaderProgramSource.vertexShader, shaderProgramSource.framgentShader);
-	glUseProgram(shader);
+	GLCall(glUseProgram(shader));
 
+	//GLClearError();
+	//glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr);
+	//ASSERT(GLLogCall());
+	// Заменяем этот код на вызов аналогичного через макрос
 	// NEW
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+	GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
 }
