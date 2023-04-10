@@ -166,15 +166,23 @@ void GraphWindow::Draw(int width, int height)
 	}
 	glEnd();
 
-	float positions[6] = {
-		-0.5f, -0.5f,
-		0.5f, -0.5f,
-		0.0f, 0.5f
+	float positions[] = {
+		-0.5f, -0.5f, // 0
+		 0.5f, -0.5f, // 1
+		 0.5f,  0.5f, // 2
+		-0.5f,  0.5f  // 3
 	};
+
+	// NEW
+	unsigned int indices[] = {
+		0, 1, 2,
+		2, 3, 0
+	};
+
 	unsigned int buffer;
 	glGenBuffers(1, &buffer);
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), positions, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 8 * sizeof(float), positions, GL_STATIC_DRAW);
 
 	// index = 0, потому что это первый из наших атрибутов с начальным индексом 0
 	// size = 2, так как нашим первым атрибутом будет позиция в двухмерной системе кооординат (x, y), например (-0.5f, -0.5f)
@@ -211,10 +219,16 @@ void GraphWindow::Draw(int width, int height)
 	 */
 
 	// NEW
+	unsigned int ibo;
+	glGenBuffers(1, &ibo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
+
 	ShaderProgramSource shaderProgramSource = ParseShader("Resources/Shaders/Shader.shader");
 
 	auto shader = CreateShader(shaderProgramSource.vertexShader, shaderProgramSource.framgentShader);
 	glUseProgram(shader);
 
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	// NEW
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 }
