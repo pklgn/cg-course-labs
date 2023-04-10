@@ -256,10 +256,13 @@ void GraphWindow::Draw(int width, int height)
 	auto shader = CreateShader(shaderProgramSource.vertexShader, shaderProgramSource.framgentShader);
 	GLCall(glUseProgram(shader));
 
+	int location = glGetUniformLocation(shader, "u_Color");
+	ASSERT(location != -1);
+	GLCall(glUniform4f(location, 0.2f, 0.3f, 0.8f, 1.0f));
+
 	//GLClearError();
 	//glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr);
 	//ASSERT(GLLogCall());
 	// Заменяем этот код на вызов аналогичного через макрос
-	// NEW
 	GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
 }
