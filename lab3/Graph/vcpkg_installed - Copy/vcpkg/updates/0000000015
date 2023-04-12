@@ -1,8 +1,0 @@
-Package: glew
-Version: 2.2.0
-Depends: opengl, vcpkg-cmake:x64-windows, vcpkg-cmake-config:x64-windows
-Architecture: x86-windows
-Multi-Arch: same
-Abi: 45fcd6fcf9b04cd0153dfe786c84c3c9c9326147351bed283367f1d84d1ec8c0
-Description: The OpenGL Extension Wrangler Library (GLEW) is a cross-platform open-source C/C++ extension loading library.
-Status: install ok installed

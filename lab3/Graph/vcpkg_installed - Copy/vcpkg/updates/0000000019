@@ -1,9 +1,0 @@
-Package: glm
-Version: 0.9.9.8
-Port-Version: 2
-Depends: vcpkg-cmake:x64-windows, vcpkg-cmake-config:x64-windows
-Architecture: x86-windows
-Multi-Arch: same
-Abi: 07eda3a76685161f441347b4da533cdee616c7b1a0b91ee1bc8456cf5d0f9236
-Description: OpenGL Mathematics (GLM)
-Status: install ok installed
