@@ -1,17 +1,10 @@
-#include <gl/glew.h>
-#include <GLFW/glfw3.h>
-#include "GraphWindow/GraphWindow.h"
-#include "Common/GLFWInitializer.h"
-#include <iostream>
+#include <GL/glew.h>
+#include <glm/glm.hpp>
+#include <GL/OOGL.hpp>
 
-int main(void)
+int main()
 {
-	GLFWInitializer initGLFW;
-	
-	GraphWindow window(800, 600, "Graph");
-	
-	window.Run();
+	GL::Window window(800, 600, "OpenGL Window", GL::WindowStyle::Close);
 
-	// just for fun
-	std::cout << glGetString(GL_VERSION) << std::endl;
+	return 0;
 }
