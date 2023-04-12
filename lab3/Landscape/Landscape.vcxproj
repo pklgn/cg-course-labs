@@ -131,17 +131,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="OpenGLLog\OpenGLLog.cpp" />
-    <ClCompile Include="ShaderProgram\ShaderProgram.cpp" />
-    <ClCompile Include="Transform\Transform.cpp" />
+    <ClCompile Include="Common\OpenGLLog\OpenGLLog.cpp" />
+    <ClCompile Include="Common\ShaderProgram\ShaderProgram.cpp" />
+    <ClCompile Include="Common\Transform\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="OpenGLLog\OpenGLLog.h" />
-    <ClInclude Include="ShaderProgram\ShaderProgram.h" />
-    <ClInclude Include="Transform\Transform.h" />
+    <ClInclude Include="Common\OpenGLLog\OpenGLLog.h" />
+    <ClInclude Include="Common\ShaderProgram\ShaderProgram.h" />
+    <ClInclude Include="Common\Transform\Transform.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
