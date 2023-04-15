@@ -3,7 +3,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <stdexcept>
-
+#include "../Common/ShaderProgram/ShaderProgram.h"
 
 class BaseWindow
 {
@@ -15,6 +15,7 @@ public:
 		{
 			throw std::runtime_error("Failed to create window");
 		}
+		glEnable(GL_DEPTH_TEST);
 	}
 	BaseWindow(const BaseWindow&) = delete;
 	BaseWindow& operator=(const BaseWindow&) = delete;
@@ -33,6 +34,9 @@ public:
 			std::cout << "Error!\n";
 		}
 
+		m_shaderProgram = ShaderProgram::CreateShaderProgram("Shaders/Vertex.shader", "Shaders/Fragment.shader");
+
+
 		while (!glfwWindowShouldClose(m_window))
 		{
 			int w, h;
@@ -45,12 +49,14 @@ public:
 
 protected:
 	GLFWwindow* m_window;
+	unsigned int m_shaderProgram;
 
 private:
 	virtual void Draw(int width, int height) = 0;
 
 	static GLFWwindow* CreateWindow(int w, int h, const char* title)
 	{
+		glfwWindowHint(GLFW_DEPTH_BITS, 24);
 		return glfwCreateWindow(w, h, title, nullptr, nullptr);
 	}
 };
