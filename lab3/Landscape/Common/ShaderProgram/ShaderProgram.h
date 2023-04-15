@@ -8,6 +8,6 @@ public:
 
 private:
 	static std::string ReadShaderFile(const char* filePath);
-	static unsigned int PrepareShader(int shaderTYPE, const char* shaderPath);
+	static unsigned int PrepareShader(unsigned int shaderTYPE, const char* shaderPath);
 	static int FinalizeShaderProgram(unsigned int shaderProgram);
 };

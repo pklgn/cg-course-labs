@@ -130,18 +130,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Common\OpenGLPrimitive\Circle.cpp" />
+    <ClCompile Include="Common\OpenGLPrimitive\Rectangle.cpp" />
+    <ClCompile Include="LandscapeWindow\LandscapeWindow.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Common\OpenGLLog\OpenGLLog.cpp" />
     <ClCompile Include="Common\ShaderProgram\ShaderProgram.cpp" />
     <ClCompile Include="Common\Transform\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Shaders\Fragment.shader" />
+    <None Include="Shaders\Vertex.shader" />
     <None Include="vcpkg.json" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Common\BaseWindow.h" />
+    <ClInclude Include="Common\GLFWInitializer.h" />
     <ClInclude Include="Common\OpenGLLog\OpenGLLog.h" />
+    <ClInclude Include="Common\OpenGLPrimitive\Circle.h" />
+    <ClInclude Include="Common\OpenGLPrimitive\Rectangle.h" />
     <ClInclude Include="Common\ShaderProgram\ShaderProgram.h" />
     <ClInclude Include="Common\Transform\Transform.h" />
+    <ClInclude Include="LandscapeWindow\LandscapeWindow.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -7,6 +7,7 @@
 
 unsigned int ShaderProgram::CreateShaderProgram(const char* vp, const char* fp)
 {
+	OpenGLLog::CheckOpenGLError();
 	GLuint vShader = PrepareShader(GL_VERTEX_SHADER, vp);
 	GLuint fShader = PrepareShader(GL_FRAGMENT_SHADER, fp);
 	GLuint vfprogram = glCreateProgram();
@@ -32,12 +33,11 @@ std::string ShaderProgram::ReadShaderFile(const char* filePath)
 	return content;
 }
 
-unsigned int ShaderProgram::PrepareShader(int shaderTYPE, const char* shaderPath)
+unsigned int ShaderProgram::PrepareShader(unsigned int shaderTYPE, const char* shaderPath)
 {
 	GLint shaderCompiled;
 	std::string shaderStr = ReadShaderFile(shaderPath);
 	const char* shaderSrc = shaderStr.c_str();
-
 	GLuint shaderRef = glCreateShader(shaderTYPE);
 	glShaderSource(shaderRef, 1, &shaderSrc, NULL);
 	glCompileShader(shaderRef);
