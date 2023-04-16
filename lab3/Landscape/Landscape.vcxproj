@@ -84,6 +84,10 @@
       <AdditionalLibraryDirectories>$(ProjectDir)vcpkg_installed\x86-windows\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3dll.lib;OpenGL32.lib;shell32.lib;glu32.lib;glew32.lib</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(ProjectDir)vcpkg_installed\x86-windows\bin\glfw3.dll" "$(OutDir)glfw3.dll"
+copy "$(ProjectDir)vcpkg_installed\x86-windows\bin\glew32.dll" "$(OutDir)glew32.dll"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -132,6 +136,7 @@
   <ItemGroup>
     <ClCompile Include="Common\OpenGLPrimitive\Circle.cpp" />
     <ClCompile Include="Common\OpenGLPrimitive\Rectangle.cpp" />
+    <ClCompile Include="Common\VertexBuffer\VertexBuffer.cpp" />
     <ClCompile Include="LandscapeWindow\LandscapeWindow.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Common\OpenGLLog\OpenGLLog.cpp" />
@@ -151,6 +156,7 @@
     <ClInclude Include="Common\OpenGLPrimitive\Rectangle.h" />
     <ClInclude Include="Common\ShaderProgram\ShaderProgram.h" />
     <ClInclude Include="Common\Transform\Transform.h" />
+    <ClInclude Include="Common\VertexBuffer\VertexBuffer.h" />
     <ClInclude Include="LandscapeWindow\LandscapeWindow.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
