@@ -82,7 +82,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)vcpkg_installed\x86-windows\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3dll.lib;OpenGL32.lib;shell32.lib;glu32.lib;glew32.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3dll.lib;OpenGL32.lib;shell32.lib;glu32.lib;glew32.lib;boost_system-vc140-mt.lib</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(ProjectDir)vcpkg_installed\x86-windows\bin\glfw3.dll" "$(OutDir)glfw3.dll"
@@ -144,6 +144,7 @@ copy "$(ProjectDir)vcpkg_installed\x86-windows\bin\glew32.dll" "$(OutDir)glew32.
     <ClCompile Include="Common\Transform\Transform.cpp" />
     <ClCompile Include="Model\LandscapeElement\LandscapeElement.cpp" />
     <ClCompile Include="Model\Landscape\Landscape.cpp" />
+    <ClCompile Include="View\LandscapeElementView\LandscapeElementView.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\Fragment.shader" />
@@ -164,6 +165,7 @@ copy "$(ProjectDir)vcpkg_installed\x86-windows\bin\glew32.dll" "$(OutDir)glew32.
     <ClInclude Include="LandscapeWindow\LandscapeWindow.h" />
     <ClInclude Include="Model\LandscapeElement\LandscapeElement.h" />
     <ClInclude Include="Model\Landscape\Landscape.h" />
+    <ClInclude Include="View\LandscapeElementView\LandscapeElementView.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

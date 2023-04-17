@@ -6,6 +6,7 @@
     "glfw3",
     "glad",
     "glm",
-    "glew"
+    "glew",
+    "boost-uuid"
   ]
 }
