@@ -15,7 +15,7 @@ public:
 		{
 			throw std::runtime_error("Failed to create window");
 		}
-		glEnable(GL_DEPTH_TEST);
+		//glEnable(GL_DEPTH_TEST);
 	}
 	BaseWindow(const BaseWindow&) = delete;
 	BaseWindow& operator=(const BaseWindow&) = delete;
@@ -35,7 +35,6 @@ public:
 		}
 
 		m_shaderProgram = ShaderProgram::CreateShaderProgram("Shaders/Vertex.shader", "Shaders/Fragment.shader");
-
 
 		while (!glfwWindowShouldClose(m_window))
 		{
