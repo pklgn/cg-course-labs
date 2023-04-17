@@ -7,6 +7,11 @@ LandscapeElement::Id LandscapeElement::GetId() const
 	return m_id;
 }
 
+LandscapeElement::Type LandscapeElement::GetType() const
+{
+	return m_type;
+}
+
 void LandscapeElement::SetSize(Size size)
 {
 	m_size = size;
@@ -27,8 +32,9 @@ Vector2d LandscapeElement::GetPosition() const
 	return m_position;
 }
 
-LandscapeElement::LandscapeElement(Size size, Vector2d position)
-	: m_size(size)
+LandscapeElement::LandscapeElement(Type type, Size size, Vector2d position)
+	: m_type(type)
+	, m_size(size)
 	, m_position(position)
 {
 	auto id = boost::uuids::random_generator_mt19937()();

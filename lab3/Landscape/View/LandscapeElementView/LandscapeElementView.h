@@ -11,8 +11,6 @@ public:
 	LandscapeElementView(const std::shared_ptr<LandscapeElement>& modelElement);
 	Id GetId() const;
 
-	void Show() const override;
-
 private:
 	std::shared_ptr<LandscapeElement> m_model;
 };
