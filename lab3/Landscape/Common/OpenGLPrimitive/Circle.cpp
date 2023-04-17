@@ -4,7 +4,7 @@
 #include <vector>
 #include "Circle.h"
 
-void Circle::Draw(unsigned int program, float radius, unsigned int numSegments)
+void MyCircle::Draw(unsigned int program, float radius, unsigned int numSegments)
 {
 	std::vector<float> vertices;
 	vertices.reserve((numSegments + 1) * 3); // 2 координаты на каждую вершину
