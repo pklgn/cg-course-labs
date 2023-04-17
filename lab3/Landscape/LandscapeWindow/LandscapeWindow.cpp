@@ -32,11 +32,11 @@ Curve4d controlPoints = {
 	{  0.5,  -0.5, 0.0 }
 };
 
+// ID объектов VAO и VBO
+GLuint vaoID, vboID;
+
 void DrawCubicCurveUsing(const Curve4d& curve, GLfloat fillType)
 {
-	// ID объектов VAO и VBO
-	GLuint vaoID, vboID;
-
 	// Создание VAO
 	glGenVertexArrays(1, &vaoID);
 	glBindVertexArray(vaoID);
@@ -58,6 +58,15 @@ void DrawCubicCurveUsing(const Curve4d& curve, GLfloat fillType)
 	// Отвязка VAO и VBO
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	// Активация VAO
+	glBindVertexArray(vaoID);
+
+	// Отрисовка кривой Безье
+	glDrawArrays(GL_LINE_STRIP, 0, 100 + 1);
+
+	// Деактивация VAO
+	glBindVertexArray(0);
 }
 
 /// <summary>
@@ -97,43 +106,5 @@ void DrawButterflyBody()
 
 void LandscapeWindow::Draw(int width, int height)
 {
-	//glUseProgram(m_shaderProgram);
-	glClear(GL_DEPTH_BUFFER_BIT);
-	
-const GLfloat butterflyVertices[] = {
-		// Левое крыло
-		-0.3f, 0.0f, 0.0f, // A
-		-0.6f, 0.4f, 0.0f, // B
-		-0.4f, 0.3f, 0.0f, // C
-		-0.6f, 0.2f, 0.0f, // D
-		-0.4f, 0.1f, 0.0f, // E
-
-		// Правое крыло
-		0.3f, 0.0f, 0.0f, // F
-		0.6f, 0.4f, 0.0f, // G
-		0.4f, 0.3f, 0.0f, // H
-		0.6f, 0.2f, 0.0f, // I
-		0.4f, 0.1f, 0.0f, // J
-
-		// Тело
-		0.0f, 0.0f, 0.0f, // K
-		0.2f, 0.1f, 0.0f, // L
-		-0.2f, 0.1f, 0.0f, // M
-		0.2f, -0.1f, 0.0f, // N
-		-0.2f, -0.1f, 0.0f // O
-	};
-
-	// Включение массива вершин
-	glEnableClientState(GL_VERTEX_ARRAY);
-
-	// Задание массива вершин
-	glVertexPointer(3, GL_FLOAT, 0, butterflyVertices);
-
-	// Отрисовка бабочки
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 5); // Левое крыло
-	glDrawArrays(GL_TRIANGLE_STRIP, 5, 5); // Правое крыло
-	glDrawArrays(GL_TRIANGLE_STRIP, 10, 5); // Тело
-
-	// Отключение массива вершин
-	glDisableClientState(GL_VERTEX_ARRAY);
+	DrawButterflyBody();
 }
