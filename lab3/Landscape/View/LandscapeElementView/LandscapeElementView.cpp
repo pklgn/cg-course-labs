@@ -11,7 +11,7 @@ LandscapeElementView::Id LandscapeElementView::GetId() const
 	return m_model->GetId();
 }
 
-void LandscapeElementView::Draw() const
+void LandscapeElementView::Show() const
 {
 	// TODO: implement
 }

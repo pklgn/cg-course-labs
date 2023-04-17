@@ -48,6 +48,9 @@
     <ClCompile Include="View\LandscapeElementView\LandscapeElementView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="View\LandscapeView\LandscapeView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json" />
@@ -95,6 +98,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="View\LandscapeElementView\LandscapeElementView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="View\LandscapeView\LandscapeView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="View\IView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
