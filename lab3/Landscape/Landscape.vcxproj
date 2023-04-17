@@ -150,6 +150,7 @@ copy "$(ProjectDir)vcpkg_installed\x86-windows\bin\glew32.dll" "$(OutDir)glew32.
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\BaseWindow.h" />
+    <ClInclude Include="Common\GC\GC.hpp" />
     <ClInclude Include="Common\GLFWInitializer.h" />
     <ClInclude Include="Common\OpenGLLog\OpenGLLog.h" />
     <ClInclude Include="Common\OpenGLPrimitive\Circle.h" />

@@ -20,52 +20,64 @@
 */
 
 #pragma once
-
 #include <GL/glew.h>
-#include <cstdint>
-#include <functional>
-#include "../GC/GC.hpp"
+#include <map>
 
 /*
-	Buffer usage types
+	OpenGL object creation/destruction function prototypes
 */
-namespace BufferUsage
-{
-enum buffer_usage_t
-{
-	StreamDraw = GL_STREAM_DRAW,
-	StreamRead = GL_STREAM_READ,
-	StreamCopy = GL_STREAM_COPY,
-	StaticDraw = GL_STATIC_DRAW,
-	StaticRead = GL_STATIC_READ,
-	StaticCopy = GL_STATIC_COPY,
-	DynamicDraw = GL_DYNAMIC_DRAW,
-	DynamicRead = GL_DYNAMIC_READ,
-	DynamicCopy = GL_DYNAMIC_COPY
-};
-}
+typedef void(__stdcall* createFunc)(GLsizei, GLuint*);
+typedef void(__stdcall* deleteFunc)(GLsizei, const GLuint*);
+typedef void(__stdcall* deleteFunc2)(GLuint);
 
 /*
-	Vertex Buffer
+	OpenGL object garbage collector
 */
-class VertexBuffer
+class GC
 {
 public:
-	VertexBuffer();
-	VertexBuffer(const VertexBuffer& other);
-	VertexBuffer(const void* data, size_t length, BufferUsage::buffer_usage_t usage);
+	void Create(GLuint& obj, createFunc c, deleteFunc d)
+	{
+		c(1, &obj);
+		refs.insert(std::pair<GLuint, unsigned int>(obj, 1));
 
-	~VertexBuffer();
+		this->d = d;
+		this->d2 = 0;
+	}
 
-	operator GLuint() const;
-	const VertexBuffer& operator=(const VertexBuffer& other);
+	int Create(const GLuint& obj, deleteFunc2 d2)
+	{
+		refs.insert(std::pair<GLuint, unsigned int>(obj, 1));
 
-	void Data(const void* data, size_t length, BufferUsage::buffer_usage_t usage);
-	void SubData(const void* data, size_t offset, size_t length);
+		this->d = 0;
+		this->d2 = d2;
 
-	void GetSubData(void* data, size_t offset, size_t length);
+		return obj;
+	}
+
+	void Copy(const GLuint& from, GLuint& to, bool destructive = false)
+	{
+		if (destructive)
+			Destroy(to);
+
+		to = from;
+		refs[from]++;
+	}
+
+	void Destroy(GLuint& obj)
+	{
+		if (--refs[obj] == 0)
+		{
+			if (d != 0)
+				d(1, &obj);
+			else
+				d2(obj);
+			refs.erase(obj);
+		}
+	}
 
 private:
-	static GC gc;
-	GLuint obj;
+	std::map<GLuint, unsigned int> refs;
+	deleteFunc d;
+	deleteFunc2 d2;
 };
