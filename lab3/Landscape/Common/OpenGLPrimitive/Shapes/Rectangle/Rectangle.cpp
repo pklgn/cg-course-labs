@@ -20,7 +20,7 @@ void Rectangle::Draw(GLuint program) const
 	auto final = trans * scale;
 	GLint modelLoc = glGetUniformLocation(program, "u_model");
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(final));
-	glDrawArrays(GL_QUADS, 0, 4);
+	glDrawArrays(GL_QUADS, 0, VERTICES_NUMBER);
 	glBindVertexArray(0);
 }
 
@@ -39,7 +39,7 @@ void Rectangle::CheckVertices(const std::vector<float>& vertices)
 Rectangle::Rectangle(Size size, Vector3d position)
 	: BasePrimitive(size, position)
 {
-	std::vector<float> vertices = {
+	std::vector<GLfloat> vertices = {
 		-1, -1, 0,
 		 1, -1, 0,
 		 1,  1, 0,

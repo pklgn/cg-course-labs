@@ -2,11 +2,10 @@
 #include <glm/gtx/rotate_vector.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "LandscapeWindow.h"
-#include "../Common/OpenGLPrimitive/Circle.h"
-#include "../Common/OpenGLPrimitive/Rectangle.h"
+#include "../Common/OpenGLPrimitive/Shapes/Circle/Circle.h"
+#include "../Common/OpenGLPrimitive/Shapes/Rectangle/Rectangle.h"
 #include "../Common/Types/DimensionTypes.h"
 #include "../Common/Types/GeometryTypes.h"
-#include "../Common/OpenGLPrimitive/Rectangle.h"
 #include "../Common/OpenGLLog/OpenGLLog.h"
 
 // Функция для вычисления точек на кривой Безье
@@ -292,6 +291,8 @@ void LandscapeWindow::Draw(int width, int height)
 	rectangle.Draw(m_shaderProgram);
 	OpenGLLog::CheckOpenGLError();
 
+	MyCircle circle({ 100, 100 }, { 100, 300, 0 });
+	circle.Draw(m_shaderProgram);
 	 //DrawButterflyBody();
 	 //DrawButterflyAntena();
 	 //DrawButterflyWing();

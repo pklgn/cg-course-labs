@@ -1,8 +1,8 @@
 #pragma once
 #include <GL/glew.h>
 #include <vector>
-#include "../../Common/Types/DimensionTypes.h"
-#include "BasePrimitive.h"
+#include "../../../../Common/Types/DimensionTypes.h"
+#include "../../BasePrimitive.h"
 
 class Rectangle : public BasePrimitive
 {
