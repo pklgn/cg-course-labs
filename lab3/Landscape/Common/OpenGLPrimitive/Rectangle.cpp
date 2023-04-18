@@ -7,11 +7,11 @@
 #include <stdexcept>
 #include "Rectangle.h"
 
-void Rectangle::Draw(unsigned int program) const
+void Rectangle::Draw(GLuint program) const
 {
 	// Нарисуем прямоугольник
 	glBindVertexArray(m_vao);
-	int location = glGetUniformLocation(program, "u_Color");
+	int location = glGetUniformLocation(program, "u_color");
 	// TODO: передавать цвет из вершины
 	glUniform4f(location, 0.f, 0.3f, 0.8f, 1.0f);
 	glm::mat4 model = glm::mat4(1.0f);
@@ -22,20 +22,6 @@ void Rectangle::Draw(unsigned int program) const
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(final));
 	glDrawArrays(GL_QUADS, 0, 4);
 	glBindVertexArray(0);
-}
-
-void Rectangle::Prepare()
-{
-	glGenVertexArrays(1, &m_vao);
-	glGenBuffers(1, &m_vbo);
-
-	glBindVertexArray(m_vao);
-
-	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-	glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(m_vertices.at(0)), m_vertices.data(), GL_STATIC_DRAW);
-
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
-	glEnableVertexAttribArray(0);
 }
 
 void Rectangle::CheckVertices(const std::vector<float>& vertices)
@@ -51,8 +37,7 @@ void Rectangle::CheckVertices(const std::vector<float>& vertices)
 }
 
 Rectangle::Rectangle(Size size, Vector3d position)
-	: m_size(size)
-	, m_position(position)
+	: BasePrimitive(size, position)
 {
 	std::vector<float> vertices = {
 		-1, -1, 0,
@@ -62,33 +47,5 @@ Rectangle::Rectangle(Size size, Vector3d position)
 	};
 
 	SetVertices(vertices);
-	Prepare();
-}
-
-Rectangle::~Rectangle()
-{
-	// Освобождаем ресурсы
-	glDeleteBuffers(1, &m_vbo);
-	glDeleteVertexArrays(1, &m_vao);
-}
-
-void Rectangle::SetVertices(const std::vector<float>& vertices)
-{
-	CheckVertices(vertices);
-	m_vertices = vertices;
-}
-
-std::vector<float> Rectangle::GetVertices() const
-{
-	return m_vertices;
-}
-
-void Rectangle::SetSize(Size size)
-{
-	m_size = size;
-}
-
-Size Rectangle::GetSize() const
-{
-	return m_size;
+	UpdateData();
 }

@@ -54,6 +54,9 @@
     <ClCompile Include="View\LandscapeElementView\ButterflyView\ButterflyView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Common\OpenGLPrimitive\BasePrimitive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json" />
@@ -113,6 +116,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Common\Types\GeometryTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\OpenGLPrimitive\BasePrimitive.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

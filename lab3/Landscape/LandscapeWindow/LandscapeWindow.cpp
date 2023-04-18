@@ -292,7 +292,7 @@ void LandscapeWindow::Draw(int width, int height)
 	rectangle.Draw(m_shaderProgram);
 	OpenGLLog::CheckOpenGLError();
 
-	 DrawButterflyBody();
-	 DrawButterflyAntena();
-	 DrawButterflyWing();
+	 //DrawButterflyBody();
+	 //DrawButterflyAntena();
+	 //DrawButterflyWing();
 }
