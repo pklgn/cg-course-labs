@@ -1,8 +1,13 @@
+#include <glm/glm.hpp>
+#include <glm/gtx/rotate_vector.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include "LandscapeWindow.h"
 #include "../Common/OpenGLPrimitive/Circle.h"
 #include "../Common/OpenGLPrimitive/Rectangle.h"
-#include "../../../Common/Types/DimensionTypes.h"
-#include "../../../Common/Types/GeometryTypes.h"
+#include "../Common/Types/DimensionTypes.h"
+#include "../Common/Types/GeometryTypes.h"
+#include "../Common/OpenGLPrimitive/Rectangle.h"
+#include "../Common/OpenGLLog/OpenGLLog.h"
 
 // Функция для вычисления точек на кривой Безье
 std::vector<GLfloat> CalculateCubicBezierPoints(const Curve4d& controlPoints)
@@ -13,9 +18,9 @@ std::vector<GLfloat> CalculateCubicBezierPoints(const Curve4d& controlPoints)
 	for (int i = 0; i <= NUM_POINTS; i++)
 	{
 		GLfloat t = GLfloat(i) / GLfloat(NUM_POINTS);
-		GLfloat x = pow(1 - t, 3) * controlPoints.p1.x + 3 * t * pow(1 - t, 2) * controlPoints.p2.x + 3 * pow(t, 2) * (1 - t) * controlPoints.p3.x + pow(t, 3) * controlPoints.p4.x;
-		GLfloat y = pow(1 - t, 3) * controlPoints.p1.y + 3 * t * pow(1 - t, 2) * controlPoints.p2.y + 3 * pow(t, 2) * (1 - t) * controlPoints.p3.y + pow(t, 3) * controlPoints.p4.y;
-		GLfloat z = pow(1 - t, 3) * controlPoints.p1.z + 3 * t * pow(1 - t, 2) * controlPoints.p2.z + 3 * pow(t, 2) * (1 - t) * controlPoints.p3.z + pow(t, 3) * controlPoints.p4.z;
+		GLfloat x = static_cast<float>(pow(1 - t, 3) * controlPoints.p1.x + 3 * t * pow(1 - t, 2) * controlPoints.p2.x + 3 * pow(t, 2) * (1 - t) * controlPoints.p3.x + pow(t, 3) * controlPoints.p4.x);
+		GLfloat y = static_cast<float>(pow(1 - t, 3) * controlPoints.p1.y + 3 * t * pow(1 - t, 2) * controlPoints.p2.y + 3 * pow(t, 2) * (1 - t) * controlPoints.p3.y + pow(t, 3) * controlPoints.p4.y);
+		GLfloat z = static_cast<float>(pow(1 - t, 3) * controlPoints.p1.z + 3 * t * pow(1 - t, 2) * controlPoints.p2.z + 3 * pow(t, 2) * (1 - t) * controlPoints.p3.z + pow(t, 3) * controlPoints.p4.z);
 		bezierPoints.push_back(x);
 		bezierPoints.push_back(y);
 		bezierPoints.push_back(z);
@@ -121,17 +126,17 @@ void DrawButterflyBody()
 {
 	float butterflyDepth = 0;
 	Curve4d curve;
-	curve.p1.x = 0;
-	curve.p1.y = 0.3;
+	curve.p1.x = 0.f;
+	curve.p1.y = 0.3f;
 	curve.p1.z = butterflyDepth;
-	curve.p2.x = 0.125;
-	curve.p2.y = 0.3;
+	curve.p2.x = 0.125f;
+	curve.p2.y = 0.3f;
 	curve.p2.z = butterflyDepth;
-	curve.p3.x = 0.0725;
-	curve.p3.y = -0.15;
+	curve.p3.x = 0.0725f;
+	curve.p3.y = -0.15f;
 	curve.p3.z = butterflyDepth;
-	curve.p4.x = 0;
-	curve.p4.y = -0.1;
+	curve.p4.x = 0.f;
+	curve.p4.y = -0.1f;
 	curve.p4.z = butterflyDepth;
 	DrawCubicCurveUsing(curve, GL_POLYGON);
 	curve.p1.x = 0;
@@ -274,7 +279,20 @@ void DrawButterflyWing()
 
 void LandscapeWindow::Draw(int width, int height)
 {
-	DrawButterflyBody();
-	DrawButterflyAntena();
-	DrawButterflyWing();
+	glm::mat4 view = glm::mat4(1.0f);
+	GLint viewLoc = glGetUniformLocation(m_shaderProgram, "u_view");
+	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+
+	glm::mat4 projection = glm::ortho(0.0f, float(width), 0.0f, float(height), - 1.0f, 100.0f);
+	GLint projectionLoc = glGetUniformLocation(m_shaderProgram, "u_projection");
+	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
+	glViewport(0, 0, width, height);
+
+	Rectangle rectangle({ 20, 30 }, { 200, 300, 0 });
+	rectangle.Draw(m_shaderProgram);
+	OpenGLLog::CheckOpenGLError();
+
+	 DrawButterflyBody();
+	 DrawButterflyAntena();
+	 DrawButterflyWing();
 }

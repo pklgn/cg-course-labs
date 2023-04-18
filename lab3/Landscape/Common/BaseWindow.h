@@ -35,6 +35,7 @@ public:
 		}
 
 		m_shaderProgram = ShaderProgram::CreateShaderProgram("Shaders/Vertex.shader", "Shaders/Fragment.shader");
+		glUseProgram(m_shaderProgram);
 
 		while (!glfwWindowShouldClose(m_window))
 		{

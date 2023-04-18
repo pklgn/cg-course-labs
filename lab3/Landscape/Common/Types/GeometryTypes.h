@@ -18,10 +18,10 @@ struct Curve4d
 
 struct Circle
 {
-	double radius;
-	double posX;
-	double posY;
-	double transX;
-	double transY;
-	double transZ;
+	float radius;
+	float posX;
+	float posY;
+	float transX;
+	float transY;
+	float transZ;
 };
