@@ -148,6 +148,7 @@ copy "$(ProjectDir)vcpkg_installed\x86-windows\bin\glew32.dll" "$(OutDir)glew32.
     <ClCompile Include="Common\Transform\Transform.cpp" />
     <ClCompile Include="Model\LandscapeElement\LandscapeElement.cpp" />
     <ClCompile Include="Model\Landscape\Landscape.cpp" />
+    <ClCompile Include="View\ButterflyView\ButterflyView.cpp" />
     <ClCompile Include="View\LandscapeElementView\ButterflyView\ButterflyView.cpp" />
     <ClCompile Include="View\LandscapeElementView\LandscapeElementView.cpp" />
     <ClCompile Include="View\LandscapeView\LandscapeView.cpp" />
@@ -175,6 +176,7 @@ copy "$(ProjectDir)vcpkg_installed\x86-windows\bin\glew32.dll" "$(OutDir)glew32.
     <ClInclude Include="LandscapeWindow\LandscapeWindow.h" />
     <ClInclude Include="Model\LandscapeElement\LandscapeElement.h" />
     <ClInclude Include="Model\Landscape\Landscape.h" />
+    <ClInclude Include="View\ButterflyView\ButterflyView.h" />
     <ClInclude Include="View\LandscapeElementView\ButterflyView\ButterflyView.h" />
     <ClInclude Include="View\IView.h" />
     <ClInclude Include="View\LandscapeElementView\LandscapeElementView.h" />

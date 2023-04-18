@@ -6,7 +6,7 @@
 class LandscapeView : public IView
 {
 public:
-	void Show() const override;
+	void Show(unsigned int program) const override;
 
 private:
 	std::vector<LandscapeElementView> m_elementsView;

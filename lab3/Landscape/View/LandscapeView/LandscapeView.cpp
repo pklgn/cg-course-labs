@@ -1,10 +1,10 @@
 #include "LandscapeView.h"
 
-void LandscapeView::Show() const
+void LandscapeView::Show(unsigned int program) const
 {
 	// TODO: implement
 	for (auto&& elementView : m_elementsView)
 	{
-		elementView.Show();
+		//elementView.Show();
 	}
 }

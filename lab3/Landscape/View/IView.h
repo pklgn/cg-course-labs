@@ -5,5 +5,5 @@ class IView
 public:
 	virtual ~IView() = default;
 
-	virtual void Show() const = 0;
+	virtual void Show(unsigned int program) const = 0;
 };

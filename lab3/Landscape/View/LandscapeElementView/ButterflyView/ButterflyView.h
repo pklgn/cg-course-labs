@@ -1,10 +1,10 @@
 #pragma once
 #include "../LandscapeElementView.h"
 
-class ButterflyView : public LandscapeElementView
+class MyButterflyView : public LandscapeElementView
 {
 public:
-	ButterflyView();
+	MyButterflyView();
 
 	void Show() const override;
 

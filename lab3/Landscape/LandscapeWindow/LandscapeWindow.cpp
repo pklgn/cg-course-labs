@@ -9,6 +9,7 @@
 #include "../Common/OpenGLLog/OpenGLLog.h"
 #include "../Common/OpenGLPrimitive/Curves/CubicBezier/CubicBezier.h"
 #include "../Common/OpenGLPrimitive/Curves/QuadraticBezier/QuadraticBezier.h"
+#include "../View/ButterflyView/ButterflyView.h"
 
 // Функция для вычисления точек на кривой Безье
 std::vector<GLfloat> CalculateCubicBezierPoints(const Curve4d& controlPoints)
@@ -289,40 +290,6 @@ void LandscapeWindow::Draw(int width, int height)
 	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 	glViewport(0, 0, width, height);
 
-	Rectangle rectangle({ 20, 30 }, { 200, 300, 0 });
-	rectangle.Draw(m_shaderProgram);
-	OpenGLLog::CheckOpenGLError();
-
-	MyCircle circle({ 100, 100 }, { 100, 300, 0 });
-	circle.Draw(m_shaderProgram);
-
-	Curve4d curve;
-	curve.p1.x = 0;
-	curve.p1.y = 0.2;
-	curve.p1.z = 1.f;
-	curve.p2.x = 0.8;
-	curve.p2.y = 0.9;
-	curve.p2.z = 1.f;
-	curve.p3.x = 1.5;
-	curve.p3.y = 0.0;
-	curve.p3.z = 1.f;
-	curve.p4.x = 0;
-	curve.p4.y = -0.4;
-	curve.p4.z = 1.f;
-	CubicBezier cubicBezier({ 100, 100 }, { 500, 500, 0 }, curve);
-	cubicBezier.Draw(m_shaderProgram);
-
-	float butterflyDepth = 0;
-	Curve4d quadraticCurve;
-	quadraticCurve.p1.x = 0.01;
-	quadraticCurve.p1.y = 0.3;
-	quadraticCurve.p1.z = butterflyDepth;
-	quadraticCurve.p2.x = 0.02;
-	quadraticCurve.p2.y = 0.5;
-	quadraticCurve.p2.z = butterflyDepth;
-	quadraticCurve.p3.x = 0.2;
-	quadraticCurve.p3.y = 0.7;
-	quadraticCurve.p3.z = butterflyDepth;
-	QuadraticBezier quadraticBezier({ 100, 100 }, { 10, 10, 0 }, quadraticCurve);
-	quadraticBezier.Draw(m_shaderProgram);
+	ButterflyView butt({ 50, 50 }, { 100, 100 });
+	butt.Show(m_shaderProgram);
 }
