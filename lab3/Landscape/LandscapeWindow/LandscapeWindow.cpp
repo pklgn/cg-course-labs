@@ -8,6 +8,7 @@
 #include "../Common/Types/GeometryTypes.h"
 #include "../Common/OpenGLLog/OpenGLLog.h"
 #include "../Common/OpenGLPrimitive/Curves/CubicBezier/CubicBezier.h"
+#include "../Common/OpenGLPrimitive/Curves/QuadraticBezier/QuadraticBezier.h"
 
 // Функция для вычисления точек на кривой Безье
 std::vector<GLfloat> CalculateCubicBezierPoints(const Curve4d& controlPoints)
@@ -311,7 +312,17 @@ void LandscapeWindow::Draw(int width, int height)
 	CubicBezier cubicBezier({ 100, 100 }, { 500, 500, 0 }, curve);
 	cubicBezier.Draw(m_shaderProgram);
 
-	 //DrawButterflyBody();
-	 //DrawButterflyAntena();
-	 //DrawButterflyWing();
+	float butterflyDepth = 0;
+	Curve4d quadraticCurve;
+	quadraticCurve.p1.x = 0.01;
+	quadraticCurve.p1.y = 0.3;
+	quadraticCurve.p1.z = butterflyDepth;
+	quadraticCurve.p2.x = 0.02;
+	quadraticCurve.p2.y = 0.5;
+	quadraticCurve.p2.z = butterflyDepth;
+	quadraticCurve.p3.x = 0.2;
+	quadraticCurve.p3.y = 0.7;
+	quadraticCurve.p3.z = butterflyDepth;
+	QuadraticBezier quadraticBezier({ 100, 100 }, { 10, 10, 0 }, quadraticCurve);
+	quadraticBezier.Draw(m_shaderProgram);
 }

@@ -137,6 +137,7 @@ copy "$(ProjectDir)vcpkg_installed\x86-windows\bin\glew32.dll" "$(OutDir)glew32.
   <ItemGroup>
     <ClCompile Include="Common\OpenGLPrimitive\BasePrimitive.cpp" />
     <ClCompile Include="Common\OpenGLPrimitive\Curves\CubicBezier\CubicBezier.cpp" />
+    <ClCompile Include="Common\OpenGLPrimitive\Curves\QuadraticBezier\QuadraticBezier.cpp" />
     <ClCompile Include="Common\OpenGLPrimitive\Shapes\Circle\Circle.cpp" />
     <ClCompile Include="Common\OpenGLPrimitive\Shapes\Rectangle\Rectangle.cpp" />
     <ClCompile Include="Common\VertexBuffer\VertexBuffer.cpp" />
@@ -163,6 +164,7 @@ copy "$(ProjectDir)vcpkg_installed\x86-windows\bin\glew32.dll" "$(OutDir)glew32.
     <ClInclude Include="Common\OpenGLLog\OpenGLLog.h" />
     <ClInclude Include="Common\OpenGLPrimitive\BasePrimitive.h" />
     <ClInclude Include="Common\OpenGLPrimitive\Curves\CubicBezier\CubicBezier.h" />
+    <ClInclude Include="Common\OpenGLPrimitive\Curves\QuadraticBezier\QuadraticBezier.h" />
     <ClInclude Include="Common\OpenGLPrimitive\Shapes\Circle\Circle.h" />
     <ClInclude Include="Common\OpenGLPrimitive\Shapes\Rectangle\Rectangle.h" />
     <ClInclude Include="Common\ShaderProgram\ShaderProgram.h" />
