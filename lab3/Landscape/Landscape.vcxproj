@@ -170,6 +170,7 @@ copy "$(ProjectDir)vcpkg_installed\x86-windows\bin\glew32.dll" "$(OutDir)glew32.
     <ClInclude Include="Common\OpenGLPrimitive\Shapes\Rectangle\Rectangle.h" />
     <ClInclude Include="Common\ShaderProgram\ShaderProgram.h" />
     <ClInclude Include="Common\Transform\Transform.h" />
+    <ClInclude Include="Common\Types\ColorTypes.h" />
     <ClInclude Include="Common\Types\DimensionTypes.h" />
     <ClInclude Include="Common\Types\GeometryTypes.h" />
     <ClInclude Include="Common\VertexBuffer\VertexBuffer.h" />

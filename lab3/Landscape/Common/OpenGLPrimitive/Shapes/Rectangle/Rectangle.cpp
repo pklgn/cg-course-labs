@@ -6,6 +6,7 @@
 #include <format>
 #include <stdexcept>
 #include "Rectangle.h"
+#include "../../../Common/Types/ColorTypes.h"
 
 void Rectangle::Draw(GLuint program) const
 {
@@ -14,12 +15,9 @@ void Rectangle::Draw(GLuint program) const
 	int location = glGetUniformLocation(program, "u_color");
 	// TODO: передавать цвет из вершины
 	glUniform4f(location, 0.f, 0.3f, 0.8f, 1.0f);
-	glm::mat4 model = glm::mat4(1.0f);
-	auto scale = glm::scale(glm::mat4(1.0f), glm::vec3(float(m_size.width), float(m_size.height), 1.0f));
-	auto trans = glm::translate(glm::mat4(1.0f), glm::vec3(float(m_position.x), float(m_position.y), float(m_position.z)));
-	auto final = trans * scale;
-	GLint modelLoc = glGetUniformLocation(program, "u_model");
-	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(final));
+
+	ApplyModelTransform(program);
+
 	glDrawArrays(GL_QUADS, 0, VERTICES_NUMBER);
 	glBindVertexArray(0);
 }
@@ -36,16 +34,19 @@ void Rectangle::CheckVertices(const std::vector<float>& vertices)
 	}
 }
 
-Rectangle::Rectangle(Size size, Vector3d position)
-	: BasePrimitive(size, position)
+Rectangle::Rectangle(Size size, Vector3d position, const std::vector<RGB>& colors, float angle)
+	: BasePrimitive(size, position, angle)
 {
+	std::vector<RGB> finishColors = colors;
+	finishColors.resize(VERTICES_NUMBER, DEFAULT_COLOR);
 	std::vector<GLfloat> vertices = {
-		-1, -1, 0,
-		 1, -1, 0,
-		 1,  1, 0,
-		-1,  1, 0
+		//position //colors
+		-1, -1, 0, finishColors[0].r, finishColors[0].g, finishColors[0].b,
+		 1, -1, 0, finishColors[1].r, finishColors[1].g, finishColors[1].b,
+		 1,  1, 0, finishColors[2].r, finishColors[2].g, finishColors[2].b,
+		-1,  1, 0, finishColors[3].r, finishColors[3].g, finishColors[3].b,
 	};
 
-	SetVertices(vertices);
+	SetVerticesData(vertices);
 	UpdateData();
 }
