@@ -7,6 +7,7 @@ QuadraticBezier::QuadraticBezier(Size size, Vector3d position, const Curve4d& co
 	: BasePrimitive(size, position, angle)
 	, m_controlPoints(controlPoints)
 	, m_verticesNumber(verticesNumber)
+	, m_drawMode(GL_POLYGON)
 {
 	std::vector<GLfloat> bezierPoints;
 
@@ -43,8 +44,13 @@ void QuadraticBezier::Draw(GLuint program) const
 	ApplyModelTransform(program);
 
 	// Отрисовка кривой Безье
-	glDrawArrays(GL_POLYGON, 0, m_verticesNumber + 1);
+	glDrawArrays(m_drawMode, 0, m_verticesNumber + 1);
 
 	// Деактивация VAO
 	glBindVertexArray(0);
+}
+
+void QuadraticBezier::SetDrawMode(GLenum mode)
+{
+	m_drawMode = mode;
 }

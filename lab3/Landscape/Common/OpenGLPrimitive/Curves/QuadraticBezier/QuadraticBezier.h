@@ -10,7 +10,10 @@ public:
 
 	void Draw(GLuint program) const override;
 
+	void SetDrawMode(GLenum mode);
+
 private:
 	unsigned int m_verticesNumber;
 	Curve4d m_controlPoints;
+	GLenum m_drawMode;
 };

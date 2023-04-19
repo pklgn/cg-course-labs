@@ -66,6 +66,12 @@
     <ClCompile Include="View\ButterflyView\ButterflyView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="View\GrassView\GrassView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="View\FlowerView\FlowerView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json" />
@@ -140,6 +146,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Common\Types\ColorTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="View\GrassView\GrassView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="View\FlowerView\FlowerView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

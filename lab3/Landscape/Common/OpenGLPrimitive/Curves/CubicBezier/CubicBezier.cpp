@@ -37,10 +37,6 @@ void CubicBezier::Draw(GLuint program) const
 	// Активация VAO
 	glBindVertexArray(m_vao);
 
-	int location = glGetUniformLocation(program, "u_color");
-	// TODO: передавать цвет из вершины
-	glUniform4f(location, 1.f, 0.3f, 0.8f, 1.0f);
-	
 	ApplyModelTransform(program);
 
 	// Отрисовка кривой Безье

@@ -15,7 +15,7 @@ public:
 		{
 			throw std::runtime_error("Failed to create window");
 		}
-		//glEnable(GL_DEPTH_TEST);
+		m_time = glfwGetTime();
 	}
 	BaseWindow(const BaseWindow&) = delete;
 	BaseWindow& operator=(const BaseWindow&) = delete;
@@ -50,6 +50,7 @@ public:
 protected:
 	GLFWwindow* m_window;
 	unsigned int m_shaderProgram;
+	double m_time;
 
 private:
 	virtual void Draw(int width, int height) = 0;

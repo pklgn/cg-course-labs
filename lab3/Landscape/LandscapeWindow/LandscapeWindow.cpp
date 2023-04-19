@@ -10,6 +10,8 @@
 #include "../Common/OpenGLPrimitive/Curves/CubicBezier/CubicBezier.h"
 #include "../Common/OpenGLPrimitive/Curves/QuadraticBezier/QuadraticBezier.h"
 #include "../View/ButterflyView/ButterflyView.h"
+#include "../View/FlowerView/FlowerView.h"
+#include "../View/GrassView/GrassView.h"
 
 void LandscapeWindow::Draw(int width, int height)
 {
@@ -24,18 +26,17 @@ void LandscapeWindow::Draw(int width, int height)
 	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 	glViewport(0, 0, width, height);
 
-	auto time = glfwGetTime();
-	ButterflyView butt({ 100 * (cosf(time) + 1.5f) / 2, 100 }, { 100, 100 }, {
-																				 { sinf(time), 0.5f, 0.7f },
-																				 { cosf(time), 0.5f, 0.7f },
-																				 { 0.5f, sinf(time), 0.7f },
+	ButterflyView butt({ 80 * (cosf(glfwGetTime()) + 1.5f) / 2, 80 }, { 100, 100 }, {
+																				 { sinf(m_time), 0.95f, 0.7f },
+																				 { cosf(m_time), 0.5f, 0.07f },
+																				 { 0.5f, sinf(m_time), 0.7f },
 																			 },
 		50.f);
 	butt.Show(m_shaderProgram);
 
-	//Circle circle({ 40 * (cosf(glfwGetTime()) + 1.5f) / 10, 40 }, { 200, 200 }, { { 0.7f, 0.4f, 0.3f } });
-	//circle.Draw(m_shaderProgram);
+	FlowerView flowerView({ 20, 80 }, { 300, 300 }, 6, { {1.f, 0.f, 0.f} });
+	flowerView.Show(m_shaderProgram);
 
-	//Rectangle rectangle({ 50, 80 }, { 500, 500 }, { { 0.5f, 1.f, 0.3f } }, 50.f);
-	//rectangle.Draw(m_shaderProgram);
+	GrassView grassView({ 100, 100 }, { 200, 200 }, 8, { {0.f, 1.f, 0.f} });
+	grassView.Show(m_shaderProgram);
 }
