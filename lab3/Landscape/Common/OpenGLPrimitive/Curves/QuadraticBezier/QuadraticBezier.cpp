@@ -3,12 +3,14 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "QuadraticBezier.h"
 
-QuadraticBezier::QuadraticBezier(Size size, Vector3d position, const Curve4d& controlPoints, float angle, unsigned int verticesNumber)
+QuadraticBezier::QuadraticBezier(Size size, Vector3d position, const Curve4d& controlPoints, const std::vector<RGB>& colors, float angle, unsigned int verticesNumber)
 	: BasePrimitive(size, position, angle)
 	, m_controlPoints(controlPoints)
 	, m_verticesNumber(verticesNumber)
 {
 	std::vector<GLfloat> bezierPoints;
+
+	std::vector<RGB> finishColors = GetVerticesColor(colors, m_verticesNumber + 1);
 
 	for (int i = 0; i <= m_verticesNumber; i++)
 	{
@@ -19,6 +21,10 @@ QuadraticBezier::QuadraticBezier(Size size, Vector3d position, const Curve4d& co
 		bezierPoints.push_back(x);
 		bezierPoints.push_back(y);
 		bezierPoints.push_back(z);
+
+		bezierPoints.push_back(finishColors[i].r);
+		bezierPoints.push_back(finishColors[i].g);
+		bezierPoints.push_back(finishColors[i].b);
 	}
 
 	SetVerticesData(bezierPoints);

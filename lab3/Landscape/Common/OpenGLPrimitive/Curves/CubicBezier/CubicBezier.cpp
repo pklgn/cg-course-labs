@@ -3,12 +3,15 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "CubicBezier.h"
 
-CubicBezier::CubicBezier(Size size, Vector3d position, const Curve4d& controlPoints, unsigned int verticesNumber)
+CubicBezier::CubicBezier(
+	Size size, Vector3d position, const Curve4d& controlPoints, const std::vector<RGB>& colors, unsigned int verticesNumber)
 	: BasePrimitive(size, position)
 	, m_controlPoints(controlPoints)
 	, m_verticesNumber(verticesNumber)
 {
 	std::vector<GLfloat> bezierPoints;
+
+	std::vector<RGB> finishColors = GetVerticesColor(colors, m_verticesNumber + 1);
 
 	for (int i = 0; i <= m_verticesNumber; i++)
 	{
@@ -19,6 +22,10 @@ CubicBezier::CubicBezier(Size size, Vector3d position, const Curve4d& controlPoi
 		bezierPoints.push_back(x);
 		bezierPoints.push_back(y);
 		bezierPoints.push_back(z);
+
+		bezierPoints.push_back(finishColors[i].r);
+		bezierPoints.push_back(finishColors[i].g);
+		bezierPoints.push_back(finishColors[i].b);
 	}
 
 	SetVerticesData(bezierPoints);

@@ -22,7 +22,7 @@ void LandscapeWindow::Draw(int width, int height)
 	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 	glViewport(0, 0, width, height);
 
-	ButterflyView butt({ 50, 50 }, { 100, 100 }, 50);
+	ButterflyView butt({ 100, 100 }, { 100, 100 }, 50);
 	butt.Show(m_shaderProgram);
 
 	Circle circle({ 40, 40 }, { 200, 200 }, { { 0.5f, 1.f, 0.3f } });

@@ -90,3 +90,18 @@ void BasePrimitive::ApplyModelTransform(GLuint program) const
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(result));
 }
 
+std::vector<RGB> BasePrimitive::GetVerticesColor(const std::vector<RGB>& colors, unsigned int verticesNumber) const
+{
+	std::vector<RGB> finishColors = colors;
+	if (finishColors.size() == 1)
+	{
+		finishColors.resize(verticesNumber, finishColors.front());
+	}
+	else
+	{
+		finishColors.resize(verticesNumber, DEFAULT_COLOR);
+	}
+
+	return finishColors;
+}
+

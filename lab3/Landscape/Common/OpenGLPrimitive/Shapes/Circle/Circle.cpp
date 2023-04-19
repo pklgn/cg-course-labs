@@ -14,15 +14,7 @@ Circle::Circle(Size size, Vector3d position, const std::vector<RGB>& colors, uns
 	std::vector<GLfloat> vertices;
 	vertices.resize(m_verticesNumber * (3 + 3));
 
-	std::vector<RGB> finishColors = colors;
-	if (finishColors.size() == 1)
-	{
-		finishColors.resize(m_verticesNumber, finishColors.front());
-	}
-	else
-	{
-		finishColors.resize(m_verticesNumber, DEFAULT_COLOR);
-	}
+	std::vector<RGB> finishColors = GetVerticesColor(colors, m_verticesNumber);
 
 	for (int angle = 0, index = 0; angle < 360; angle += (360 / m_verticesNumber), index += 6)
 	{

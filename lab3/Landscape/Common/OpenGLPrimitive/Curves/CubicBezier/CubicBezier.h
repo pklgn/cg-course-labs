@@ -6,7 +6,8 @@
 class CubicBezier : public BasePrimitive
 {
 public:
-	CubicBezier(Size size, Vector3d position, const Curve4d& controlPoints, unsigned int verticesNumber = 100);
+	CubicBezier(
+		Size size, Vector3d position, const Curve4d& controlPoints, const std::vector<RGB>& colors = {}, unsigned int verticesNumber = 100);
 
 	void Draw(GLuint program) const override;
 

@@ -29,6 +29,7 @@ public:
 protected:
 	void UpdateData();
 	void ApplyModelTransform(GLuint program) const;
+	std::vector<RGB> GetVerticesColor(const std::vector<RGB>& colors, unsigned int verticesNumber) const;
 
 	GLuint m_vao;
 	GLuint m_vbo;

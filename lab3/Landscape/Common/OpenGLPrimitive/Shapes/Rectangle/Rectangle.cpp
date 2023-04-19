@@ -34,15 +34,7 @@ void Rectangle::CheckVertices(const std::vector<float>& vertices)
 Rectangle::Rectangle(Size size, Vector3d position, const std::vector<RGB>& colors, float angle)
 	: BasePrimitive(size, position, angle)
 {
-	std::vector<RGB> finishColors = colors;
-	if (finishColors.size() == 1)
-	{
-		finishColors.resize(VERTICES_NUMBER, finishColors.front());
-	}
-	else
-	{
-		finishColors.resize(VERTICES_NUMBER, DEFAULT_COLOR);
-	}
+	std::vector<RGB> finishColors = GetVerticesColor(colors, VERTICES_NUMBER);
 	std::vector<GLfloat> vertices = {
 		//position //colors
 		-1, -1, 0, finishColors[0].r, finishColors[0].g, finishColors[0].b,

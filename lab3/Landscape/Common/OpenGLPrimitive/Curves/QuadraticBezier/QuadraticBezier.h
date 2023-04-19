@@ -6,7 +6,7 @@
 class QuadraticBezier : public BasePrimitive
 {
 public:
-	QuadraticBezier(Size size, Vector3d position, const Curve4d& controlPoints, float angle = 0.f, unsigned int verticesNumber = 100);
+	QuadraticBezier(Size size, Vector3d position, const Curve4d& controlPoints, const std::vector<RGB>& colors = {}, float angle = 0.f, unsigned int verticesNumber = 100);
 
 	void Draw(GLuint program) const override;
 
