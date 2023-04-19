@@ -20,4 +20,5 @@ private:
 	mutable Size m_size;
 	Vector3d m_position;
 	float m_angle;
+	std::vector<RGB> m_colors;
 };

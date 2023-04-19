@@ -24,7 +24,13 @@ void LandscapeWindow::Draw(int width, int height)
 	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 	glViewport(0, 0, width, height);
 
-	ButterflyView butt({ 100 * (cosf(glfwGetTime()) + 1.5f) / 2, 100 }, { 100, 100 }, {}, 50.f);
+	auto time = glfwGetTime();
+	ButterflyView butt({ 100 * (cosf(time) + 1.5f) / 2, 100 }, { 100, 100 }, {
+																				 { sinf(time), 0.5f, 0.7f },
+																				 { cosf(time), 0.5f, 0.7f },
+																				 { 0.5f, sinf(time), 0.7f },
+																			 },
+		50.f);
 	butt.Show(m_shaderProgram);
 
 	//Circle circle({ 40 * (cosf(glfwGetTime()) + 1.5f) / 10, 40 }, { 200, 200 }, { { 0.7f, 0.4f, 0.3f } });
