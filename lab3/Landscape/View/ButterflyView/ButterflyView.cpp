@@ -4,9 +4,10 @@
 #include "../../Common/Types/GeometryTypes.h"
 #include "../../Common/OpenGLPrimitive/Shapes/Circle/Circle.h"
 
-ButterflyView::ButterflyView(Size size, Vector3d position)
+ButterflyView::ButterflyView(Size size, Vector3d position, float angle)
 	: m_size(size)
 	, m_position(position)
+	, m_angle(angle)
 {
 }
 
@@ -106,13 +107,7 @@ void ButterflyView::DrawBufferflyWingPart(unsigned int program) const
 
 void DrawButterflyWingCircle(unsigned int program, float radius, float tranX, float transY)
 {
-	Circle c;
-	c.radius = radius;
-	c.transX = tranX;
-	c.transY = transY;
-	c.transZ = 0;
-	
-	MyCircle circle({ radius, radius }, { tranX, transY, 0.f });
+	Circle circle({ radius, radius }, { tranX, transY, 0.f });
 	circle.Draw(program);
 }
 
@@ -126,6 +121,13 @@ void ButterflyView::DrawButterflyWing(unsigned int program) const
 
 void ButterflyView::Show(unsigned int program) const
 {
+	DrawButterflyBody(program);
+	DrawButterflyAntena(program);
+	DrawButterflyWing(program);
+	m_size = {
+		-m_size.width,
+		m_size.height
+	};
 	DrawButterflyBody(program);
 	DrawButterflyAntena(program);
 	DrawButterflyWing(program);

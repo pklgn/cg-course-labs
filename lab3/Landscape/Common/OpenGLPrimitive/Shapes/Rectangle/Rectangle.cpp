@@ -12,9 +12,6 @@ void Rectangle::Draw(GLuint program) const
 {
 	// Нарисуем прямоугольник
 	glBindVertexArray(m_vao);
-	int location = glGetUniformLocation(program, "u_color");
-	// TODO: передавать цвет из вершины
-	glUniform4f(location, 0.f, 0.3f, 0.8f, 1.0f);
 
 	ApplyModelTransform(program);
 
@@ -38,7 +35,14 @@ Rectangle::Rectangle(Size size, Vector3d position, const std::vector<RGB>& color
 	: BasePrimitive(size, position, angle)
 {
 	std::vector<RGB> finishColors = colors;
-	finishColors.resize(VERTICES_NUMBER, DEFAULT_COLOR);
+	if (finishColors.size() == 1)
+	{
+		finishColors.resize(VERTICES_NUMBER, finishColors.front());
+	}
+	else
+	{
+		finishColors.resize(VERTICES_NUMBER, DEFAULT_COLOR);
+	}
 	std::vector<GLfloat> vertices = {
 		//position //colors
 		-1, -1, 0, finishColors[0].r, finishColors[0].g, finishColors[0].b,

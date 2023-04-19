@@ -76,15 +76,17 @@ void BasePrimitive::UpdateData()
 
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
+
+	glBindVertexArray(0);
 }
 
 void BasePrimitive::ApplyModelTransform(GLuint program) const
 {
-	glm::mat4 model = glm::mat4(1.0f);
-	auto scale = glm::scale(glm::mat4(1.0f), glm::vec3(float(m_size.width), float(m_size.height), 1.0f));
+	auto rotate = glm::rotate(glm::mat4(1.0f), float(m_angle * 3.14 / 180), glm::vec3(0.0f, 0.0f, 1.0f));
+	auto scale = glm::scale(glm::mat4(1.0f), glm::vec3(float(m_size.width / 2), float(m_size.height / 2), 1.0f));
 	auto trans = glm::translate(glm::mat4(1.0f), glm::vec3(float(m_position.x), float(m_position.y), float(m_position.z)));
-	auto final = trans * scale;
+	auto result = trans * rotate * scale;
 	GLint modelLoc = glGetUniformLocation(program, "u_model");
-	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(final));
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(result));
 }
 

@@ -3,8 +3,8 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "QuadraticBezier.h"
 
-QuadraticBezier::QuadraticBezier(Size size, Vector3d position, const Curve4d& controlPoints, unsigned int verticesNumber)
-	: BasePrimitive(size, position)
+QuadraticBezier::QuadraticBezier(Size size, Vector3d position, const Curve4d& controlPoints, float angle, unsigned int verticesNumber)
+	: BasePrimitive(size, position, angle)
 	, m_controlPoints(controlPoints)
 	, m_verticesNumber(verticesNumber)
 {

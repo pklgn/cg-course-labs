@@ -7,31 +7,43 @@
 #include <vector>
 #include "Circle.h"
 
-MyCircle::MyCircle(Size size, Vector3d position, unsigned int verticesNumber)
+Circle::Circle(Size size, Vector3d position, const std::vector<RGB>& colors, unsigned int verticesNumber)
 	: BasePrimitive(size, position)
 	, m_verticesNumber(verticesNumber)
 {
 	std::vector<GLfloat> vertices;
-	vertices.resize(m_verticesNumber * 3);
+	vertices.resize(m_verticesNumber * (3 + 3));
 
-	for (int angle = 0, index = 0; angle < 360; angle += (360 / m_verticesNumber), index += 3)
+	std::vector<RGB> finishColors = colors;
+	if (finishColors.size() == 1)
+	{
+		finishColors.resize(m_verticesNumber, finishColors.front());
+	}
+	else
+	{
+		finishColors.resize(m_verticesNumber, DEFAULT_COLOR);
+	}
+
+	for (int angle = 0, index = 0; angle < 360; angle += (360 / m_verticesNumber), index += 6)
 	{
 		float rad = angle * M_PI / 180.0f;
+		//positions
 		vertices[index] = cosf(rad);
 		vertices[index + 1] = sinf(rad);
 		vertices[index + 2] = 1.f;
+		//colors
+		vertices[index + 3] = finishColors[index / 6].r;
+		vertices[index + 4] = finishColors[index / 6].g;
+		vertices[index + 5] = finishColors[index / 6].b;
 	}
 	
 	SetVerticesData(vertices);
 	UpdateData();
 }
 
-void MyCircle::Draw(GLuint program) const
+void Circle::Draw(GLuint program) const
 {
 	glBindVertexArray(m_vao);
-	int location = glGetUniformLocation(program, "u_color");
-	// TODO: передавать цвет из вершины
-	glUniform4f(location, 1.f, 0.3f, 0.8f, 1.0f);
 	
 	ApplyModelTransform(program);
 

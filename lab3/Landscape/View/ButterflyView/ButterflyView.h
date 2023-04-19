@@ -5,7 +5,7 @@
 class ButterflyView : public IView
 {
 public:
-	ButterflyView(Size size, Vector3d position);
+	ButterflyView(Size size, Vector3d position, float angle = 0.f);
 	void Show(unsigned int program) const override;
 
 private:
@@ -14,6 +14,7 @@ private:
 	void DrawBufferflyWingPart(unsigned int program) const;
 	void DrawButterflyWing(unsigned int program) const;
 
-	Size m_size;
+	mutable Size m_size;
 	Vector3d m_position;
+	float m_angle;
 };

@@ -1,10 +1,10 @@
 #pragma once
 #include "../../BasePrimitive.h"
 
-class MyCircle : public BasePrimitive
+class Circle : public BasePrimitive
 {
 public:
-	MyCircle(Size size, Vector3d position, unsigned int verticesNumber = 360);
+	Circle(Size size, Vector3d position, const std::vector<RGB>& colors = {}, unsigned int verticesNumber = 360);
 
 	void Draw(GLuint program) const override;
 

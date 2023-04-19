@@ -15,13 +15,3 @@ struct Curve4d
 	Vector3d p3;
 	Vector3d p4;
 };
-
-struct Circle
-{
-	float radius;
-	float posX;
-	float posY;
-	float transX;
-	float transY;
-	float transZ;
-};
