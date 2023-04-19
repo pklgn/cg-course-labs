@@ -7,8 +7,8 @@
 #include <vector>
 #include "Circle.h"
 
-Circle::Circle(Size size, Vector3d position, const std::vector<RGB>& colors, unsigned int verticesNumber)
-	: BasePrimitive(size, position)
+Circle::Circle(Size size, Vector3d position, const std::vector<RGB>& colors, float angle, unsigned int verticesNumber)
+	: BasePrimitive(size, position, angle)
 	, m_verticesNumber(verticesNumber)
 {
 	std::vector<GLfloat> vertices;

@@ -4,7 +4,8 @@
 #include "../../Common/Types/GeometryTypes.h"
 #include "../../Common/OpenGLPrimitive/Shapes/Circle/Circle.h"
 
-ButterflyView::ButterflyView(Size size, Vector3d position, float angle)
+ButterflyView::ButterflyView(
+	Size size, Vector3d position, const std::vector<RGB>& colors, float angle)
 	: m_size(size)
 	, m_position(position)
 	, m_angle(angle)
@@ -27,8 +28,8 @@ void ButterflyView::DrawButterflyBody(unsigned int program) const
 	curve.p4.x = 0.f;
 	curve.p4.y = -0.1f;
 	curve.p4.z = butterflyDepth;
-	
-	CubicBezier cubicBezierTop(m_size, m_position, curve);
+
+	CubicBezier cubicBezierTop(m_size, m_position, curve, { {} }, m_angle);
 	cubicBezierTop.Draw(program);
 
 	curve.p1.x = 0;
@@ -44,7 +45,7 @@ void ButterflyView::DrawButterflyBody(unsigned int program) const
 	curve.p4.y = -0.5;
 	curve.p4.z = butterflyDepth;
 
-	CubicBezier cubicBezierBottom(m_size, m_position, curve);
+	CubicBezier cubicBezierBottom(m_size, m_position, curve, {}, m_angle);
 	cubicBezierBottom.Draw(program);
 }
 
@@ -62,7 +63,7 @@ void ButterflyView::DrawButterflyAntena(unsigned int program) const
 	curve.p3.y = 0.7;
 	curve.p3.z = butterflyDepth;
 
-	QuadraticBezier quadraticBezier(m_size, m_position, curve);
+	QuadraticBezier quadraticBezier(m_size, m_position, curve, {}, m_angle);
 	quadraticBezier.Draw(program);
 }
 
@@ -84,7 +85,7 @@ void ButterflyView::DrawBufferflyWingPart(unsigned int program) const
 	curve.p4.y = -0.4;
 	curve.p4.z = butterflyDepth;
 
-	CubicBezier cubicBezierTop(m_size, m_position, curve);
+	CubicBezier cubicBezierTop(m_size, m_position, curve, {}, m_angle);
 	cubicBezierTop.Draw(program);
 
 	// Bottom Wing
@@ -101,13 +102,13 @@ void ButterflyView::DrawBufferflyWingPart(unsigned int program) const
 	curve.p4.y = -0.4;
 	curve.p4.z = butterflyDepth;
 
-	CubicBezier cubicBezierBottom(m_size, m_position, curve);
+	CubicBezier cubicBezierBottom(m_size, m_position, curve, {}, m_angle);
 	cubicBezierBottom.Draw(program);
 }
 
-void DrawButterflyWingCircle(unsigned int program, float radius, float tranX, float transY)
+void DrawButterflyWingCircle(unsigned int program, float radius, float tranX, float transY, float angle)
 {
-	Circle circle({ radius, radius }, { tranX, transY, 0.f });
+	Circle circle({ radius, radius }, { tranX, transY, 0.f }, {}, angle);
 	circle.Draw(program);
 }
 
@@ -115,8 +116,8 @@ void ButterflyView::DrawButterflyWing(unsigned int program) const
 {
 	DrawBufferflyWingPart(program);
 	DrawBufferflyWingPart(program);
-	DrawButterflyWingCircle(program, 0.13, 0.48, 0.28);
-	DrawButterflyWingCircle(program, 0.14, 0.25, -0.4);
+	DrawButterflyWingCircle(program, 0.13, 0.48, 0.28, m_angle);
+	DrawButterflyWingCircle(program, 0.14, 0.25, -0.4, m_angle);
 }
 
 void ButterflyView::Show(unsigned int program) const

@@ -13,6 +13,8 @@
 
 void LandscapeWindow::Draw(int width, int height)
 {
+	glClear(GL_COLOR_BUFFER_BIT);
+
 	glm::mat4 view = glm::mat4(1.0f);
 	GLint viewLoc = glGetUniformLocation(m_shaderProgram, "u_view");
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
@@ -22,12 +24,12 @@ void LandscapeWindow::Draw(int width, int height)
 	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 	glViewport(0, 0, width, height);
 
-	ButterflyView butt({ 100, 100 }, { 100, 100 }, 50);
+	ButterflyView butt({ 100 * (cosf(glfwGetTime()) + 1.5f) / 2, 100 }, { 100, 100 }, {}, 50.f);
 	butt.Show(m_shaderProgram);
 
-	Circle circle({ 40, 40 }, { 200, 200 }, { { 0.5f, 1.f, 0.3f } });
-	circle.Draw(m_shaderProgram);
+	//Circle circle({ 40 * (cosf(glfwGetTime()) + 1.5f) / 10, 40 }, { 200, 200 }, { { 0.7f, 0.4f, 0.3f } });
+	//circle.Draw(m_shaderProgram);
 
-	Rectangle rectangle({ 50, 80 }, { 500, 500 }, { { 0.5f, 1.f, 0.3f } }, 0);
-	rectangle.Draw(m_shaderProgram);
+	//Rectangle rectangle({ 50, 80 }, { 500, 500 }, { { 0.5f, 1.f, 0.3f } }, 50.f);
+	//rectangle.Draw(m_shaderProgram);
 }

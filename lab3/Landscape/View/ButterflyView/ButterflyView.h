@@ -1,11 +1,14 @@
 #pragma once
+#include <vector>
 #include "../IView.h"
 #include "../../Common/Types/DimensionTypes.h"
+#include "../../Common/Types/ColorTypes.h"
 
 class ButterflyView : public IView
 {
 public:
-	ButterflyView(Size size, Vector3d position, float angle = 0.f);
+	ButterflyView(
+		Size size, Vector3d position, const std::vector<RGB>& colors = {}, float angle = 0.f);
 	void Show(unsigned int program) const override;
 
 private:

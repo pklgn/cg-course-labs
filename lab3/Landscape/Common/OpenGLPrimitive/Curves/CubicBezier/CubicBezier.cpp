@@ -4,8 +4,8 @@
 #include "CubicBezier.h"
 
 CubicBezier::CubicBezier(
-	Size size, Vector3d position, const Curve4d& controlPoints, const std::vector<RGB>& colors, unsigned int verticesNumber)
-	: BasePrimitive(size, position)
+	Size size, Vector3d position, const Curve4d& controlPoints, const std::vector<RGB>& colors, float angle, unsigned int verticesNumber)
+	: BasePrimitive(size, position, angle)
 	, m_controlPoints(controlPoints)
 	, m_verticesNumber(verticesNumber)
 {
