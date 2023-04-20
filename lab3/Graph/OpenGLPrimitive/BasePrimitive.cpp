@@ -71,37 +71,9 @@ void BasePrimitive::UpdateData()
 	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
 	glBufferData(GL_ARRAY_BUFFER, m_verticesData.size() * sizeof(m_verticesData.at(0)), m_verticesData.data(), GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, (3 + 3) * sizeof(GLfloat), (GLvoid*)0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, (3 + 3) * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
 
 	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
 
 	glBindVertexArray(0);
 }
-
-void BasePrimitive::ApplyModelTransform(GLuint program) const
-{
-	auto rotate = glm::rotate(glm::mat4(1.0f), float(m_angle * 3.14 / 180), glm::vec3(0.0f, 0.0f, 1.0f));
-	auto scale = glm::scale(glm::mat4(1.0f), glm::vec3(float(m_size.width / 2), float(m_size.height / 2), 1.0f));
-	auto trans = glm::translate(glm::mat4(1.0f), glm::vec3(float(m_position.x), float(m_position.y), float(m_position.z)));
-	auto result = trans * rotate * scale;
-	GLint modelLoc = glGetUniformLocation(program, "u_model");
-	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(result));
-}
-
-std::vector<RGB> BasePrimitive::GetVerticesColor(const std::vector<RGB>& colors, unsigned int verticesNumber) const
-{
-	std::vector<RGB> finishColors = colors;
-	if (finishColors.size() == 1)
-	{
-		finishColors.resize(verticesNumber, finishColors.front());
-	}
-	else
-	{
-		finishColors.resize(verticesNumber, DEFAULT_COLOR);
-	}
-
-	return finishColors;
-}
-

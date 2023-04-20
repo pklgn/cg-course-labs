@@ -11,7 +11,4 @@ int main(void)
 	GraphWindow window(800, 600, "Graph");
 	
 	window.Run();
-
-	// just for fun
-	std::cout << glGetString(GL_VERSION) << std::endl;
 }

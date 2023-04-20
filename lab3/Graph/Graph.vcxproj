@@ -166,6 +166,8 @@ copy "$(ProjectDir)vcpkg_installed\x86-windows\bin\glew32.dll" "$(OutDir)glew32.
     <ClCompile Include="main.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MultiThreaded</RuntimeLibrary>
     </ClCompile>
+    <ClCompile Include="OpenGLPrimitive\BasePrimitive.cpp" />
+    <ClCompile Include="OpenGLPrimitive\Curves\CubicBezier\CubicBezier.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\BaseWindow.h" />
@@ -174,6 +176,11 @@ copy "$(ProjectDir)vcpkg_installed\x86-windows\bin\glew32.dll" "$(OutDir)glew32.
     <ClInclude Include="GraphWindow\CoordinateSystem\CoordinateSystem.h" />
     <ClInclude Include="GraphWindow\GraphWindow.h" />
     <ClInclude Include="GraphWindow\IDrawable.h" />
+    <ClInclude Include="OpenGLPrimitive\BasePrimitive.h" />
+    <ClInclude Include="OpenGLPrimitive\Curves\CubicBezier\CubicBezier.h" />
+    <ClInclude Include="Types\ColorTypes.h" />
+    <ClInclude Include="Types\DimensionTypes.h" />
+    <ClInclude Include="Types\GeometryTypes.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
