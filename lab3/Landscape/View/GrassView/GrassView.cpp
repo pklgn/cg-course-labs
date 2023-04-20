@@ -34,7 +34,7 @@ void GrassView::Show(unsigned int program) const
 	curve.p3.y = -1.f;
 	curve.p3.z = butterflyDepth;
 
-	for (int i = 210, j = 0; i > 150 && j < m_vertices; i -= (60 / m_vertices), ++j)
+	for (int i = 210, j = 0; i > 120 && j < m_vertices; i -= (90 / m_vertices), ++j)
 	{
 		glLineWidth(3.0f);
 		QuadraticBezier quadraticBezier(m_size, m_position, curve, { m_colors[j] }, i);
