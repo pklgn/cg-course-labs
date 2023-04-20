@@ -2,6 +2,7 @@
 #include "../../Common/OpenGLPrimitive/Shapes/Circle/Circle.h"
 
 constexpr int CLOUDS_NUMBER = 4;
+const RGB DEFAULT_COLOR = { 0.75f, 0.75f, 0.75f };
 
 CloudView::CloudView(Size size, Vector3d position, const std::vector<RGB>& colors, float angle)
 	: BaseView(size, position, angle, colors)
@@ -12,7 +13,7 @@ CloudView::CloudView(Size size, Vector3d position, const std::vector<RGB>& color
 	}
 	else
 	{
-		m_colors.resize(CLOUDS_NUMBER, { 0.75f, 0.75f, 0.75f });
+		m_colors.resize(CLOUDS_NUMBER, DEFAULT_COLOR);
 	}
 }
 

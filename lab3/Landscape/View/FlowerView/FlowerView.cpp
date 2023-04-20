@@ -14,7 +14,7 @@ FlowerView::FlowerView(Size size, Vector3d position, unsigned int vertices, cons
 	}
 	else
 	{
-		m_colors.resize(m_vertices, { 0.f, 1.f, 0.f });
+		m_colors.resize(m_vertices, DEFAULT_COLOR);
 	}
 }
 
