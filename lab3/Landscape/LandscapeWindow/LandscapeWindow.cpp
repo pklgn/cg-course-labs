@@ -34,17 +34,17 @@ void LandscapeWindow::Draw(int width, int height)
 	Rectangle sky({ float(width), float(height / 3) }, { width / 2.f, height * 5.f / 6.f }, { { 0.f, 0.5f, 1.f }, { 0.65f, 0.8f, 0.95f }, { 0.36f, 0.61f, 0.88f } });
 	sky.Draw(m_shaderProgram);
 
+	Circle sun({ 120, 120 }, { 300, 500 }, { { 1.f, 1.f, 0.32f } });
+	sun.Draw(m_shaderProgram);
+
 	CloudView firstCloud({ 100, 100 }, { 100, 470 }, { { 0.8f, 0.8f, 0.8f } });
 	firstCloud.Show(m_shaderProgram);
 
 	CloudView secondCloud({ 120, 120 }, { 450, 490 }, { { 0.8f, 0.8f, 0.8f } });
 	secondCloud.Show(m_shaderProgram);
 
-	Circle sun({ 120, 120 }, { 300, 500 }, { { 1.f, 1.f, 0.32f } });
-	sun.Draw(m_shaderProgram);
-
-	ButterflyView firstButterfly({ 80 * (cosf(glfwGetTime()) + 1.5f) / 2, 80 }, { 100, 100 }, {
-																				 { sinf(m_time), 0.95f, 0.7f },
+	ButterflyView firstButterfly({ 80 * (cosf(glfwGetTime()) + 1.5f) / 2.f, 80 }, { 100, 100 }, {
+																				 { float(sinf(m_time)), 0.95f, 0.7f },
 																				 { cosf(m_time), 0.5f, 0.07f },
 																				 { 0.5f, sinf(m_time), 0.7f },
 																			 },
@@ -67,14 +67,14 @@ void LandscapeWindow::Draw(int width, int height)
 		10.f);
 	thirdButterfly.Show(m_shaderProgram);
 
-	GrassView firstGrass({ 100, 100 }, { 700, 10 }, 8, { {1.f, 0.75f, 0.8f} });
+	GrassView firstGrass({ 200, 100 }, { 700, 60 }, 8, { { 0.26f, 0.6f, 0.3f } });
 	firstGrass.Show(m_shaderProgram);
 	
-	GrassView secondGrass({ 100, 100 }, { 600, 10 }, 6, { { 0.1f, 0.75f, 0.05f } });
+	GrassView secondGrass({ 150, 100 }, { 500, 10 }, 6, { { 0.0f, 0.3f, 0.0f } });
 	secondGrass.Show(m_shaderProgram);
 
-	GrassView thirdGrass({ 100, 100 }, { 500, 10 }, 12, {
-															{ 1.f, 1.f, 0.0f },
+	GrassView thirdGrass({ 200, 100 }, { 120, 10 }, 12, {
+															{ 0.075f, 0.53f, 0.03f },
 														});
 	thirdGrass.Show(m_shaderProgram);
 

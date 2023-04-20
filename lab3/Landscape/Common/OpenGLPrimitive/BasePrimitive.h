@@ -31,6 +31,7 @@ protected:
 	void ApplyModelTransform(GLuint program) const;
 	std::vector<RGB> GetVerticesColor(const std::vector<RGB>& colors, unsigned int verticesNumber) const;
 
+	// TODO: сделать отдельные обертки и сделать их вью онли
 	GLuint m_vao;
 	GLuint m_vbo;
 	Size m_size;
