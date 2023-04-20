@@ -36,7 +36,7 @@ void GrassView::Show(unsigned int program) const
 
 	for (int i = 210, j = 0; i > 120 && j < m_vertices; i -= (90 / m_vertices), ++j)
 	{
-		glLineWidth(3.0f);
+		glLineWidth(2.0f);
 		QuadraticBezier quadraticBezier(m_size, m_position, curve, { m_colors[j] }, i);
 		quadraticBezier.SetDrawMode(GL_LINE_STRIP);
 		quadraticBezier.Draw(program);
