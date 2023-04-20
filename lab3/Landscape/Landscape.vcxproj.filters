@@ -75,6 +75,9 @@
     <ClCompile Include="View\CloudView\CloudView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="View\BaseView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json" />
@@ -158,6 +161,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="View\CloudView\CloudView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="View\BaseView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

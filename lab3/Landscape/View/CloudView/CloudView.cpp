@@ -4,9 +4,7 @@
 constexpr int CLOUDS_NUMBER = 4;
 
 CloudView::CloudView(Size size, Vector3d position, const std::vector<RGB>& colors, float angle)
-	: m_size(size)
-	, m_position(position)
-	, m_angle(angle)
+	: BaseView(size, position, angle, colors)
 {
 	if (colors.size() == 1)
 	{

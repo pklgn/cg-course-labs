@@ -5,9 +5,7 @@
 const RGB DEFAULT_COLOR = { 0.f, 1.f, 0.f };
 
 GrassView::GrassView(Size size, Vector3d position, unsigned int vertices, const std::vector<RGB>& colors, float angle)
-	: m_size(size)
-	, m_position(position)
-	, m_angle(angle)
+	: BaseView(size, position, angle, colors)
 	, m_vertices(vertices)
 {
 	if (colors.size() == 1)

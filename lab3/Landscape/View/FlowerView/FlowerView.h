@@ -1,10 +1,10 @@
 #pragma once
 #include <vector>
-#include "../IView.h"
+#include "../BaseView.h"
 #include "../../Common/Types/DimensionTypes.h"
 #include "../../Common/Types/ColorTypes.h"
 
-class FlowerView : public IView
+class FlowerView : public BaseView
 {
 public:
 	FlowerView(
@@ -13,9 +13,5 @@ public:
 	void Show(unsigned int program) const override;
 
 private:
-	mutable Size m_size;
-	Vector3d m_position;
-	float m_angle;
-	std::vector<RGB> m_colors;
 	unsigned int m_vertices;
 };

@@ -1,10 +1,10 @@
 #pragma once
 #include <vector>
-#include "../IView.h"
+#include "../BaseView.h"
 #include "../../Common/Types/DimensionTypes.h"
 #include "../../Common/Types/ColorTypes.h"
 
-class ButterflyView : public IView
+class ButterflyView : public BaseView
 {
 public:
 	ButterflyView(
@@ -16,9 +16,4 @@ private:
 	void DrawButterflyAntena(unsigned int program) const;
 	void DrawBufferflyWingPart(unsigned int program) const;
 	void DrawButterflyWing(unsigned int program) const;
-
-	mutable Size m_size;
-	Vector3d m_position;
-	float m_angle;
-	std::vector<RGB> m_colors;
 };
