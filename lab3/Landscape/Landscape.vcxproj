@@ -153,9 +153,6 @@ copy "$(ProjectDir)vcpkg_installed\x86-windows\bin\glew32.dll" "$(OutDir)glew32.
     <ClCompile Include="View\CloudView\CloudView.cpp" />
     <ClCompile Include="View\FlowerView\FlowerView.cpp" />
     <ClCompile Include="View\GrassView\GrassView.cpp" />
-    <ClCompile Include="View\LandscapeElementView\ButterflyView\ButterflyView.cpp" />
-    <ClCompile Include="View\LandscapeElementView\LandscapeElementView.cpp" />
-    <ClCompile Include="View\LandscapeView\LandscapeView.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\Fragment.shader" />
@@ -186,10 +183,7 @@ copy "$(ProjectDir)vcpkg_installed\x86-windows\bin\glew32.dll" "$(OutDir)glew32.
     <ClInclude Include="View\CloudView\CloudView.h" />
     <ClInclude Include="View\FlowerView\FlowerView.h" />
     <ClInclude Include="View\GrassView\GrassView.h" />
-    <ClInclude Include="View\LandscapeElementView\ButterflyView\ButterflyView.h" />
     <ClInclude Include="View\IView.h" />
-    <ClInclude Include="View\LandscapeElementView\LandscapeElementView.h" />
-    <ClInclude Include="View\LandscapeView\LandscapeView.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

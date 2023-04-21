@@ -45,15 +45,6 @@
     <ClCompile Include="Model\Landscape\Landscape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="View\LandscapeElementView\LandscapeElementView.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="View\LandscapeView\LandscapeView.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="View\LandscapeElementView\ButterflyView\ButterflyView.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Common\OpenGLPrimitive\BasePrimitive.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -124,16 +115,7 @@
     <ClInclude Include="Model\Landscape\Landscape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="View\LandscapeElementView\LandscapeElementView.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="View\LandscapeView\LandscapeView.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="View\IView.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="View\LandscapeElementView\ButterflyView\ButterflyView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Common\Types\GeometryTypes.h">
