@@ -20,7 +20,6 @@
 */
 
 #include "../../pch.h"
-#include <vector>
 #include "VertexBuffer.h"
 
 VertexBuffer::VertexBuffer()

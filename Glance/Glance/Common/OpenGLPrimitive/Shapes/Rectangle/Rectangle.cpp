@@ -1,13 +1,8 @@
 #include "../../../../pch.h"
-#include <GL/glew.h>
-#include <glm/glm.hpp>
-#include <glm/gtx/rotate_vector.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include <string>
-#include <format>
-#include <stdexcept>
-#include "Rectangle.h"
 #include "../../../Common/Types/ColorTypes.h"
+#include "Rectangle.h"
+#include <format>
+#include <string>
 
 void Rectangle::Draw(GLuint program) const
 {

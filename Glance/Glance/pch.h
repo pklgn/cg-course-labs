@@ -9,9 +9,15 @@
 
 // add headers that you want to pre-compile here
 #define _USE_MATH_DEFINES
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <iostream>
 #include <cmath>
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtx/rotate_vector.hpp>
+#include <iostream>
+#include <stdexcept>
+#include <vector>
 
-#endif //PCH_H
+#endif // PCH_H

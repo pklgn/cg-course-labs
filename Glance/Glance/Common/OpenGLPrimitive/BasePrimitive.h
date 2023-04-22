@@ -1,6 +1,4 @@
 #pragma once
-#include <GL/glew.h>
-#include <vector>
 #include "../../Common/Types/DimensionTypes.h"
 #include "../../Common/Types/ColorTypes.h"
 

@@ -57,10 +57,10 @@
     <ClInclude Include="Common\VertexBuffer\VertexBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Common\BaseWindow.h">
+    <ClInclude Include="Common\BaseWindow.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Common\GLFWInitializer.h">
+    <ClInclude Include="Common\GLFWInitializer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

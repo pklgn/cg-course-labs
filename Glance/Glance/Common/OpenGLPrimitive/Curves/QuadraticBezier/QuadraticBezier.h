@@ -1,7 +1,6 @@
 #pragma once
 #include "../../../Common/Types/GeometryTypes.h"
 #include "../../BasePrimitive.h"
-#include <GL/glew.h>
 
 class QuadraticBezier : public BasePrimitive
 {

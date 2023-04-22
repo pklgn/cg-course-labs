@@ -1,5 +1,4 @@
 #pragma once
-#include <GL/glew.h>
 #include "../../../Common/Types/GeometryTypes.h"
 #include "../../BasePrimitive.h"
 

@@ -1,7 +1,4 @@
 #include "../../../../pch.h"
-#include <glm/glm.hpp>
-#include <glm/gtx/rotate_vector.hpp>
-#include <glm/gtc/type_ptr.hpp>
 #include "QuadraticBezier.h"
 
 QuadraticBezier::QuadraticBezier(Size size, Vector3d position, const Curve4d& controlPoints, const std::vector<RGB>& colors, float angle, unsigned int verticesNumber)
@@ -14,7 +11,7 @@ QuadraticBezier::QuadraticBezier(Size size, Vector3d position, const Curve4d& co
 
 	std::vector<RGB> finishColors = GetVerticesColor(colors, m_verticesNumber + 1);
 
-	for (int i = 0; i <= m_verticesNumber; i++)
+	for (int i = 0; i <= static_cast<int>(m_verticesNumber); i++)
 	{
 		GLfloat t = GLfloat(i) / GLfloat(m_verticesNumber);
 		float x = (1 - t) * (1 - t) * controlPoints.p1.x + 2 * (1 - t) * t * controlPoints.p2.x + t * t * controlPoints.p3.x;

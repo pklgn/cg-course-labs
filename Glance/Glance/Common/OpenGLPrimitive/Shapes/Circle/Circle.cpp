@@ -1,9 +1,4 @@
 #include "../../../../pch.h"
-#include <GL/glew.h>
-#include <glm/glm.hpp>
-#include <glm/gtx/rotate_vector.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include <vector>
 #include "Circle.h"
 
 Circle::Circle(Size size, Vector3d position, const std::vector<RGB>& colors, float angle, unsigned int verticesNumber)
@@ -17,7 +12,7 @@ Circle::Circle(Size size, Vector3d position, const std::vector<RGB>& colors, flo
 
 	for (int angle = 0, index = 0; angle < 360; angle += (360 / m_verticesNumber), index += 6)
 	{
-		float rad = angle * M_PI / 180.0f;
+		float rad = static_cast<float>(angle * M_PI / 180.0f);
 		//positions
 		vertices[index] = cosf(rad);
 		vertices[index + 1] = sinf(rad);

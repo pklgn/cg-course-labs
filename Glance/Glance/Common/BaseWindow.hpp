@@ -1,9 +1,7 @@
 #pragma once
-#include <gl/glew.h>
-#include <GLFW/glfw3.h>
-#include <iostream>
-#include <stdexcept>
+#include "../pch.h"
 #include "../Common/ShaderProgram/ShaderProgram.h"
+#include <stdexcept>
 
 class BaseWindow
 {

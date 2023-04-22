@@ -1,8 +1,5 @@
 ﻿#include "../../pch.h"
 #include "BasePrimitive.h"
-#include <glm/glm.hpp>
-#include <glm/gtx/rotate_vector.hpp>
-#include <glm/gtc/type_ptr.hpp>
 
 const RGB BasePrimitive::DEFAULT_COLOR = { 1.f, 1.f, 1.f };
 
