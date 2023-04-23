@@ -115,6 +115,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)vcpkg_installed\x64-windows-static\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>Default</LanguageStandard_C>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>
