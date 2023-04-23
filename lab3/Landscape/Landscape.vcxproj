@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -112,10 +112,17 @@ copy "$(ProjectDir)vcpkg_installed\x86-windows\bin\glew32.dll" "$(OutDir)glew32.
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Glance\include;$(ProjectDir)vcpkg_installed\x64-windows-static\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)x64\Debug;$(ProjectDir)vcpkg_installed\x64-windows-static\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;OpenGL32.lib;shell32.lib;glu32.lib;glew32.lib;bcrypt.lib;Glance.lib;libcmtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <AdditionalOptions>/NODEFAULTLIB:libcmt.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -126,26 +133,19 @@ copy "$(ProjectDir)vcpkg_installed\x86-windows\bin\glew32.dll" "$(OutDir)glew32.
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Glance\include;$(ProjectDir)vcpkg_installed\x64-windows-static\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)vcpkg_installed\x64-windows-static\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Common\OpenGLPrimitive\BasePrimitive.cpp" />
-    <ClCompile Include="Common\OpenGLPrimitive\Curves\CubicBezier\CubicBezier.cpp" />
-    <ClCompile Include="Common\OpenGLPrimitive\Curves\QuadraticBezier\QuadraticBezier.cpp" />
-    <ClCompile Include="Common\OpenGLPrimitive\Shapes\Circle\Circle.cpp" />
-    <ClCompile Include="Common\OpenGLPrimitive\Shapes\Rectangle\Rectangle.cpp" />
-    <ClCompile Include="Common\VertexBuffer\VertexBuffer.cpp" />
     <ClCompile Include="LandscapeWindow\LandscapeWindow.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Common\OpenGLLog\OpenGLLog.cpp" />
-    <ClCompile Include="Common\ShaderProgram\ShaderProgram.cpp" />
-    <ClCompile Include="Common\Transform\Transform.cpp" />
     <ClCompile Include="Model\LandscapeElement\LandscapeElement.cpp" />
     <ClCompile Include="Model\Landscape\Landscape.cpp" />
     <ClCompile Include="View\BaseView.cpp" />
@@ -160,21 +160,6 @@ copy "$(ProjectDir)vcpkg_installed\x86-windows\bin\glew32.dll" "$(OutDir)glew32.
     <None Include="vcpkg.json" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Common\BaseWindow.h" />
-    <ClInclude Include="Common\GC\GC.hpp" />
-    <ClInclude Include="Common\GLFWInitializer.h" />
-    <ClInclude Include="Common\OpenGLLog\OpenGLLog.h" />
-    <ClInclude Include="Common\OpenGLPrimitive\BasePrimitive.h" />
-    <ClInclude Include="Common\OpenGLPrimitive\Curves\CubicBezier\CubicBezier.h" />
-    <ClInclude Include="Common\OpenGLPrimitive\Curves\QuadraticBezier\QuadraticBezier.h" />
-    <ClInclude Include="Common\OpenGLPrimitive\Shapes\Circle\Circle.h" />
-    <ClInclude Include="Common\OpenGLPrimitive\Shapes\Rectangle\Rectangle.h" />
-    <ClInclude Include="Common\ShaderProgram\ShaderProgram.h" />
-    <ClInclude Include="Common\Transform\Transform.h" />
-    <ClInclude Include="Common\Types\ColorTypes.h" />
-    <ClInclude Include="Common\Types\DimensionTypes.h" />
-    <ClInclude Include="Common\Types\GeometryTypes.h" />
-    <ClInclude Include="Common\VertexBuffer\VertexBuffer.h" />
     <ClInclude Include="LandscapeWindow\LandscapeWindow.h" />
     <ClInclude Include="Model\LandscapeElement\LandscapeElement.h" />
     <ClInclude Include="Model\Landscape\Landscape.h" />

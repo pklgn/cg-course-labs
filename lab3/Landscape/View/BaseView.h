@@ -1,8 +1,10 @@
 #pragma once
 #include <vector>
+
+#include <ColorTypes.h>
+#include <DimensionTypes.h>
+
 #include "IView.h"
-#include "../Common/Types/DimensionTypes.h"
-#include "../Common/Types/ColorTypes.h"
 
 class BaseView : public IView
 {

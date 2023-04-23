@@ -1,8 +1,6 @@
 #pragma once
 #include <vector>
 #include "../BaseView.h"
-#include "../../Common/Types/DimensionTypes.h"
-#include "../../Common/Types/ColorTypes.h"
 
 class GrassView : public BaseView
 {

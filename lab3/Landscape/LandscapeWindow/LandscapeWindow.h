@@ -1,5 +1,5 @@
 #pragma once
-#include "../Common/BaseWindow.h"
+#include <BaseWindow.hpp>
 
 class LandscapeWindow : public BaseWindow
 {

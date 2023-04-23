@@ -1,7 +1,7 @@
-#include <gl/glew.h>
-#include "Common/GLFWInitializer.h"
 #include "LandscapeWindow/LandscapeWindow.h"
+#include <gl/glew.h>
 #include <GLFW/glfw3.h>
+#include <GLFWInitializer.hpp>
 #include <iostream>
 
 int main(void)

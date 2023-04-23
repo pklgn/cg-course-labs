@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
 #include <string>
-#include "../../Common/Types/DimensionTypes.h"
+#include <DimensionTypes.h>
 
 class LandscapeElement : public std::enable_shared_from_this<LandscapeElement>
 {

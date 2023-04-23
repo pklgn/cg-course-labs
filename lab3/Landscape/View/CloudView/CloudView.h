@@ -1,6 +1,4 @@
 #pragma once
-#include "../../Common/Types/ColorTypes.h"
-#include "../../Common/Types/DimensionTypes.h"
 #include "../BaseView.h"
 #include <vector>
 

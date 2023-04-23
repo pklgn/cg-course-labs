@@ -1,5 +1,5 @@
 #include "CloudView.h"
-#include "../../Common/OpenGLPrimitive/Shapes/Circle/Circle.h"
+#include <OpenGLPrimitive/Shapes/Circle/Circle.h>
 
 constexpr int CLOUDS_NUMBER = 4;
 const RGB DEFAULT_COLOR = { 0.75f, 0.75f, 0.75f };

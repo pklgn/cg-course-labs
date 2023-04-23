@@ -1,13 +1,10 @@
-#include <glm/glm.hpp>
-#include <glm/gtx/rotate_vector.hpp>
-#include <glm/gtc/type_ptr.hpp>
 #include "LandscapeWindow.h"
-#include "../Common/OpenGLPrimitive/Shapes/Circle/Circle.h"
-#include "../Common/OpenGLPrimitive/Shapes/Rectangle/Rectangle.h"
 #include "../View/ButterflyView/ButterflyView.h"
+#include "../View/CloudView/CloudView.h"
 #include "../View/FlowerView/FlowerView.h"
 #include "../View/GrassView/GrassView.h"
-#include "../View/CloudView/CloudView.h"
+#include <OpenGLPrimitive/Shapes/Circle/Circle.h>
+#include <OpenGLPrimitive/Shapes/Rectangle/Rectangle.h>
 
 void LandscapeWindow::UpdateUVMatrices(int width, int height)
 {
@@ -43,26 +40,26 @@ void LandscapeWindow::Draw(int width, int height)
 	CloudView secondCloud({ 120, 120 }, { 450, 490 }, { { 0.8f, 0.8f, 0.8f } });
 	secondCloud.Show(m_shaderProgram);
 
-	ButterflyView firstButterfly({ 80 * (cosf(glfwGetTime()) + 1.5f) / 2.f, 80 }, { 100, 100 }, {
-																				 { float(sinf(m_time)), 0.95f, 0.7f },
-																				 { cosf(m_time), 0.5f, 0.07f },
-																				 { 0.5f, sinf(m_time), 0.7f },
+	ButterflyView firstButterfly({ 80 * float(cos(glfwGetTime()) + 1.5f) / 2.f, 80 }, { 100, 100 }, {
+																				 { float(sin(m_time)), 0.95f, 0.7f },
+																				 { float(cos(m_time)), 0.5f, 0.07f },
+																				 { 0.5f, float(sin(m_time)), 0.7f },
 																			 },
 		50.f);
 	firstButterfly.Show(m_shaderProgram);
 
-	ButterflyView secondButterfly({ 70 * (cosf(glfwGetTime()) + 1.5f) / 2, 70 }, { 700, 200 }, {
-																							 { 0.95f, sinf(m_time), 0.7f },
-																							 { cosf(m_time), 0.5f, 0.07f },
-																							 { 0.5f, sinf(m_time), 0.7f },
+	ButterflyView secondButterfly({ 70 * float(cos(glfwGetTime()) + 1.5f) / 2, 70 }, { 700, 200 }, {
+																							 { 0.95f, float(sin(m_time)), 0.7f },
+																							 { float(cos(m_time)), 0.5f, 0.07f },
+																							 { 0.5f, float(sin(m_time)), 0.7f },
 																						 },
 		-45.f);
 	secondButterfly.Show(m_shaderProgram);
 
-	ButterflyView thirdButterfly({ 100 * (cosf(glfwGetTime()) + 1.5f) / 2, 100 }, { 500, 300 }, {
-																								  { 0.95f, sinf(m_time), 0.0f },
-																								  { 0.5f, cosf(m_time), 0.07f },
-																								  { 0.95f, sinf(m_time), 0.7f },
+	ButterflyView thirdButterfly({ 100 * float(cos(glfwGetTime()) + 1.5f) / 2, 100 }, { 500, 300 }, {
+																								  { 0.95f, float(sin(m_time)), 0.0f },
+																								  { 0.5f, float(cos(m_time)), 0.07f },
+																								  { 0.95f, float(sin(m_time)), 0.7f },
 																							  },
 		10.f);
 	thirdButterfly.Show(m_shaderProgram);

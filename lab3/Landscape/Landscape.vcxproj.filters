@@ -18,40 +18,13 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Common\OpenGLLog\OpenGLLog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\ShaderProgram\ShaderProgram.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\Transform\Transform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="LandscapeWindow\LandscapeWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\OpenGLPrimitive\Shapes\Circle\Circle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\OpenGLPrimitive\Shapes\Rectangle\Rectangle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\VertexBuffer\VertexBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Model\LandscapeElement\LandscapeElement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Model\Landscape\Landscape.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\OpenGLPrimitive\BasePrimitive.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\OpenGLPrimitive\Curves\CubicBezier\CubicBezier.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\OpenGLPrimitive\Curves\QuadraticBezier\QuadraticBezier.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="View\ButterflyView\ButterflyView.cpp">
@@ -76,40 +49,10 @@
     <None Include="Shaders\Vertex.shader" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Common\OpenGLLog\OpenGLLog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\ShaderProgram\ShaderProgram.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Transform\Transform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\BaseWindow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\GLFWInitializer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="LandscapeWindow\LandscapeWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Common\OpenGLPrimitive\Shapes\Circle\Circle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\OpenGLPrimitive\Shapes\Rectangle\Rectangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\VertexBuffer\VertexBuffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\GC\GC.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Model\LandscapeElement\LandscapeElement.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Types\DimensionTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Model\Landscape\Landscape.h">
@@ -118,22 +61,7 @@
     <ClInclude Include="View\IView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Common\Types\GeometryTypes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\OpenGLPrimitive\BasePrimitive.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\OpenGLPrimitive\Curves\CubicBezier\CubicBezier.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\OpenGLPrimitive\Curves\QuadraticBezier\QuadraticBezier.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="View\ButterflyView\ButterflyView.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Types\ColorTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="View\GrassView\GrassView.h">
