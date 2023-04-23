@@ -8,5 +8,5 @@
 * glew32.lib
 * bcrypt.lib
 * Glance.lib
-* libcmtd.lib -- из-за проблемы https://stackoverflow.com/questions/18612072/link-warning-lnk4098-defaultlib-msvcrt-conflicts-with-use-of-other-libs-us
-3. Решением проблемы, описанной выше для Debug x64 версии проекта было прописать ~~чапалах~~ /NODEFAULTLIB:libcmt.lib в разделе Command Line у Linker'а
+3. Из-за проблемы https://stackoverflow.com/questions/18612072/link-warning-lnk4098-defaultlib-msvcrt-conflicts-with-use-of-other-libs-us для Debug x64 версии проекта было принято решение прописать ~~чапалах~~ /NODEFAULTLIB:libcmt.lib в разделе Command Line у Linker'а
+4. Для работы с vcpkg используется ```vcpkg install --triplet=x64-windows-static```
