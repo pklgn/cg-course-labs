@@ -1,8 +1,11 @@
-#include "../../pch.h"
-#include "../OpenGLLog/OpenGLLog.h"
-#include "ShaderProgram.h"
+#include "../pch.h"
+
 #include <fstream>
 #include <string>
+
+#include "OpenGLLog.h"
+#include "ShaderProgram.h"
+
 
 unsigned int ShaderProgram::CreateShaderProgram(const char* vp, const char* fp)
 {

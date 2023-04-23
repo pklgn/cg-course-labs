@@ -1,6 +1,6 @@
 #pragma once
-#include "../../../Common/Types/GeometryTypes.h"
-#include "../../BasePrimitive.h"
+#include "GeometryTypes.h"
+#include "OpenGLPrimitive/BasePrimitive.h"
 
 class CubicBezier : public BasePrimitive
 {

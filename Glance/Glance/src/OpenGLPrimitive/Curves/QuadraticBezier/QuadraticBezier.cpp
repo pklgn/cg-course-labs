@@ -1,5 +1,10 @@
 #include "../../../../pch.h"
-#include "QuadraticBezier.h"
+
+#include <GeometryTypes.h>
+#include <ColorTypes.h>
+#include <OpenGLPrimitive/BasePrimitive.h>
+#include "OpenGLPrimitive/Curves/QuadraticBezier/QuadraticBezier.h"
+
 
 QuadraticBezier::QuadraticBezier(Size size, Vector3d position, const Curve4d& controlPoints, const std::vector<RGB>& colors, float angle, unsigned int verticesNumber)
 	: BasePrimitive(size, position, angle)

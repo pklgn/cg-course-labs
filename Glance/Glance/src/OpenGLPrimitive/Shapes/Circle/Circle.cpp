@@ -1,5 +1,8 @@
 #include "../../../../pch.h"
-#include "Circle.h"
+
+#include "ColorTypes.h"
+#include "GeometryTypes.h"
+#include "OpenGLPrimitive/Shapes/Circle/Circle.h"
 
 Circle::Circle(Size size, Vector3d position, const std::vector<RGB>& colors, float angle, unsigned int verticesNumber)
 	: BasePrimitive(size, position, angle)

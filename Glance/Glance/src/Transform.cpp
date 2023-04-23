@@ -1,4 +1,5 @@
-#include "../../pch.h"
+#include "../pch.h"
+
 #include "Transform.h"
 
 glm::mat4 Transform::BuildTranslate(float x, float y, float z)

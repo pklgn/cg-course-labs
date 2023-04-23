@@ -1,4 +1,5 @@
-#include "../../pch.h"
+#include "../pch.h"
+
 #include "OpenGLLog.h"
 
 void OpenGLLog::PrintShaderLog(unsigned int shader)

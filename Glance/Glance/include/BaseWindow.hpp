@@ -1,7 +1,7 @@
 #pragma once
 #include "../pch.h"
-#include "../Common/ShaderProgram/ShaderProgram.h"
 #include <stdexcept>
+#include "ShaderProgram.h"
 
 class BaseWindow
 {

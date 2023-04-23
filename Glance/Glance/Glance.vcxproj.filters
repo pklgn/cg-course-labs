@@ -18,49 +18,49 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Common\GC\GC.hpp">
+    <ClInclude Include="include\GC\GC.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Common\OpenGLLog\OpenGLLog.h">
+    <ClInclude Include="include\OpenGLPrimitive\Curves\CubicBezier\CubicBezier.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Common\OpenGLPrimitive\Curves\CubicBezier\CubicBezier.h">
+    <ClInclude Include="include\OpenGLPrimitive\Curves\QuadraticBezier\QuadraticBezier.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Common\OpenGLPrimitive\Curves\QuadraticBezier\QuadraticBezier.h">
+    <ClInclude Include="include\OpenGLPrimitive\Shapes\Circle\Circle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Common\OpenGLPrimitive\Shapes\Circle\Circle.h">
+    <ClInclude Include="include\OpenGLPrimitive\Shapes\Rectangle\Rectangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Common\OpenGLPrimitive\Shapes\Rectangle\Rectangle.h">
+    <ClInclude Include="include\OpenGLPrimitive\BasePrimitive.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Common\OpenGLPrimitive\BasePrimitive.h">
+    <ClInclude Include="include\BaseWindow.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Common\ShaderProgram\ShaderProgram.h">
+    <ClInclude Include="include\ColorTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Common\Transform\Transform.h">
+    <ClInclude Include="include\DimensionTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Common\Types\ColorTypes.h">
+    <ClInclude Include="include\GeometryTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Common\Types\DimensionTypes.h">
+    <ClInclude Include="include\GLFWInitializer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Common\Types\GeometryTypes.h">
+    <ClInclude Include="include\OpenGLLog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Common\VertexBuffer\VertexBuffer.h">
+    <ClInclude Include="include\ShaderProgram.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Common\BaseWindow.hpp">
+    <ClInclude Include="include\Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Common\GLFWInitializer.hpp">
+    <ClInclude Include="include\VertexBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -68,31 +68,31 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Common\OpenGLLog\OpenGLLog.cpp">
+    <ClCompile Include="src\OpenGLPrimitive\Curves\CubicBezier\CubicBezier.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Common\OpenGLPrimitive\Curves\CubicBezier\CubicBezier.cpp">
+    <ClCompile Include="src\OpenGLPrimitive\Curves\QuadraticBezier\QuadraticBezier.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Common\OpenGLPrimitive\Curves\QuadraticBezier\QuadraticBezier.cpp">
+    <ClCompile Include="src\OpenGLPrimitive\Shapes\Circle\Circle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Common\OpenGLPrimitive\Shapes\Circle\Circle.cpp">
+    <ClCompile Include="src\OpenGLPrimitive\Shapes\Rectangle\Rectangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Common\OpenGLPrimitive\Shapes\Rectangle\Rectangle.cpp">
+    <ClCompile Include="src\OpenGLPrimitive\BasePrimitive.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Common\OpenGLPrimitive\BasePrimitive.cpp">
+    <ClCompile Include="src\OpenGLLog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Common\ShaderProgram\ShaderProgram.cpp">
+    <ClCompile Include="src\ShaderProgram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Common\Transform\Transform.cpp">
+    <ClCompile Include="src\Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Common\VertexBuffer\VertexBuffer.cpp">
+    <ClCompile Include="src\VertexBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

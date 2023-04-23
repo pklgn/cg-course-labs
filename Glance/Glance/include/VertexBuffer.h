@@ -21,9 +21,10 @@
 
 #pragma once
 
-#include "../GC/GC.hpp"
 #include <cstdint>
 #include <functional>
+
+#include <GC/GC.hpp>
 
 /*
 	Buffer usage types

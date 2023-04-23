@@ -1,5 +1,4 @@
 #pragma once
-#include "../../../../Common/Types/DimensionTypes.h"
 #include "../../BasePrimitive.h"
 
 class Rectangle : public BasePrimitive

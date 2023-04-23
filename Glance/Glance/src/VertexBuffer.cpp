@@ -19,7 +19,9 @@
 	CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
 */
 
-#include "../../pch.h"
+#include "../pch.h"
+
+#include "GC/GC.hpp"
 #include "VertexBuffer.h"
 
 VertexBuffer::VertexBuffer()

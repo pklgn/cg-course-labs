@@ -1,6 +1,4 @@
 #pragma once
-#include "../../../Common/Types/GeometryTypes.h"
-#include "../../BasePrimitive.h"
 
 class QuadraticBezier : public BasePrimitive
 {

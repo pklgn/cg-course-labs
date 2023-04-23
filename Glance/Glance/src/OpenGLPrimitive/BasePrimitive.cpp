@@ -1,5 +1,7 @@
 ﻿#include "../../pch.h"
-#include "BasePrimitive.h"
+
+#include "OpenGLPrimitive/BasePrimitive.h"
+
 
 const RGB BasePrimitive::DEFAULT_COLOR = { 1.f, 1.f, 1.f };
 

@@ -1,5 +1,8 @@
 #include "../../../../pch.h"
-#include "CubicBezier.h"
+
+#include "ColorTypes.h"
+#include "DimensionTypes.h"
+#include "OpenGLPrimitive/Curves/CubicBezier/CubicBezier.h"
 
 CubicBezier::CubicBezier(
 	Size size, Vector3d position, const Curve4d& controlPoints, const std::vector<RGB>& colors, float angle, unsigned int verticesNumber)

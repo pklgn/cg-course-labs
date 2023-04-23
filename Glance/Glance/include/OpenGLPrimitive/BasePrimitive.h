@@ -1,6 +1,6 @@
 #pragma once
-#include "../../Common/Types/DimensionTypes.h"
-#include "../../Common/Types/ColorTypes.h"
+#include "ColorTypes.h"
+#include "DimensionTypes.h"
 
 class BasePrimitive
 {

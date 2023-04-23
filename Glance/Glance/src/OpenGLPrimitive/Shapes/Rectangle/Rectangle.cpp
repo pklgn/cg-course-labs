@@ -1,8 +1,12 @@
 #include "../../../../pch.h"
-#include "../../../Common/Types/ColorTypes.h"
-#include "Rectangle.h"
+
 #include <format>
 #include <string>
+
+#include "ColorTypes.h"
+#include "GeometryTypes.h"
+#include "OpenGLPrimitive/Shapes/Rectangle/Rectangle.h"
+
 
 void Rectangle::Draw(GLuint program) const
 {
