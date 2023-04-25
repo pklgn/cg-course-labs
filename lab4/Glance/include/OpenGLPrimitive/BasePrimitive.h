@@ -1,6 +1,7 @@
 #pragma once
 // TODO: filled with knowledge why do I have to include glew here while he was added in pch file
 #include <GL/glew.h>
+#include <vector>
 #include "ColorTypes.h"
 #include "DimensionTypes.h"
 
@@ -28,14 +29,17 @@ public:
 
 protected:
 	void UpdateData();
+	void UpdateIndexData(const std::vector<unsigned int>& indices);
 	void ApplyModelTransform(GLuint program) const;
 	std::vector<RGB> GetVerticesColor(const std::vector<RGB>& colors, unsigned int verticesNumber) const;
 
 	// TODO: сделать отдельные обертки и сделать их вью онли
 	GLuint m_vao;
 	GLuint m_vbo;
+	GLuint m_ibo;
 	Size m_size;
 	float m_angle;
 	Vector3d m_position;
 	std::vector<GLfloat> m_verticesData;
+	std::vector<unsigned int> m_indicesData;
 };

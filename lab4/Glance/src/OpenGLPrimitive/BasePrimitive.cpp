@@ -11,6 +11,7 @@ BasePrimitive::BasePrimitive(Size size, Vector3d position, float angle)
 	, m_angle(angle)
 	, m_vao(0)
 	, m_vbo(0)
+	, m_ibo(0)
 {
 }
 
@@ -76,6 +77,18 @@ void BasePrimitive::UpdateData()
 
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
+
+	glBindVertexArray(0);
+}
+
+void BasePrimitive::UpdateIndexData(const std::vector<unsigned int>& indices)
+{
+	glBindVertexArray(m_vao);
+	// TODO: [high] исправить ситуацию с требуемым порядком вызова сначала UpdateData() в начале перед UpdateIndexData()
+	m_indicesData = indices;
+	glGenBuffers(1, &m_ibo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indicesData.size() * sizeof(m_indicesData.at(0)), m_indicesData.data(), GL_STATIC_DRAW);
 
 	glBindVertexArray(0);
 }
