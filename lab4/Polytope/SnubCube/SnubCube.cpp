@@ -132,7 +132,7 @@ SnubCube::SnubCube(Size size, Vector3d position, const std::vector<RGB>& /*color
 		17, 22, 23, 18
 	};
 
-	auto normals = CalculateNormals(vertices, indecies, { {}, {} });
+	auto normals = CalculateNormals(vertices, indecies, { {3, 32}, {4, 6} });
 
 	std::vector<GLfloat> verticesData;
 	for (int i = 0; i < (int)m_verticesNumber; ++i)
@@ -153,12 +153,13 @@ void SnubCube::Draw(GLuint program) const
 	glBindVertexArray(m_vao);
 
 	ApplyModelTransform(program);
+	ShaderProgram::SetVec3(program, "u_objectColor", 1.0f, 0.5f, 0.31f);
 	ShaderProgram::SetVec3(program, "u_lightColor", 1.0f, 1.0f, 1.0f);
-	ShaderProgram::SetVec3(program, "u_lightPos", 1.2f, 1.0f, 2.0f);
+	ShaderProgram::SetVec3(program, "u_lightPos", 100.2f, 100.0f, 100.0f);
 
 	if (m_ibo != 0)
 	{
-		glDrawElements(GL_LINE_STRIP, (GLsizei)m_indicesData.size(), GL_UNSIGNED_INT, nullptr);
+		glDrawElements(GL_POLYGON, (GLsizei)m_indicesData.size(), GL_UNSIGNED_INT, nullptr);
 	}
 	else
 	{
@@ -170,12 +171,12 @@ void SnubCube::Draw(GLuint program) const
 
 std::vector<Vector3d> SnubCube::CalculateNormals(const std::vector<Vector3d>& vertices, const std::vector<unsigned int>& indices, const std::unordered_map<int, int>& faceVertexCountTofaceCount) const
 {
-	std::vector<Vector3d> normals(vertices.size(), { 0, 0, 0 });
+	std::vector<Vector3d> normals(vertices.size(), { 0.1, 0.1, 0.1 });
 	int offset = 0;
 	for (const auto [faceVertexCount, faceCount] : faceVertexCountTofaceCount)
 	{
 		// бегаем по вектору индексов
-		for (int i = offset; i < faceCount; i+=faceVertexCount)
+		for (int i = offset; i < faceCount * faceVertexCount + offset; i+=faceVertexCount)
 		{
 			auto firstPointIndex = indices.at(i);
 			auto secondPointIndex = indices.at(i + 1);
@@ -190,9 +191,9 @@ std::vector<Vector3d> SnubCube::CalculateNormals(const std::vector<Vector3d>& ve
 
 			auto result = glm::cross(firstVector, secondVector);
 			result = glm::normalize(result);
-			normals[firstPointIndex] + Vector3d{ result.x, result.y, result.z };
-			normals[firstPointIndex] + Vector3d{ result.x, result.y, result.z };
-			normals[firstPointIndex] + Vector3d{ result.x, result.y, result.z };
+			normals[firstPointIndex] = normals[firstPointIndex] + Vector3d{ result.x, result.y, result.z };
+			normals[secondPointIndex] = normals[secondPointIndex] + Vector3d{ result.x, result.y, result.z };
+			normals[thirdPointIndex] = normals[thirdPointIndex] + Vector3d{ result.x, result.y, result.z };
 		}
 		offset += faceCount;
 	}

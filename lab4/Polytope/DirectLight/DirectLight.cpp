@@ -4,9 +4,9 @@ DirectLight::DirectLight(Vector3d const& lightDirection)
 	: m_direction(lightDirection)
 {
 	// TODO: вынести значения освещения по умолчанию в конфиг
-	SetDiffuseIntensity(0.8, 0.8, 0.8, 1);
-	SetAmbientIntensity(0.2, 0.2, 0.2, 1);
-	SetSpecularIntensity(0.5, 0.5, 0.5, 1);
+	SetDiffuseIntensity(0.8f, 0.8f, 0.8f, 1.f);
+	SetAmbientIntensity(0.2f, 0.2f, 0.2f, 1.f);
+	SetSpecularIntensity(0.5f, 0.5f, 0.5f, 1.f);
 }
 
 void DirectLight::SetDirection(Vector3d const& direction)
