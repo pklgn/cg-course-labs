@@ -10,7 +10,6 @@ SnubCube::SnubCube(Size size, Vector3d position, float angle)
 	: BasePrimitive(size, position, angle)
 {
 	// FIXED: сделать чтение из файла
-	
 	PolytopeReader polytopeReader("SnubCube.txt");
 	std::vector<Vector3d> vertices;
 	std::vector<unsigned int> indexes;

@@ -26,6 +26,11 @@ BasePrimitive::~BasePrimitive()
 	// Освобождаем ресурсы
 	glDeleteBuffers(1, &m_vbo);
 	glDeleteVertexArrays(1, &m_vao);
+	
+	if (m_ibo != 0)
+	{
+		glDeleteBuffers(1, &m_ibo);
+	}
 }
 
 void BasePrimitive::SetVerticesData(const std::vector<GLfloat>& vertices)
