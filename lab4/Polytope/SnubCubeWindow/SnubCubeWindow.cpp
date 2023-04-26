@@ -25,7 +25,7 @@ void SnubCubeWindow::UpdateUVMatrices(int width, int height)
 	GLint viewLoc = glGetUniformLocation(m_shaderProgram, "u_view");
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 
-	glm::mat4 projection = glm::perspective(glm::radians(45.f), (float)width / (float)height, 0.1f, 100.0f);
+	glm::mat4 projection = glm::perspective(glm::radians(45.f), (float)(width + 1) / (float)(height + 1), 0.1f, 100.0f);
 	GLint projectionLoc = glGetUniformLocation(m_shaderProgram, "u_projection");
 	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 	glViewport(0, 0, width, height);
