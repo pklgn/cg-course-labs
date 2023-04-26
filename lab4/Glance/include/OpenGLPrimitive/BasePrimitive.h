@@ -31,7 +31,7 @@ public:
 protected:
 	void UpdateVerticesData();
 	void UpdateIndexData(const std::vector<unsigned int>& indices);
-	virtual std::vector<Vector3d> CalculateNormals(const std::vector<Vector3d>& vertices, const std::vector<unsigned int>& indices, const std::unordered_map<int, int>& faceVertexCountTofaceCount) const = 0;
+	virtual void CalculateNormals(std::vector<Vector3d>& normals, const std::vector<Vector3d>& vertices) const = 0;
 	void ApplyModelTransform(GLuint program) const;
 	std::vector<RGB> GetVerticesColor(const std::vector<RGB>& colors, unsigned int verticesNumber) const;
 

@@ -15,6 +15,10 @@ BasePrimitive::BasePrimitive(Size size, Vector3d position, float angle)
 {
 	glGenVertexArrays(1, &m_vao);
 	glGenBuffers(1, &m_vbo);
+
+	glBindVertexArray(m_vao);
+	glEnable(GL_DEPTH_TEST);
+	glBindVertexArray(0);
 }
 
 BasePrimitive::~BasePrimitive()
@@ -101,10 +105,11 @@ void BasePrimitive::UpdateIndexData(const std::vector<unsigned int>& indices)
 
 void BasePrimitive::ApplyModelTransform(GLuint program) const
 {
-	auto rotate = glm::rotate(glm::mat4(1.0f), float(m_angle * 3.14 / 180), glm::vec3(0.0f, 0.0f, 1.0f));
-	auto scale = glm::scale(glm::mat4(1.0f), glm::vec3(float(m_size.width / 2), float(m_size.height / 2), 1.0f));
-	auto trans = glm::translate(glm::mat4(1.0f), glm::vec3(float(m_position.x), float(m_position.y), float(m_position.z)));
-	auto result = trans * rotate * scale;
+	//auto rotate = glm::rotate(glm::mat4(1.0f), float(m_angle * 3.14 / 180), glm::vec3(0.0f, 0.0f, 1.0f));
+	//auto scale = glm::scale(glm::mat4(1.0f), glm::vec3(float(m_size.width / 2), float(m_size.height / 2), 1.0f));
+	//auto trans = glm::translate(glm::mat4(1.0f), glm::vec3(float(m_position.x), float(m_position.y), float(m_position.z)));
+	//auto result = trans * rotate * scale;
+	auto result = glm::mat4(1.0f);
 	GLint modelLoc = glGetUniformLocation(program, "u_model");
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(result));
 }

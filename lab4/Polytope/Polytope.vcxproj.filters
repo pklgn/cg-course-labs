@@ -27,6 +27,9 @@
     <ClCompile Include="DirectLight\DirectLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PolytopeReader\PolytopeReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SnubCubeWindow\SnubCubeWindow.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DirectLight\DirectLight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PolytopeReader\PolytopeReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -134,6 +134,7 @@
   <ItemGroup>
     <ClCompile Include="DirectLight\DirectLight.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PolytopeReader\PolytopeReader.cpp" />
     <ClCompile Include="SnubCubeWindow\SnubCubeWindow.cpp" />
     <ClCompile Include="SnubCube\SnubCube.cpp" />
   </ItemGroup>
@@ -144,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectLight\DirectLight.h" />
+    <ClInclude Include="PolytopeReader\PolytopeReader.h" />
     <ClInclude Include="SnubCubeWindow\SnubCubeWindow.h" />
     <ClInclude Include="SnubCube\SnubCube.h" />
   </ItemGroup>
