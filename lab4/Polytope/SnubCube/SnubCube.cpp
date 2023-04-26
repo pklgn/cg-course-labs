@@ -42,21 +42,14 @@ void SnubCube::Draw(GLuint program) const
 	ShaderProgram::SetVec3(program, "u_lightColor", 1.0f, 1.0f, 1.0f);
 	ShaderProgram::SetVec3(program, "u_lightPos", 10.2f, 10.0f, 10.0f);
 
-	if (m_ibo != 0)
-	{
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_FRONT); // отбраковываем лицевые (ближние) грани
-		glDrawElements(GL_TRIANGLES, (GLsizei)m_indicesData.size() , GL_UNSIGNED_INT, nullptr);
-		glCullFace(GL_BACK);
-		glDrawElements(GL_TRIANGLES, (GLsizei)m_indicesData.size(), GL_UNSIGNED_INT, nullptr);
-	}
-	else
-	{
-		glDrawArrays(GL_LINE_STRIP, 0, m_verticesNumber);
-	}
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_FRONT); // отбраковываем лицевые (ближние) грани
+	glDrawElements(GL_TRIANGLES, (GLsizei)m_indicesData.size(), GL_UNSIGNED_INT, nullptr);
+	glCullFace(GL_BACK);
+	glDrawElements(GL_TRIANGLES, (GLsizei)m_indicesData.size(), GL_UNSIGNED_INT, nullptr);
 
 	glBindVertexArray(0);
 }

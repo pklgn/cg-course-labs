@@ -11,5 +11,4 @@ public:
 
 private:
 	void CalculateNormals(std::vector<Vector3d>& normals, const std::vector<Vector3d>& vertices) const override;
-	unsigned int m_verticesNumber;
 };
