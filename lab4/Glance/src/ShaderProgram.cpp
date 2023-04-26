@@ -20,6 +20,11 @@ unsigned int ShaderProgram::CreateShaderProgram(const char* vp, const char* fp)
 	return vfprogram;
 }
 
+void ShaderProgram::SetVec3(unsigned int shaderProgram, const std::string& name, float x, float y, float z)
+{
+	glUniform3f(glGetUniformLocation(shaderProgram, name.c_str()), x, y, z);
+}
+
 std::string ShaderProgram::ReadShaderFile(const char* filePath)
 {
 	std::string content;

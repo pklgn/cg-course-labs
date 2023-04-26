@@ -32,7 +32,7 @@ QuadraticBezier::QuadraticBezier(Size size, Vector3d position, const Curve4d& co
 	}
 
 	SetVerticesData(bezierPoints);
-	UpdateData();
+	UpdateVerticesData();
 }
 
 void QuadraticBezier::Draw(GLuint program) const

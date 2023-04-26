@@ -30,7 +30,7 @@ CubicBezier::CubicBezier(
 	}
 
 	SetVerticesData(bezierPoints);
-	UpdateData();
+	UpdateVerticesData();
 }
 
 void CubicBezier::Draw(GLuint program) const

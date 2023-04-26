@@ -10,5 +10,6 @@ public:
 	void Draw(GLuint program) const override;
 
 private:
+	std::vector<Vector3d> CalculateNormals(const std::vector<Vector3d>& vertices, const std::vector<unsigned int>& indices, const std::unordered_map<int, int>& faceVertexCountTofaceCount) const override;
 	unsigned int m_verticesNumber;
 };

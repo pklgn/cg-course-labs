@@ -44,5 +44,5 @@ Rectangle::Rectangle(Size size, Vector3d position, const std::vector<RGB>& color
 	};
 
 	SetVerticesData(vertices);
-	UpdateData();
+	UpdateVerticesData();
 }

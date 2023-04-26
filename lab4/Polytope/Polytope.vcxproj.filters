@@ -24,12 +24,18 @@
     <ClCompile Include="SnubCube\SnubCube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DirectLight\DirectLight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SnubCubeWindow\SnubCubeWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SnubCube\SnubCube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectLight\DirectLight.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

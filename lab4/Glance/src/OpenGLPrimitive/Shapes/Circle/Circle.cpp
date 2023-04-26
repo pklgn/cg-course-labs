@@ -27,7 +27,7 @@ Circle::Circle(Size size, Vector3d position, const std::vector<RGB>& colors, flo
 	}
 	
 	SetVerticesData(vertices);
-	UpdateData();
+	UpdateVerticesData();
 }
 
 void Circle::Draw(GLuint program) const

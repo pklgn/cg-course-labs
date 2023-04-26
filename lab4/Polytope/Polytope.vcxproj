@@ -106,6 +106,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)vcpkg_installed\x64-windows-static\include;$(SolutionDir)Glance\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -131,6 +132,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DirectLight\DirectLight.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SnubCubeWindow\SnubCubeWindow.cpp" />
     <ClCompile Include="SnubCube\SnubCube.cpp" />
@@ -141,6 +143,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DirectLight\DirectLight.h" />
     <ClInclude Include="SnubCubeWindow\SnubCubeWindow.h" />
     <ClInclude Include="SnubCube\SnubCube.h" />
   </ItemGroup>
