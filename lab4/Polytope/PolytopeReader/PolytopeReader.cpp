@@ -55,5 +55,4 @@ void PolytopeReader::Read(std::vector<Vector3d>& vertices, std::vector<unsigned 
 		colors.push_back(color);
 		colors.push_back(color);
 	}
-	int a;
 }

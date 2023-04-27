@@ -107,6 +107,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)vcpkg_installed\x64-windows-static\include;$(SolutionDir)Glance\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/NODEFAULTLIB:libcmt.lib </AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
