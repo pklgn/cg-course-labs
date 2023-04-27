@@ -3,9 +3,12 @@
 #include "SnubCubeWindow.h"
 #include "../SnubCube/SnubCube.h"
 
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
+
 SnubCubeWindow::SnubCubeWindow(int w, int h, const char* title)
 	: BaseWindow(w, h, title)
 {
+	glfwSetKeyCallback(m_window, key_callback);  
 	//// TODO: вынести в класс приложения
 	// Включаем режим отбраковки граней
 	glEnable(GL_CULL_FACE);
@@ -21,7 +24,7 @@ SnubCubeWindow::SnubCubeWindow(int w, int h, const char* title)
 
 void SnubCubeWindow::UpdateUVMatrices(int width, int height)
 {
-	GLfloat radius = 10.0f;
+	GLfloat radius = 3.0f;
 	GLfloat camX = sin(glfwGetTime()) * radius;
 	GLfloat camZ = cos(glfwGetTime()) * radius;
 	glm::mat4 view;
@@ -44,4 +47,12 @@ void SnubCubeWindow::Draw(int width, int height)
 
 	SnubCube snubCube({ 1, 1 }, { 0, 0 });
 	snubCube.Draw(m_shaderProgram);
+}
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
+{
+	// Когда пользователь нажимает ESC, мы устанавливаем свойство WindowShouldClose в true,
+	// и приложение после этого закроется
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, GL_TRUE);
 }
