@@ -16,6 +16,7 @@ SnubCube::SnubCube(Size size, Vector3d position, float angle)
 	std::vector<RGB> colors;
 	polytopeReader.Read(vertices, indexes, colors);
 
+	// TODO: сделать возвращаемым значения
 	std::vector<Vector3d> normals;
 	CalculateNormals(normals, vertices);
 

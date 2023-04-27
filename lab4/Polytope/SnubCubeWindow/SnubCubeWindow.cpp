@@ -25,8 +25,8 @@ SnubCubeWindow::SnubCubeWindow(int w, int h, const char* title)
 void SnubCubeWindow::UpdateUVMatrices(int width, int height)
 {
 	GLfloat radius = 3.0f;
-	GLfloat camX = sin(glfwGetTime()) * radius;
-	GLfloat camZ = cos(glfwGetTime()) * radius;
+	GLfloat camX = (GLfloat)(sin(glfwGetTime()) * radius);
+	GLfloat camZ = (GLfloat)(cos(glfwGetTime()) * radius);
 	glm::mat4 view;
 	view = glm::lookAt(glm::vec3(camX, 2, camZ), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 	GLint viewLoc = glGetUniformLocation(m_shaderProgram, "u_view");

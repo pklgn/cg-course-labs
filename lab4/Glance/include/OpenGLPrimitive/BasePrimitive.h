@@ -28,9 +28,13 @@ public:
 
 	virtual void Draw(GLuint program) const = 0;
 
+	BasePrimitive(const BasePrimitive&) = delete;
+	BasePrimitive& operator=(const BasePrimitive&) = delete;
+
 protected:
 	void UpdateVerticesData();
 	void UpdateIndexData(const std::vector<unsigned int>& indices);
+
 	virtual void CalculateNormals(std::vector<Vector3d>& normals, const std::vector<Vector3d>& vertices) const = 0;
 	void ApplyModelTransform(GLuint program) const;
 	std::vector<RGB> GetVerticesColor(const std::vector<RGB>& colors, unsigned int verticesNumber) const;
