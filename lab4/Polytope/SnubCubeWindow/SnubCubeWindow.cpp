@@ -11,18 +11,20 @@ SnubCubeWindow::SnubCubeWindow(int w, int h, const char* title)
 	glfwSetKeyCallback(m_window, key_callback);  
 	//// TODO: вынести в класс приложения
 	// Включаем режим отбраковки граней
-	glEnable(GL_CULL_FACE);
-	// Отбраковываться будут нелицевые стороны граней
-	glCullFace(GL_BACK);
-	// Сторона примитива считается лицевой, если при ее рисовании
-	// обход верших осуществляется против часовой стрелки
-	glFrontFace(GL_CCW);
 
-	// Включаем тест глубины для удаления невидимых линий и поверхностей
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_DEPTH_TEST);
+
+	m_snubCubePtr = std::make_unique<SnubCube>(Size{ 1, 1 }, Vector3d{ 0, 0 });
+
+	glm::mat4 projection = glm::perspective(glm::radians(45.f), (float)(w + 1) / (float)(h + 1), 0.1f, 100.0f);
+	GLint projectionLoc = glGetUniformLocation(m_shaderProgram, "u_projection");
+	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
+	glViewport(0, 0, w, h);
 }
 
-void SnubCubeWindow::UpdateUVMatrices(int width, int height)
+void SnubCubeWindow::UpdateVPMatrices(int width, int height)
 {
 	GLfloat radius = 3.0f;
 	GLfloat camX = (GLfloat)(sin(glfwGetTime()) * radius);
@@ -31,11 +33,6 @@ void SnubCubeWindow::UpdateUVMatrices(int width, int height)
 	view = glm::lookAt(glm::vec3(camX, 2, camZ), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 	GLint viewLoc = glGetUniformLocation(m_shaderProgram, "u_view");
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-
-	glm::mat4 projection = glm::perspective(glm::radians(45.f), (float)(width + 1) / (float)(height + 1), 0.1f, 100.0f);
-	GLint projectionLoc = glGetUniformLocation(m_shaderProgram, "u_projection");
-	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
-	glViewport(0, 0, width, height);
 }
 
 void SnubCubeWindow::Draw(int width, int height)
@@ -43,10 +40,16 @@ void SnubCubeWindow::Draw(int width, int height)
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	UpdateUVMatrices(width, height);
-
-	SnubCube snubCube({ 1, 1 }, { 0, 0 });
-	snubCube.Draw(m_shaderProgram);
+	UpdateVPMatrices(width, height);
+	glEnable(GL_CULL_FACE);
+	// Отбраковываться будут нелицевые стороны граней
+	glCullFace(GL_FRONT);
+	m_snubCubePtr->Draw(m_shaderProgram);
+	// Сторона примитива считается лицевой, если при ее рисовании
+	// обход верших осуществляется против часовой стрелки
+	glCullFace(GL_BACK);
+	// Включаем тест глубины для удаления невидимых линий и поверхностей
+	m_snubCubePtr->Draw(m_shaderProgram);
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)

@@ -1,5 +1,5 @@
 ﻿#include "../../pch.h"
-
+#include "OpenGLLog.h"
 #include "OpenGLPrimitive/BasePrimitive.h"
 
 

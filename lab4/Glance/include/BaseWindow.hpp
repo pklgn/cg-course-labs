@@ -13,7 +13,16 @@ public:
 		{
 			throw std::runtime_error("Failed to create window");
 		}
-		m_time = glfwGetTime();
+		glfwMakeContextCurrent(m_window);
+
+		if (glewInit() != GLEW_OK)
+		{
+			std::cout << "Error!\n";
+		}
+
+		m_shaderProgram = ShaderProgram::CreateShaderProgram("Shaders/Vertex.shader", "Shaders/Fragment.shader");
+		glUseProgram(m_shaderProgram);
+
 	}
 	BaseWindow(const BaseWindow&) = delete;
 	BaseWindow& operator=(const BaseWindow&) = delete;
@@ -25,15 +34,6 @@ public:
 
 	void Run()
 	{
-		glfwMakeContextCurrent(m_window);
-
-		if (glewInit() != GLEW_OK)
-		{
-			std::cout << "Error!\n";
-		}
-
-		m_shaderProgram = ShaderProgram::CreateShaderProgram("Shaders/Vertex.shader", "Shaders/Fragment.shader");
-		glUseProgram(m_shaderProgram);
 
 		while (!glfwWindowShouldClose(m_window))
 		{
@@ -48,7 +48,6 @@ public:
 protected:
 	GLFWwindow* m_window;
 	unsigned int m_shaderProgram;
-	double m_time;
 
 private:
 	virtual void Draw(int width, int height) = 0;
