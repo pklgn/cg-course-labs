@@ -88,13 +88,47 @@ void ShaderProgram::Link()
 
 		throw std::runtime_error(log.data());
 	}
-
-
 }
 
 void ShaderProgram::Use()
 {
 	glUseProgram(m_id);
+}
+
+void ShaderProgram::SetUniform1f(const char* name, float value)
+{
+	GLint location = glGetUniformLocation(m_id, name);
+	glUniform1f(location, value);
+}
+
+void ShaderProgram::SetUniform1i(const char* name, int value)
+{
+	GLint location = glGetUniformLocation(m_id, name);
+	glUniform1i(location, value);
+}
+
+void ShaderProgram::SetUniform2f(const char* name, glm::vec2 value)
+{
+	GLint location = glGetUniformLocation(m_id, name);
+	glUniform2f(location, value.x, value.y);
+}
+
+void ShaderProgram::SetUniform3f(const char* name, glm::vec3 value)
+{
+	GLint location = glGetUniformLocation(m_id, name);
+	glUniform3f(location, value.x, value.y, value.z);
+}
+
+void ShaderProgram::SetUniform4f(const char* name, glm::vec4 value)
+{
+	GLint location = glGetUniformLocation(m_id, name);
+	glUniform4f(location, value.x, value.y, value.z, value.w);
+}
+
+void ShaderProgram::SetUniform4fv(const char* name, glm::mat4 value)
+{
+	GLint location = glGetUniformLocation(m_id, name);
+	glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));
 }
 
 }; // namespace glance

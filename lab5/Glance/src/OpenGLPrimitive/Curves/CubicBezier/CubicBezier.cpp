@@ -1,7 +1,7 @@
 #include "../../../../pch.h"
 
-#include "ColorTypes.h"
-#include "DimensionTypes.h"
+#include "Types/ColorTypes.h"
+#include "Types/DimensionTypes.h"
 #include "OpenGLPrimitive/Curves/CubicBezier/CubicBezier.h"
 
 CubicBezier::CubicBezier(

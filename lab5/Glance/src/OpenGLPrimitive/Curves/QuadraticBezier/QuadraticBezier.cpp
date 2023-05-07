@@ -1,7 +1,7 @@
 #include "../../../../pch.h"
 
-#include <GeometryTypes.h>
-#include <ColorTypes.h>
+#include <Types/GeometryTypes.h>
+#include <Types/ColorTypes.h>
 #include <OpenGLPrimitive/BasePrimitive.h>
 #include "OpenGLPrimitive/Curves/QuadraticBezier/QuadraticBezier.h"
 

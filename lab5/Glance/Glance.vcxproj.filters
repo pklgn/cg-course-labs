@@ -39,13 +39,13 @@
     <ClInclude Include="include\BaseWindow.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\ColorTypes.h">
+    <ClInclude Include="include\Types\ColorTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\DimensionTypes.h">
+    <ClInclude Include="include\Types\DimensionTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\GeometryTypes.h">
+    <ClInclude Include="include\Types\GeometryTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\GLFWInitializer.hpp">
@@ -92,13 +92,13 @@
     <ClCompile Include="src\ShaderProgram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Transform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\VertexBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VertexArray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

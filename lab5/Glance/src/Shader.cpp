@@ -59,4 +59,4 @@ std::string Shader::ReadShaderFile(const char* filePath)
 	return content;
 }
 
-}
+}; // namespace glance

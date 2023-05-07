@@ -3,7 +3,8 @@
 #include <stdexcept>
 #include "ShaderProgram.h"
 
-using namespace glance;
+namespace glance
+{
 
 class BaseWindow
 {
@@ -23,7 +24,6 @@ public:
 		}
 
 		m_shaderProgram = ShaderProgram("Shaders/Vertex.shader", "Shaders/Fragment.shader");
-
 	}
 	BaseWindow(const BaseWindow&) = delete;
 	BaseWindow& operator=(const BaseWindow&) = delete;
@@ -59,3 +59,5 @@ private:
 		return glfwCreateWindow(w, h, title, nullptr, nullptr);
 	}
 };
+
+}; // namespace

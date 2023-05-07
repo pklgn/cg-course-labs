@@ -3,8 +3,8 @@
 #include <GL/glew.h>
 #include <vector>
 #include <unordered_map>
-#include "ColorTypes.h"
-#include "DimensionTypes.h"
+#include "Types/ColorTypes.h"
+#include "Types/DimensionTypes.h"
 
 class BasePrimitive
 {

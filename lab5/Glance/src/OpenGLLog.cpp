@@ -2,6 +2,9 @@
 
 #include "OpenGLLog.h"
 
+namespace glance
+{
+
 void OpenGLLog::PrintShaderLog(unsigned int shader)
 {
 	int len = 0;
@@ -45,3 +48,5 @@ bool OpenGLLog::CheckOpenGLError()
 
 	return wasError;
 }
+
+}; // namespace glance

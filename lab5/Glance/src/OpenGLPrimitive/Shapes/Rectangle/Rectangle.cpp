@@ -3,8 +3,8 @@
 #include <format>
 #include <string>
 
-#include "ColorTypes.h"
-#include "GeometryTypes.h"
+#include "Types/ColorTypes.h"
+#include "Types/GeometryTypes.h"
 #include "OpenGLPrimitive/Shapes/Rectangle/Rectangle.h"
 
 
