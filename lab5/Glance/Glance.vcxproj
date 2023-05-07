@@ -175,9 +175,10 @@
     <ClInclude Include="include\OpenGLPrimitive\Curves\QuadraticBezier\QuadraticBezier.h" />
     <ClInclude Include="include\OpenGLPrimitive\Shapes\Circle\Circle.h" />
     <ClInclude Include="include\OpenGLPrimitive\Shapes\Rectangle\Rectangle.h" />
+    <ClInclude Include="include\Shader.h" />
     <ClInclude Include="include\ShaderProgram.h" />
-    <ClInclude Include="include\Transform.h" />
-    <ClInclude Include="include\VertexBuffer.hpp" />
+    <ClInclude Include="include\VertexArray.h" />
+    <ClInclude Include="include\VertexBuffer.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -211,6 +212,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../../pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../../../pch.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\ShaderProgram.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../pch.h</PrecompiledHeaderFile>
@@ -219,6 +221,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../pch.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="src\VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json" />
