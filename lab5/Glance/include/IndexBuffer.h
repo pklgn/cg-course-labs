@@ -4,11 +4,11 @@
 namespace glance
 {
 
-class IndexBufferObject
+class IndexBuffer
 {
 public:
-	IndexBufferObject();
-	~IndexBufferObject();
+	IndexBuffer();
+	~IndexBuffer();
 
 	void Bind() const;
 	void Unbind() const;
