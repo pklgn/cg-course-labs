@@ -17,13 +17,15 @@ public:
 			throw std::runtime_error("Failed to create window");
 		}
 		glfwMakeContextCurrent(m_window);
+		glfwSwapInterval(1);
 
 		if (glewInit() != GLEW_OK)
 		{
 			std::cout << "Error!\n";
 		}
 
-		m_shaderProgram = ShaderProgram("Shaders/Vertex.shader", "Shaders/Fragment.shader");
+		m_shaderProgram = std::make_unique<ShaderProgram>("Shaders/Vertex.shader", "Shaders/Fragment.shader");
+		m_shaderProgram->Use();
 	}
 	BaseWindow(const BaseWindow&) = delete;
 	BaseWindow& operator=(const BaseWindow&) = delete;
@@ -35,7 +37,6 @@ public:
 
 	void Run()
 	{
-
 		while (!glfwWindowShouldClose(m_window))
 		{
 			int w, h;
@@ -48,7 +49,7 @@ public:
 
 protected:
 	GLFWwindow* m_window;
-	ShaderProgram m_shaderProgram;
+	std::unique_ptr<ShaderProgram> m_shaderProgram;
 
 private:
 	virtual void Draw(int width, int height) = 0;

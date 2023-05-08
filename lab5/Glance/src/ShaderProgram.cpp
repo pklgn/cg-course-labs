@@ -33,12 +33,11 @@ ShaderProgram::ShaderProgram(const std::string& vertexPath, const std::string& f
 	Shader vertexShader(GL_VERTEX_SHADER);
 	vertexShader.LoadFileSource(vertexPath.c_str());
 	vertexShader.Compile();
+	AttachShader(vertexShader);
 
 	Shader fragmentShader(GL_FRAGMENT_SHADER);
-	vertexShader.LoadFileSource(fragmentPath.c_str());
-	vertexShader.Compile();
-
-	AttachShader(vertexShader);
+	fragmentShader.LoadFileSource(fragmentPath.c_str());
+	fragmentShader.Compile();
 	AttachShader(fragmentShader);
 
 	Link();
@@ -60,9 +59,10 @@ void glance::ShaderProgram::AttachShader(const Shader& shader)
 	{
 		GLint length = 0;
 		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &length);
-		std::vector<GLchar> log(length);
-		glGetShaderInfoLog(shader, length, nullptr, log.data());
-		throw std::runtime_error(log.data());
+		GLchar* infoLog = new GLchar[length];
+		glGetShaderInfoLog(shader, length, nullptr, infoLog);
+		std::cout << infoLog << std::endl;
+		throw std::runtime_error(infoLog);
 	}
 
 	glAttachShader(m_id, shader);
@@ -129,6 +129,11 @@ void ShaderProgram::SetUniform4fv(const char* name, glm::mat4 value)
 {
 	GLint location = glGetUniformLocation(m_id, name);
 	glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));
+}
+
+ShaderProgram::operator GLuint() const
+{
+	return m_id;
 }
 
 }; // namespace glance

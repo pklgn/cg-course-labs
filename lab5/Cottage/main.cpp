@@ -1,13 +1,13 @@
 #include <gl/glew.h>
 #include <GLFW/glfw3.h>
 #include <GLFWInitializer.hpp>
-#include "SnubCubeWindow/SnubCubeWindow.h"
+#include "CottageWindow/CottageWindow.h"
 
 int main(void)
 {
-	GLFWInitializer initGLFW;
+	glance::GLFWInitializer initGLFW;
 
-	SnubCubeWindow window(800, 600, "Snub Cube");
+	CottageWindow window(800, 600, "Cottage");
 
 	window.Run();
 }

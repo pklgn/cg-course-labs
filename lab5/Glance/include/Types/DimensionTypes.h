@@ -1,4 +1,5 @@
 #pragma once
+#include <cmath>
 
 // TODO: change postfix to f
 
@@ -36,7 +37,7 @@ struct Vector3d
 
 	float GetLength() const
 	{
-		return static_cast<float>(sqrt(x * x + y * y + z * z));
+		return static_cast<float>(std::sqrt(x * x + y * y + z * z));
 	}
 
 	// Нормализуем

@@ -27,6 +27,8 @@ public:
 	void SetUniform4f(const char* name, glm::vec4 value);
 	void SetUniform4fv(const char* name, glm::mat4 value);
 
+	operator GLuint() const;
+
 private:
 	GLuint m_id;
 };

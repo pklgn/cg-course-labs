@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <GL/glew.h>
 #include <array>
-#include "DimensionTypes.h"
+#include "Types/DimensionTypes.h"
 
 // TODO: вынести этот класс в библиотеку
 class DirectLight

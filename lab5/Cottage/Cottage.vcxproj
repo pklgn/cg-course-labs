@@ -104,10 +104,17 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)vcpkg_installed\x64-windows-static\include;$(SolutionDir)Glance\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>
+      </AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)vcpkg_installed\x64-windows-static\lib;$(SolutionDir)x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;OpenGL32.lib;shell32.lib;glu32.lib;glew32.lib;bcrypt.lib;Glance.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -127,15 +134,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Cottage\Cottage.cpp" />
     <ClCompile Include="DirectLight\DirectLight.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="SnubCubeWindow\SnubCubeWindow.cpp" />
+    <ClCompile Include="CottageWindow\CottageWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cottage\Cottage.h" />
     <ClInclude Include="DirectLight\DirectLight.h" />
-    <ClInclude Include="SnubCubeWindow\SnubCubeWindow.h" />
+    <ClInclude Include="CottageWindow\CottageWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Shaders\Fragment.shader" />
+    <None Include="Shaders\Vertex.shader" />
     <None Include="vcpkg.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
