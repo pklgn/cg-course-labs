@@ -27,6 +27,12 @@
     <ClCompile Include="Cottage\Cottage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Model\PolytopeReader\PolytopeReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Model\Cube\Cube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectLight\DirectLight.h">
@@ -38,10 +44,19 @@
     <ClInclude Include="Cottage\Cottage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Model\PolytopeReader\PolytopeReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\Cube\Cube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json" />
     <None Include="Shaders\Fragment.shader" />
     <None Include="Shaders\Vertex.shader" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Model\Assets\cube.txt" />
   </ItemGroup>
 </Project>

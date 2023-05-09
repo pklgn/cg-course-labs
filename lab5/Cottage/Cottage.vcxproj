@@ -138,16 +138,23 @@
     <ClCompile Include="DirectLight\DirectLight.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="CottageWindow\CottageWindow.cpp" />
+    <ClCompile Include="Model\Cube\Cube.cpp" />
+    <ClCompile Include="Model\PolytopeReader\PolytopeReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cottage\Cottage.h" />
     <ClInclude Include="DirectLight\DirectLight.h" />
     <ClInclude Include="CottageWindow\CottageWindow.h" />
+    <ClInclude Include="Model\Cube\Cube.h" />
+    <ClInclude Include="Model\PolytopeReader\PolytopeReader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\Fragment.shader" />
     <None Include="Shaders\Vertex.shader" />
     <None Include="vcpkg.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Model\Assets\cube.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

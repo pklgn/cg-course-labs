@@ -7,6 +7,6 @@
     "glad",
     "glm",
     "glew",
-    "boost-uuid"
+    "soil"
   ]
 }
