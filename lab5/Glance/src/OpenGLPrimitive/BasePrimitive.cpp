@@ -88,11 +88,11 @@ void BasePrimitive::UpdateVerticesData()
 	m_vao->Unbind();
 }
 
-void BasePrimitive::UpdateIndicesData(const std::vector<unsigned int>& indices)
+void BasePrimitive::UpdateIndicesData()
 {
 	m_vao->Bind();
 	// FIXED: [high] исправить ситуацию с требуемым порядком вызова сначала UpdateData() в начале перед UpdateIndexData()
-	m_ibo->SetData(m_indicesData.data(), m_indicesData.size(), GL_STATIC_DRAW);
+	m_ibo->SetData(m_indicesData.data(), static_cast<unsigned int>(m_indicesData.size()), GL_STATIC_DRAW);
 
 	m_vao->Unbind();
 }
@@ -104,3 +104,22 @@ void BasePrimitive::ApplyModelTransform(GLuint program) const
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(result));
 }
 
+std::vector<Vector3d> BasePrimitive::CalculateNormals(const std::vector<Vector3d>& vertices) const
+{
+	std::vector<Vector3d> normals;
+	auto vertexCount = vertices.size();
+	for (size_t i = 0; i < vertexCount; i += 3)
+	{
+		auto firstVector = glm::vec3(vertices[i + 1].x - vertices[i].x, vertices[i + 1].y - vertices[i].y, vertices[i + 1].z - vertices[i].z);
+		auto secondVector = glm::vec3(vertices[i + 2].x - vertices[i].x, vertices[i + 2].y - vertices[i].y, vertices[i + 2].z - vertices[i].z);
+
+		auto normal = glm::cross(firstVector, secondVector);
+		normal = glm::normalize(normal);
+
+		normals.push_back({ normal.x, normal.y, normal.z });
+		normals.push_back({ normal.x, normal.y, normal.z });
+		normals.push_back({ normal.x, normal.y, normal.z });
+	}
+
+	return normals;
+}

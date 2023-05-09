@@ -172,10 +172,6 @@
     <ClInclude Include="include\GLFWInitializer.hpp" />
     <ClInclude Include="include\OpenGLLog.h" />
     <ClInclude Include="include\OpenGLPrimitive\BasePrimitive.h" />
-    <ClInclude Include="include\OpenGLPrimitive\Curves\CubicBezier\CubicBezier.h" />
-    <ClInclude Include="include\OpenGLPrimitive\Curves\QuadraticBezier\QuadraticBezier.h" />
-    <ClInclude Include="include\OpenGLPrimitive\Shapes\Circle\Circle.h" />
-    <ClInclude Include="include\OpenGLPrimitive\Shapes\Rectangle\Rectangle.h" />
     <ClInclude Include="include\Shader.h" />
     <ClInclude Include="include\ShaderProgram.h" />
     <ClInclude Include="include\VertexArray.h" />
@@ -187,7 +183,9 @@
     <ClCompile Include="src\IndexBuffer.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="src\Texture.cpp" />
+    <ClCompile Include="src\Texture.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="src\VertexArray.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../pch.h</PrecompiledHeaderFile>
@@ -205,22 +203,6 @@
     <ClCompile Include="src\OpenGLPrimitive\BasePrimitive.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../pch.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="src\OpenGLPrimitive\Curves\CubicBezier\CubicBezier.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../../pch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../../../pch.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="src\OpenGLPrimitive\Curves\QuadraticBezier\QuadraticBezier.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../../pch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../../../pch.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="src\OpenGLPrimitive\Shapes\Circle\Circle.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../../pch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../../../pch.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="src\OpenGLPrimitive\Shapes\Rectangle\Rectangle.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../../pch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../../../pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="src\Shader.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>

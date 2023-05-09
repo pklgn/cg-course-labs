@@ -8,6 +8,7 @@
 #include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
+#include "ShaderProgram.h"
 
 class BasePrimitive
 {
@@ -34,18 +35,18 @@ public:
 	void SetAngle(float angle);
 	float GetAngle() const;
 
-	virtual void Draw(GLuint program) const = 0;
+	virtual void Draw(const glance::ShaderProgram& program) const = 0;
 
 	BasePrimitive(const BasePrimitive&) = delete;
 	BasePrimitive& operator=(const BasePrimitive&) = delete;
 
 protected:
 	void UpdateVerticesData();
-	void UpdateIndicesData(const std::vector<IndicesDataType>& indices);
+	void UpdateIndicesData();
 
 	void ApplyModelTransform(GLuint program) const;
 
-	virtual std::vector<Vector3d> CalculateNormals(const std::vector<Vector3d>& vertices) const = 0;
+	std::vector<Vector3d> CalculateNormals(const std::vector<Vector3d>& vertices) const;
 
 	// TODO: сделать отдельные обертки и сделать их вью онли
 	std::unique_ptr<glance::VertexArray> m_vao;

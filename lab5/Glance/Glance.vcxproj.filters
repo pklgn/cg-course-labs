@@ -21,18 +21,6 @@
     <ClInclude Include="include\GC\GC.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\OpenGLPrimitive\Curves\CubicBezier\CubicBezier.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\OpenGLPrimitive\Curves\QuadraticBezier\QuadraticBezier.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\OpenGLPrimitive\Shapes\Circle\Circle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\OpenGLPrimitive\Shapes\Rectangle\Rectangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\OpenGLPrimitive\BasePrimitive.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -75,18 +63,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OpenGLPrimitive\Curves\CubicBezier\CubicBezier.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OpenGLPrimitive\Curves\QuadraticBezier\QuadraticBezier.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OpenGLPrimitive\Shapes\Circle\Circle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OpenGLPrimitive\Shapes\Rectangle\Rectangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\OpenGLPrimitive\BasePrimitive.cpp">
