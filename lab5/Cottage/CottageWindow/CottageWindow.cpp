@@ -1,6 +1,4 @@
-﻿#include <OpenGLPrimitive/Shapes/Circle/Circle.h>
-#include <OpenGLPrimitive/Shapes/Rectangle/Rectangle.h>
-#include "CottageWindow.h"
+﻿#include "CottageWindow.h"
 #include "../Cottage/Cottage.h"
 
 using namespace glance;
@@ -11,12 +9,6 @@ CottageWindow::CottageWindow(int w, int h, const char* title)
 	: BaseWindow(w, h, title)
 {
 	glfwSetKeyCallback(m_window, key_callback);
-	//// TODO: вынести в класс приложения
-	// Включаем режим отбраковки граней
-
-	//glEnable(GL_BLEND);
-	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//glEnable(GL_DEPTH_TEST);
 
 	m_cottagePtr = std::make_unique<Cottage>(Size{ 1, 1 }, Vector3d{ 0, 0 });
 
@@ -42,15 +34,8 @@ void CottageWindow::Draw(int width, int height)
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	//UpdateVPMatrices(width, height);
-	//glEnable(GL_CULL_FACE);
-	// Отбраковываться будут нелицевые стороны граней
-	//glCullFace(GL_FRONT);
-	//m_cottagePtr->Draw(*m_shaderProgram);
-	// Сторона примитива считается лицевой, если при ее рисовании
-	// обход верших осуществляется против часовой стрелки
-	//glCullFace(GL_BACK);
-	// Включаем тест глубины для удаления невидимых линий и поверхностей
+	UpdateVPMatrices(width, height);
+
 	m_cottagePtr->Draw(*m_shaderProgram);
 }
 

@@ -8,6 +8,7 @@ out vec4 fragColor;
 
 uniform vec3 u_lightPos;
 uniform vec3 u_lightColor;
+uniform vec3 u_objectColor;
 
 void main()
 {

@@ -6,7 +6,7 @@ using namespace glance;
 Cube::Cube(Size size, Vector3d position, float angle)
 	: BasePrimitive(size, position, angle)
 {
-	PolytopeReader polytopeReader("SnubCube.txt");
+	PolytopeReader polytopeReader("Model\\Assets\\cube.txt");
 	std::vector<Vector3d> vertices;
 	std::vector<unsigned int> indices;
 	std::vector<RGB> colors;

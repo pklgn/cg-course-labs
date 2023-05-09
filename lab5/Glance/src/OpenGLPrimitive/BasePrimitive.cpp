@@ -8,8 +8,8 @@ BasePrimitive::BasePrimitive(Size size, Vector3d position, float angle)
 	: m_size(size)
 	, m_position(position)
 	, m_angle(angle)
-	, m_vao()
-	, m_ibo()
+	, m_vao(std::make_unique<glance::VertexArray>())
+	, m_ibo(std::make_unique<glance::IndexBuffer>())
 {
 	m_vao->Bind();
 	glEnable(GL_DEPTH_TEST);
@@ -74,10 +74,10 @@ float BasePrimitive::GetAngle() const
 // FIXED: переименовать в SetupVerticesData или что-то такое?
 void BasePrimitive::UpdateVerticesData()
 {
-	m_vao->Bind();
-
 	m_vbo = std::make_unique<VertexBuffer>(m_verticesData.data(), sizeof(VerticesDataType) * m_verticesData.size(), GL_STATIC_DRAW);
 
+	m_vao->Bind();
+	m_vbo->Bind();
 	// position
 	m_vbo->BindAttribPointer(0, GL_FLOAT, 3, (3 + 3 + 3) * sizeof(GLfloat), (GLvoid*)0);
 	// color
@@ -91,7 +91,7 @@ void BasePrimitive::UpdateVerticesData()
 void BasePrimitive::UpdateIndicesData()
 {
 	m_vao->Bind();
-	// FIXED: [high] исправить ситуацию с требуемым порядком вызова сначала UpdateData() в начале перед UpdateIndexData()
+
 	m_ibo->SetData(m_indicesData.data(), static_cast<unsigned int>(m_indicesData.size()), GL_STATIC_DRAW);
 
 	m_vao->Unbind();
