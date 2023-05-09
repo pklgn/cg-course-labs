@@ -2,45 +2,43 @@
 #include "OpenGLLog.h"
 #include "OpenGLPrimitive/BasePrimitive.h"
 
-
-const RGB BasePrimitive::DEFAULT_COLOR = { 1.f, 1.f, 1.f };
+using namespace glance;
 
 BasePrimitive::BasePrimitive(Size size, Vector3d position, float angle)
 	: m_size(size)
 	, m_position(position)
 	, m_angle(angle)
-	, m_vao(0)
-	, m_vbo(0)
-	, m_ibo(0)
+	, m_vao()
+	, m_ibo()
 {
-	glGenVertexArrays(1, &m_vao);
-	glGenBuffers(1, &m_vbo);
-
-	glBindVertexArray(m_vao);
+	m_vao->Bind();
 	glEnable(GL_DEPTH_TEST);
-	glBindVertexArray(0);
+	m_vao->Unbind();
 }
 
 BasePrimitive::~BasePrimitive()
 {
-	// Освобождаем ресурсы
-	glDeleteBuffers(1, &m_vbo);
-	glDeleteVertexArrays(1, &m_vao);
-	
-	if (m_ibo != 0)
-	{
-		glDeleteBuffers(1, &m_ibo);
-	}
+	// TODO: подумать, нужно ли сюда что-то добавить
 }
 
-void BasePrimitive::SetVerticesData(const std::vector<GLfloat>& vertices)
+void BasePrimitive::SetVerticesData(const std::vector<VerticesDataType>& vertices)
 {
 	m_verticesData = vertices;
 }
 
-std::vector<GLfloat> BasePrimitive::GetVerticesData() const
+std::vector<BasePrimitive::VerticesDataType> BasePrimitive::GetVerticesData() const
 {
 	return m_verticesData;
+}
+
+void BasePrimitive::SetIndicesData(const std::vector<IndicesDataType>& indicesData)
+{
+	m_indicesData = indicesData;
+}
+
+std::vector<BasePrimitive::IndicesDataType> BasePrimitive::GetIndicesData() const
+{
+	return m_indicesData;
 }
 
 void BasePrimitive::SetSize(Size size)
@@ -76,36 +74,27 @@ float BasePrimitive::GetAngle() const
 // FIXED: переименовать в SetupVerticesData или что-то такое?
 void BasePrimitive::UpdateVerticesData()
 {
-	glBindVertexArray(m_vao);
+	m_vao->Bind();
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-	glBufferData(GL_ARRAY_BUFFER, m_verticesData.size() * sizeof(m_verticesData.at(0)), m_verticesData.data(), GL_STATIC_DRAW);
+	m_vbo = std::make_unique<VertexBuffer>(m_verticesData.data(), sizeof(VerticesDataType) * m_verticesData.size(), GL_STATIC_DRAW);
 
 	// position
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, (3 + 3 + 3) * sizeof(GLfloat), (GLvoid*)0);
+	m_vbo->BindAttribPointer(0, GL_FLOAT, 3, (3 + 3 + 3) * sizeof(GLfloat), (GLvoid*)0);
 	// color
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, (3 + 3 + 3) * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+	m_vbo->BindAttribPointer(1, GL_FLOAT, 3, (3 + 3 + 3) * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
 	// normal
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, (3 + 3 + 3) * sizeof(GLfloat), (GLvoid*)((3 + 3) * sizeof(GLfloat)));
-
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-	glEnableVertexAttribArray(2);
-
-	glBindVertexArray(0);
+	m_vbo->BindAttribPointer(2, GL_FLOAT, 3, (3 + 3 + 3) * sizeof(GLfloat), (GLvoid*)((3 + 3) * sizeof(GLfloat)));
+	
+	m_vao->Unbind();
 }
 
-void BasePrimitive::UpdateIndexData(const std::vector<unsigned int>& indices)
+void BasePrimitive::UpdateIndicesData(const std::vector<unsigned int>& indices)
 {
-	m_indicesData = indices;
-
-	glBindVertexArray(m_vao);
+	m_vao->Bind();
 	// FIXED: [high] исправить ситуацию с требуемым порядком вызова сначала UpdateData() в начале перед UpdateIndexData()
-	glGenBuffers(1, &m_ibo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indicesData.size() * sizeof(m_indicesData.at(0)), m_indicesData.data(), GL_STATIC_DRAW);
+	m_ibo->SetData(m_indicesData.data(), m_indicesData.size(), GL_STATIC_DRAW);
 
-	glBindVertexArray(0);
+	m_vao->Unbind();
 }
 
 void BasePrimitive::ApplyModelTransform(GLuint program) const
@@ -113,20 +102,5 @@ void BasePrimitive::ApplyModelTransform(GLuint program) const
 	auto result = glm::mat4(1.0f);
 	GLint modelLoc = glGetUniformLocation(program, "u_model");
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(result));
-}
-
-std::vector<RGB> BasePrimitive::GetVerticesColor(const std::vector<RGB>& colors, unsigned int verticesNumber) const
-{
-	std::vector<RGB> finishColors = colors;
-	if (finishColors.size() == 1)
-	{
-		finishColors.resize(verticesNumber, finishColors.front());
-	}
-	else
-	{
-		finishColors.resize(verticesNumber, DEFAULT_COLOR);
-	}
-
-	return finishColors;
 }
 

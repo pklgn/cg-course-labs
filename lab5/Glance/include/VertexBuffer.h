@@ -16,6 +16,8 @@ public:
 
 	void SetData(const void* data, size_t size);
 
+	void BindAttribPointer(GLint location, GLenum type, GLuint count, GLuint stride, GLvoid* offset) const;
+
 private:
 	GLuint m_id;
 	size_t m_size;

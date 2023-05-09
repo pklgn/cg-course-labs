@@ -21,5 +21,6 @@
 #include <iostream>
 #include <stdexcept>
 #include <vector>
+#include <SOIL/SOIL.h>
 
 #endif // PCH_H

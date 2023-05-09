@@ -164,6 +164,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\BaseWindow.hpp" />
+    <ClInclude Include="include\Texture.h" />
     <ClInclude Include="include\Types\ColorTypes.h" />
     <ClInclude Include="include\Types\DimensionTypes.h" />
     <ClInclude Include="include\GC\GC.hpp" />
@@ -186,6 +187,7 @@
     <ClCompile Include="src\IndexBuffer.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="src\VertexArray.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../pch.h</PrecompiledHeaderFile>

@@ -4,11 +4,11 @@
 namespace glance
 {
 
-class VertexArrayObject
+class VertexArray
 {
 public:
-	VertexArrayObject();
-	~VertexArrayObject();
+	VertexArray();
+	~VertexArray();
 
 	void Bind() const;
 	void Unbind() const;
