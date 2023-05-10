@@ -28,4 +28,7 @@ private:
 	std::unique_ptr<Cube> m_garageDoor;
 
 	std::unique_ptr<Pyramid> m_bedroomRoof;
+	std::unique_ptr<Pyramid> m_livingRoomRoof;
+	std::unique_ptr<Pyramid> m_diningRoof;
+	std::unique_ptr<Pyramid> m_garageRoof;
 };

@@ -18,6 +18,9 @@ Cottage::Cottage(Size size, Vector3d position, float angle)
 	, m_garage(std::make_unique<Room>(Size{ 1, 1, 1 }, Vector3d{ 0, 0, -4 }))
 	, m_garageDoor(std::make_unique<TextureCube>("Model\\Assets\\garageDoor.jpg", Size{ 0.1f, 0.8f, 0.7f }, Vector3d{ 1.f, 0, -4 }, Vector3d{ 180.f, 0, 0 }))
 	, m_bedroomRoof(std::make_unique<TexturePyramid>("Model\\Assets\\roof.jpg", Size{ 1.2f, 1.f, 1.2f }, Vector3d{ 0, 1, 2 }))
+	, m_livingRoomRoof(std::make_unique<TexturePyramid>("Model\\Assets\\roof.jpg", Size{ 1.4f, 1.4f, 1 }, Vector3d{ 0, 1.6f, 0 }))
+	, m_diningRoof(std::make_unique<TexturePyramid>("Model\\Assets\\roof.jpg", Size{ 1.7f, 1.2f, 1 }, Vector3d{ 0, 1, -2 }))
+	, m_garageRoof(std::make_unique<TexturePyramid>("Model\\Assets\\roof.jpg", Size{ 1.2f, 1.2f, 1 }, Vector3d{ 0, 1, -4 }))
 {
 }	
 
@@ -42,4 +45,7 @@ void Cottage::Draw(const glance::ShaderProgram& program) const
 	m_garageDoor->Draw(program);
 
 	m_bedroomRoof->Draw(program);
+	m_livingRoomRoof->Draw(program);
+	m_diningRoof->Draw(program);
+	m_garageRoof->Draw(program);
 }
