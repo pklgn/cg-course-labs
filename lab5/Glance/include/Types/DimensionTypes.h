@@ -7,6 +7,7 @@ struct Size
 {
 	float width;
 	float height;
+	float depth;
 };
 
 struct Vector2d

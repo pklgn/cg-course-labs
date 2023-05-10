@@ -1,14 +1,16 @@
 #pragma once
+#include "../../Model/Cube/Cube.h"
 #include "Texture.h"
-#include "OpenGLPrimitive/BasePrimitive.h"
 
-class Cube : public BasePrimitive
+class Room : public Cube
 {
 public:
-	Cube(Size size, Vector3d position, float angle = 0.f);
+	Room(Size size, Vector3d position, float angle = 0.f);
 
 	void Draw(const glance::ShaderProgram& program) const override;
 
 private:
 	std::unique_ptr<glance::Texture> m_texture;
+
+	std::unique_ptr<Cube> m_window;
 };

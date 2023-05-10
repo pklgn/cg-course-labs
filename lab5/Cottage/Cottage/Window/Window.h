@@ -1,11 +1,10 @@
 #pragma once
-#include "Texture.h"
-#include "OpenGLPrimitive/BasePrimitive.h"
+#include "../../Model/Cube/Cube.h"
 
-class Cube : public BasePrimitive
+class Window : public Cube
 {
 public:
-	Cube(Size size, Vector3d position, float angle = 0.f);
+	Window(Size size, Vector3d position, float angle = 0.f);
 
 	void Draw(const glance::ShaderProgram& program) const override;
 

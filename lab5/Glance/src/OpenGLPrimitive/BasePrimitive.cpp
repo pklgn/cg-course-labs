@@ -79,11 +79,13 @@ void BasePrimitive::UpdateVerticesData()
 	m_vao->Bind();
 	m_vbo->Bind();
 	// position
-	m_vbo->BindAttribPointer(0, GL_FLOAT, 3, (3 + 3 + 3) * sizeof(GLfloat), (GLvoid*)0);
+	m_vbo->BindAttribPointer(0, GL_FLOAT, 3, (3 + 3 + 3 + 2) * sizeof(GLfloat), (GLvoid*)0);
 	// color
-	m_vbo->BindAttribPointer(1, GL_FLOAT, 3, (3 + 3 + 3) * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+	m_vbo->BindAttribPointer(1, GL_FLOAT, 3, (3 + 3 + 3 + 2) * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
 	// normal
-	m_vbo->BindAttribPointer(2, GL_FLOAT, 3, (3 + 3 + 3) * sizeof(GLfloat), (GLvoid*)((3 + 3) * sizeof(GLfloat)));
+	m_vbo->BindAttribPointer(2, GL_FLOAT, 3, (3 + 3 + 3 + 2) * sizeof(GLfloat), (GLvoid*)((3 + 3) * sizeof(GLfloat)));
+	// texture
+	m_vbo->BindAttribPointer(3, GL_FLOAT, 2, (3 + 3 + 3 + 2) * sizeof(GLfloat), (GLvoid*)((3 + 3 + 3) * sizeof(GLfloat)));
 	
 	m_vao->Unbind();
 }
@@ -97,11 +99,14 @@ void BasePrimitive::UpdateIndicesData()
 	m_vao->Unbind();
 }
 
-void BasePrimitive::ApplyModelTransform(GLuint program) const
+glm::mat4 BasePrimitive::BuildModelMatrix() const
 {
-	auto result = glm::mat4(1.0f);
-	GLint modelLoc = glGetUniformLocation(program, "u_model");
-	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(result));
+	// TODO: возможно стоит последовательно передавать матрицы от предыдущего метода преобразования к следующему
+	auto translate = glm::translate(glm::mat4(1.0f), glm::vec3(m_position.x, m_position.y, m_position.z));
+	auto scale = glm::scale(glm::mat4(1.0f), glm::vec3(m_size.width, m_size.height, m_size.depth));
+	auto rotate = glm::mat4(1.f);
+	
+	return translate * scale * rotate;
 }
 
 std::vector<Vector3d> BasePrimitive::CalculateNormals(const std::vector<Vector3d>& vertices) const

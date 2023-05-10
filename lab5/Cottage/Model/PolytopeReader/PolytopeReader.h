@@ -10,7 +10,7 @@ class PolytopeReader
 public:
 	PolytopeReader(std::string const& filename);
 
-	void Read(std::vector<Vector3d>& vertices, std::vector<unsigned int>& indices, std::vector<RGB>& colors);
+	void Read(std::vector<Vector3d>& vertices, std::vector<unsigned int>& indices, std::vector<RGB>& colors, std::vector<Vector2d>& textures);
 
 private:
 	std::ifstream m_inputStream;

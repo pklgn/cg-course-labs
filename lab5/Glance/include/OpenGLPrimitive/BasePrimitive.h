@@ -44,7 +44,7 @@ protected:
 	void UpdateVerticesData();
 	void UpdateIndicesData();
 
-	void ApplyModelTransform(GLuint program) const;
+	glm::mat4 BuildModelMatrix() const;
 
 	std::vector<Vector3d> CalculateNormals(const std::vector<Vector3d>& vertices) const;
 

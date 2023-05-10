@@ -114,7 +114,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)vcpkg_installed\x64-windows-static\lib;$(SolutionDir)x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;OpenGL32.lib;shell32.lib;glu32.lib;glew32.lib;bcrypt.lib;Glance.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;OpenGL32.lib;shell32.lib;glu32.lib;glew32.lib;bcrypt.lib;Glance.lib;soil.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -135,18 +135,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Cottage\Cottage.cpp" />
+    <ClCompile Include="Cottage\Window\Window.cpp" />
     <ClCompile Include="DirectLight\DirectLight.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="CottageWindow\CottageWindow.cpp" />
     <ClCompile Include="Model\Cube\Cube.cpp" />
     <ClCompile Include="Model\PolytopeReader\PolytopeReader.cpp" />
+    <ClCompile Include="Cottage\Room\Room.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cottage\Cottage.h" />
+    <ClInclude Include="Cottage\Window\Window.h" />
     <ClInclude Include="DirectLight\DirectLight.h" />
     <ClInclude Include="CottageWindow\CottageWindow.h" />
     <ClInclude Include="Model\Cube\Cube.h" />
     <ClInclude Include="Model\PolytopeReader\PolytopeReader.h" />
+    <ClInclude Include="Cottage\Room\Room.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\Fragment.shader" />

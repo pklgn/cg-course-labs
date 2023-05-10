@@ -12,5 +12,6 @@ public:
 	void Draw(const glance::ShaderProgram& program) const;
 
 private:
-	std::unique_ptr<Cube> m_cube;
+	std::unique_ptr<Cube> m_room;
+	std::unique_ptr<Cube> m_window;
 };

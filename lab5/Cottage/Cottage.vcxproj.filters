@@ -33,6 +33,12 @@
     <ClCompile Include="Model\Cube\Cube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Cottage\Room\Room.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cottage\Window\Window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectLight\DirectLight.h">
@@ -48,6 +54,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Model\Cube\Cube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cottage\Room\Room.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cottage\Window\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
