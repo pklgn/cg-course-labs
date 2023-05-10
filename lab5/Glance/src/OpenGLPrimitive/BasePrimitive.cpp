@@ -4,7 +4,7 @@
 
 using namespace glance;
 
-BasePrimitive::BasePrimitive(Size size, Vector3d position, float angle)
+BasePrimitive::BasePrimitive(Size size, Vector3d position, Vector3d angle)
 	: m_size(size)
 	, m_position(position)
 	, m_angle(angle)
@@ -61,12 +61,12 @@ Vector3d BasePrimitive::GetPosition() const
 	return m_position;
 }
 
-void BasePrimitive::SetAngle(float angle)
+void BasePrimitive::SetAngle(Vector3d angle)
 {
 	m_angle = angle;
 }
 
-float BasePrimitive::GetAngle() const
+Vector3d BasePrimitive::GetAngle() const
 {
 	return m_angle;
 }
@@ -104,9 +104,11 @@ glm::mat4 BasePrimitive::BuildModelMatrix() const
 	// TODO: возможно стоит последовательно передавать матрицы от предыдущего метода преобразования к следующему
 	auto translate = glm::translate(glm::mat4(1.0f), glm::vec3(m_position.x, m_position.y, m_position.z));
 	auto scale = glm::scale(glm::mat4(1.0f), glm::vec3(m_size.width, m_size.height, m_size.depth));
-	auto rotate = glm::mat4(1.f);
+	auto rotate = glm::rotate(glm::mat4(1.f), glm::radians(m_angle.x), glm::vec3(1.f, 0.f, 0.f));
+	rotate = glm::rotate(rotate, glm::radians(m_angle.y), glm::vec3(0.f, 1.f, 0.f));
+	rotate = glm::rotate(rotate, glm::radians(m_angle.z), glm::vec3(0.f, 0.f, 1.f));
 	
-	return translate * scale * rotate;
+	return translate * rotate * scale;
 }
 
 std::vector<Vector3d> BasePrimitive::CalculateNormals(const std::vector<Vector3d>& vertices) const

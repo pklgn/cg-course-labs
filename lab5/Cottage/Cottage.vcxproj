@@ -134,21 +134,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Cottage\AccentRoom\AccentRoom.cpp" />
     <ClCompile Include="Cottage\Cottage.cpp" />
+    <ClCompile Include="Cottage\Door\Door.cpp" />
     <ClCompile Include="Cottage\Window\Window.cpp" />
     <ClCompile Include="DirectLight\DirectLight.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="CottageWindow\CottageWindow.cpp" />
     <ClCompile Include="Model\Cube\Cube.cpp" />
+    <ClCompile Include="Model\Cube\TextureCube.cpp" />
     <ClCompile Include="Model\PolytopeReader\PolytopeReader.cpp" />
     <ClCompile Include="Cottage\Room\Room.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cottage\AccentRoom\AccentRoom.h" />
     <ClInclude Include="Cottage\Cottage.h" />
+    <ClInclude Include="Cottage\Door\Door.h" />
     <ClInclude Include="Cottage\Window\Window.h" />
     <ClInclude Include="DirectLight\DirectLight.h" />
     <ClInclude Include="CottageWindow\CottageWindow.h" />
     <ClInclude Include="Model\Cube\Cube.h" />
+    <ClInclude Include="Model\Cube\TextureCube.h" />
     <ClInclude Include="Model\PolytopeReader\PolytopeReader.h" />
     <ClInclude Include="Cottage\Room\Room.h" />
   </ItemGroup>
@@ -159,6 +165,10 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Model\Assets\cube.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Model\Assets\brickwall.jpg" />
+    <Image Include="Model\Assets\window.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

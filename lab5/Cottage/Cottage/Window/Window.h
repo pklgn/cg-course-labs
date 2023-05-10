@@ -4,7 +4,7 @@
 class Window : public Cube
 {
 public:
-	Window(Size size, Vector3d position, float angle = 0.f);
+	Window(Size size, Vector3d position, Vector3d angle = { 0.f, 0.f, 0.f });
 
 	void Draw(const glance::ShaderProgram& program) const override;
 

@@ -5,10 +5,7 @@
 class Cube : public BasePrimitive
 {
 public:
-	Cube(Size size, Vector3d position, float angle = 0.f);
+	Cube(Size size, Vector3d position, Vector3d angle = { 0.f, 0.f, 0.f });
 
 	void Draw(const glance::ShaderProgram& program) const override;
-
-private:
-	std::unique_ptr<glance::Texture> m_texture;
 };

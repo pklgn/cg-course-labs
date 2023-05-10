@@ -4,7 +4,7 @@
 
 using namespace glance;
 
-Cube::Cube(Size size, Vector3d position, float angle)
+Cube::Cube(Size size, Vector3d position, Vector3d angle)
 	: BasePrimitive(size, position, angle)
 {
 	PolytopeReader polytopeReader("Model\\Assets\\cube.txt");

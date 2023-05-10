@@ -16,7 +16,7 @@ public:
 	using VerticesDataType = GLfloat;
 	using IndicesDataType = unsigned int;
 
-	BasePrimitive(Size size, Vector3d position, float angle = 0.f);
+	BasePrimitive(Size size, Vector3d position, Vector3d angle = {0.f, 0.f, 0.f});
 	virtual ~BasePrimitive();
 
 	// TODO: remove vertices methods?
@@ -32,8 +32,8 @@ public:
 	void SetPosition(Vector3d position);
 	Vector3d GetPosition() const;
 
-	void SetAngle(float angle);
-	float GetAngle() const;
+	void SetAngle(Vector3d angle);
+	Vector3d GetAngle() const;
 
 	virtual void Draw(const glance::ShaderProgram& program) const = 0;
 
@@ -54,7 +54,7 @@ protected:
 	std::unique_ptr<glance::IndexBuffer> m_ibo;
 
 	Size m_size;
-	float m_angle;
+	Vector3d m_angle;
 	Vector3d m_position;
 
 	std::vector<VerticesDataType> m_verticesData;

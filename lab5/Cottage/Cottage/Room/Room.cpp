@@ -3,7 +3,7 @@
 
 using namespace glance;
 
-Room::Room(Size size, Vector3d position, float angle)
+Room::Room(Size size, Vector3d position, Vector3d angle)
 	: Cube(size, position, angle)
 	, m_texture(std::make_unique<Texture>("Model\\Assets\\brickwall.jpg"))
 {
