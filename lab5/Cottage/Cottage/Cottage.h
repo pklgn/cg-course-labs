@@ -3,6 +3,7 @@
 #include <Types/DimensionTypes.h>
 #include "ShaderProgram.h"
 #include "../Model/Cube/Cube.h"
+#include "../Model/Pyramid/Pyramid.h"
 
 class Cottage
 {
@@ -25,4 +26,6 @@ private:
 
 	std::unique_ptr<Cube> m_garage;
 	std::unique_ptr<Cube> m_garageDoor;
+
+	std::unique_ptr<Pyramid> m_bedroomRoof;
 };

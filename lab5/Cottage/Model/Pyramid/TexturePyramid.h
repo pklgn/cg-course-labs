@@ -1,11 +1,11 @@
 #pragma once
 #include "Texture.h"
-#include "../../Model/Cube/Cube.h"
+#include "Pyramid.h"
 
-class Window : public Cube
+class TexturePyramid : public Pyramid
 {
 public:
-	Window(Size size, Vector3d position, Vector3d angle = { 0.f, 0.f, 0.f });
+	TexturePyramid(const std::string& texturePath, Size size, Vector3d position, Vector3d angle = { 0.f, 0.f, 0.f });
 
 	void Draw(const glance::ShaderProgram& program) const override;
 

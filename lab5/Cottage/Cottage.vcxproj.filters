@@ -48,6 +48,15 @@
     <ClCompile Include="Model\Cube\TextureCube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Model\Pyramid\Pyramid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Model\Pyramid\TexturePyramid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cottage\Bedroom\Bedroom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectLight\DirectLight.h">
@@ -80,6 +89,15 @@
     <ClInclude Include="Model\Cube\TextureCube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Model\Pyramid\Pyramid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\Pyramid\TexturePyramid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cottage\Bedroom\Bedroom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json" />
@@ -88,6 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Model\Assets\cube.txt" />
+    <Text Include="Model\Assets\pyramid.txt" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Model\Assets\brickwall.jpg">

@@ -1,13 +1,11 @@
-#include "Cube.h"
+#include "Pyramid.h"
 #include "../PolytopeReader/PolytopeReader.h"
 #include <glm/gtx/transform.hpp>
 
-using namespace glance;
-
-Cube::Cube(Size size, Vector3d position, Vector3d angle)
+Pyramid::Pyramid(Size size, Vector3d position, Vector3d angle)
 	: BasePrimitive(size, position, angle)
 {
-	PolytopeReader polytopeReader("Model\\Assets\\cube.txt");
+	PolytopeReader polytopeReader("Model\\Assets\\pyramid.txt");
 	std::vector<Vector3d> vertices;
 	std::vector<unsigned int> indices;
 	std::vector<RGB> colors;
@@ -34,7 +32,7 @@ Cube::Cube(Size size, Vector3d position, Vector3d angle)
 	UpdateIndicesData();
 }
 
-void Cube::Draw(const ShaderProgram& program) const
+void Pyramid::Draw(const glance::ShaderProgram& program) const
 {
 	m_vao->Bind();
 

@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "Texture.h"
 
 using namespace glance;
 

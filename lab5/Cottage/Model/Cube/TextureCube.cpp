@@ -1,4 +1,5 @@
 #include "TextureCube.h"
+#include "Texture.h"
 
 using namespace glance;
 

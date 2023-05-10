@@ -135,6 +135,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Cottage\AccentRoom\AccentRoom.cpp" />
+    <ClCompile Include="Cottage\Bedroom\Bedroom.cpp" />
     <ClCompile Include="Cottage\Cottage.cpp" />
     <ClCompile Include="Cottage\Door\Door.cpp" />
     <ClCompile Include="Cottage\Window\Window.cpp" />
@@ -145,9 +146,12 @@
     <ClCompile Include="Model\Cube\TextureCube.cpp" />
     <ClCompile Include="Model\PolytopeReader\PolytopeReader.cpp" />
     <ClCompile Include="Cottage\Room\Room.cpp" />
+    <ClCompile Include="Model\Pyramid\Pyramid.cpp" />
+    <ClCompile Include="Model\Pyramid\TexturePyramid.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cottage\AccentRoom\AccentRoom.h" />
+    <ClInclude Include="Cottage\Bedroom\Bedroom.h" />
     <ClInclude Include="Cottage\Cottage.h" />
     <ClInclude Include="Cottage\Door\Door.h" />
     <ClInclude Include="Cottage\Window\Window.h" />
@@ -157,6 +161,8 @@
     <ClInclude Include="Model\Cube\TextureCube.h" />
     <ClInclude Include="Model\PolytopeReader\PolytopeReader.h" />
     <ClInclude Include="Cottage\Room\Room.h" />
+    <ClInclude Include="Model\Pyramid\Pyramid.h" />
+    <ClInclude Include="Model\Pyramid\TexturePyramid.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\Fragment.shader" />
@@ -165,6 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Model\Assets\cube.txt" />
+    <Text Include="Model\Assets\pyramid.txt" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Model\Assets\brickwall.jpg" />
