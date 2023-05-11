@@ -4,6 +4,10 @@
 #include "ShaderProgram.h"
 #include "../Model/Cube/Cube.h"
 #include "../Model/Pyramid/Pyramid.h"
+#include "Bedroom/Bedroom.h"
+#include "LivingRoom/LivingRoom.h"
+#include "DiningRoom/DiningRoom.h"
+#include "Garage/Garage.h"
 
 class Cottage
 {
@@ -13,22 +17,8 @@ public:
 	void Draw(const glance::ShaderProgram& program) const;
 
 private:
-	std::unique_ptr<Cube> m_bedroom;
-	std::unique_ptr<Cube> m_bedroomWindow;
-
-	std::unique_ptr<Cube> m_livingRoom;
-	std::unique_ptr<Cube> m_livingRoomWindow;
-	std::unique_ptr<Cube> m_livingRoomDoor;
-
-	std::unique_ptr<Cube> m_dining;
-	std::unique_ptr<Cube> m_diningWindowFront;
-	std::unique_ptr<Cube> m_diningWindowRear;
-
-	std::unique_ptr<Cube> m_garage;
-	std::unique_ptr<Cube> m_garageDoor;
-
-	std::unique_ptr<Pyramid> m_bedroomRoof;
-	std::unique_ptr<Pyramid> m_livingRoomRoof;
-	std::unique_ptr<Pyramid> m_diningRoof;
-	std::unique_ptr<Pyramid> m_garageRoof;
+	Bedroom m_bedroom;
+	LivingRoom m_livingRoom;
+	DiningRoom m_diningRoom;
+	Garage m_garage;
 };

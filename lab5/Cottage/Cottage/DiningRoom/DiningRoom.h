@@ -3,15 +3,16 @@
 #include "../../Model/Cube/TextureCube.h"
 #include "../../Model/Pyramid/TexturePyramid.h"
 
-class Bedroom : public IDrawable
+class DiningRoom : public IDrawable
 {
 public:
-	Bedroom();
+	DiningRoom();
 
 	void Draw(const glance::ShaderProgram& program) const override;
 
 private:
 	TextureCube m_room;
-	TextureCube m_window;
+	TextureCube m_windowFront;
+	TextureCube m_windowRear;
 	TexturePyramid m_roof;
 };
