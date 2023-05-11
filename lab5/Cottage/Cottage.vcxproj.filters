@@ -106,6 +106,8 @@
     <None Include="vcpkg.json" />
     <None Include="Shaders\Fragment.shader" />
     <None Include="Shaders\Vertex.shader" />
+    <None Include="Shaders\SkyboxVertex.shader" />
+    <None Include="Shaders\SkyboxFragment.shader" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Model\Assets\cube.txt" />

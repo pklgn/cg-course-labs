@@ -167,6 +167,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\Fragment.shader" />
+    <None Include="Shaders\SkyboxFragment.shader" />
+    <None Include="Shaders\SkyboxVertex.shader" />
     <None Include="Shaders\Vertex.shader" />
     <None Include="vcpkg.json" />
   </ItemGroup>

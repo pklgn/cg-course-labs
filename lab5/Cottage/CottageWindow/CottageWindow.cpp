@@ -12,10 +12,21 @@ CottageWindow::CottageWindow(int w, int h, const char* title)
 
 	m_cottagePtr = std::make_unique<Cottage>(Size{ 1, 1 }, Vector3d{ 0, 0 });
 
-	glm::mat4 projection = glm::perspective(glm::radians(45.f), (float)(w + 1) / (float)(h + 1), 0.1f, 100.0f);
+	m_projection = glm::perspective(glm::radians(45.f), (float)(w + 1) / (float)(h + 1), 0.1f, 100.0f);
 	GLint projectionLoc = glGetUniformLocation(*m_shaderProgram, "u_projection");
-	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
+	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(m_projection));
 	glViewport(0, 0, w, h);
+
+	std::vector<std::string> faces{
+		"Model\\Assets\\Skybox\\right.jpg",
+		"Model\\Assets\\Skybox\\left.jpg",
+		"Model\\Assets\\Skybox\\top.jpg",
+		"Model\\Assets\\Skybox\\bottom.jpg",
+		"Model\\Assets\\Skybox\\front.jpg",
+		"Model\\Assets\\Skybox\\back.jpg",
+	};
+
+	m_skyboxPtr = std::make_unique<Skybox>(faces);
 }
 
 void CottageWindow::UpdateVPMatrices(int width, int height)
@@ -23,10 +34,9 @@ void CottageWindow::UpdateVPMatrices(int width, int height)
 	GLfloat radius = 10.0f;
 	GLfloat camX = (GLfloat)(sin(glfwGetTime()) * radius);
 	GLfloat camZ = (GLfloat)(cos(glfwGetTime()) * radius);
-	glm::mat4 view;
-	view = glm::lookAt(glm::vec3(camX, 5, camZ), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	m_view = glm::lookAt(glm::vec3(camX, 5, camZ), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 
-	m_shaderProgram->SetUniform4fv("u_view", view);
+	m_shaderProgram->SetUniform4fv("u_view", m_view);
 }
 
 void CottageWindow::Draw(int width, int height)
@@ -36,6 +46,12 @@ void CottageWindow::Draw(int width, int height)
 
 	UpdateVPMatrices(width, height);
 
+	glDepthFunc(GL_LEQUAL);
+	m_skyboxShaderProgram->Use();
+	m_skyboxPtr->Draw(*m_skyboxShaderProgram, m_view, m_projection);
+	glDepthFunc(GL_LESS); // set depth function back to default
+
+	m_shaderProgram->Use();
 	m_cottagePtr->Draw(*m_shaderProgram);
 }
 

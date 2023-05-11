@@ -164,6 +164,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\BaseWindow.hpp" />
+    <ClInclude Include="include\CubemapTexture.h" />
+    <ClInclude Include="include\OpenGLPrimitive\Skybox.h" />
     <ClInclude Include="include\Texture.h" />
     <ClInclude Include="include\Types\ColorTypes.h" />
     <ClInclude Include="include\Types\DimensionTypes.h" />
@@ -180,7 +182,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\IndexBuffer.h" />
+    <ClCompile Include="src\CubemapTexture.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="src\IndexBuffer.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="src\OpenGLPrimitive\Skybox.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="src\Texture.cpp">

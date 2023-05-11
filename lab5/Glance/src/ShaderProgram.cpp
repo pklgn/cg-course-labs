@@ -95,6 +95,11 @@ void ShaderProgram::Use()
 	glUseProgram(m_id);
 }
 
+void ShaderProgram::Unuse()
+{
+	glUseProgram(0);
+}
+
 void ShaderProgram::SetUniform1f(const char* name, float value) const
 {
 	GLint location = glGetUniformLocation(m_id, name);

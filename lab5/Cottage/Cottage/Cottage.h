@@ -11,6 +11,7 @@
 class Cottage
 {
 public:
+	// TODO: убрать все параметры для коттеджа
 	Cottage(Size size, Vector3d position, float angle = 0.f);
 
 	void Draw(const glance::ShaderProgram& program) const;
