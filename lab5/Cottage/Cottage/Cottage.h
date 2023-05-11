@@ -7,6 +7,7 @@
 #include "DiningRoom/DiningRoom.h"
 #include "Garage/Garage.h"
 #include "Grass/Grass.h"
+#include "Fence/Fence.h"
 
 class Cottage
 {
@@ -22,4 +23,5 @@ private:
 	DiningRoom m_diningRoom;
 	Garage m_garage;
 	Grass m_grass;
+	Fence m_fence;
 };

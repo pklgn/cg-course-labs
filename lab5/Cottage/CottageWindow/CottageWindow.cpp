@@ -31,10 +31,10 @@ CottageWindow::CottageWindow(int w, int h, const char* title)
 
 void CottageWindow::UpdateVPMatrices(int width, int height)
 {
-	GLfloat radius = 10.0f;
+	GLfloat radius = 12.0f;
 	GLfloat camX = (GLfloat)(sin(glfwGetTime()) * radius);
 	GLfloat camZ = (GLfloat)(cos(glfwGetTime()) * radius);
-	m_view = glm::lookAt(glm::vec3(camX, 5, camZ), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	m_view = glm::lookAt(glm::vec3(camX, 3, camZ), glm::vec3(0, 0, -1), glm::vec3(0, 1, 0));
 
 	m_shaderProgram->SetUniform4fv("u_view", m_view);
 }

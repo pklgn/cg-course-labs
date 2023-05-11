@@ -57,6 +57,9 @@
     <ClCompile Include="Cottage\Grass\Grass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Cottage\Fence\Fence.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectLight\DirectLight.h">
@@ -99,6 +102,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Cottage\Grass\Grass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cottage\Fence\Fence.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

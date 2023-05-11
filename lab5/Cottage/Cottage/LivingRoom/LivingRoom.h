@@ -15,4 +15,5 @@ private:
 	TextureCube m_door;
 	TextureCube m_window;
 	TexturePyramid m_roof;
+	TexturePyramid m_veranda;
 };
