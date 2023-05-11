@@ -14,4 +14,5 @@ void Cottage::Draw(const glance::ShaderProgram& program) const
 	m_livingRoom.Draw(program);
 	m_diningRoom.Draw(program);
 	m_garage.Draw(program);
+	m_grass.Draw(program);
 }

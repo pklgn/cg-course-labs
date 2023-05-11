@@ -138,6 +138,7 @@
     <ClCompile Include="Cottage\Cottage.cpp" />
     <ClCompile Include="Cottage\DiningRoom\DiningRoom.cpp" />
     <ClCompile Include="Cottage\Garage\Garage.cpp" />
+    <ClCompile Include="Cottage\Grass\Grass.cpp" />
     <ClCompile Include="Cottage\LivingRoom\LivingRoom.cpp" />
     <ClCompile Include="DirectLight\DirectLight.cpp" />
     <ClCompile Include="main.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="Cottage\Cottage.h" />
     <ClInclude Include="Cottage\DiningRoom\DiningRoom.h" />
     <ClInclude Include="Cottage\Garage\Garage.h" />
+    <ClInclude Include="Cottage\Grass\Grass.h" />
     <ClInclude Include="Cottage\LivingRoom\LivingRoom.h" />
     <ClInclude Include="DirectLight\DirectLight.h" />
     <ClInclude Include="CottageWindow\CottageWindow.h" />

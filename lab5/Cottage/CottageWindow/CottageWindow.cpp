@@ -24,7 +24,7 @@ void CottageWindow::UpdateVPMatrices(int width, int height)
 	GLfloat camX = (GLfloat)(sin(glfwGetTime()) * radius);
 	GLfloat camZ = (GLfloat)(cos(glfwGetTime()) * radius);
 	glm::mat4 view;
-	view = glm::lookAt(glm::vec3(5, 0, 5), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	view = glm::lookAt(glm::vec3(camX, 5, camZ), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 
 	m_shaderProgram->SetUniform4fv("u_view", view);
 }

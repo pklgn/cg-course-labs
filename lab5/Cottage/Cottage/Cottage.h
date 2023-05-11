@@ -2,12 +2,11 @@
 #include <GL/glew.h>
 #include <Types/DimensionTypes.h>
 #include "ShaderProgram.h"
-#include "../Model/Cube/Cube.h"
-#include "../Model/Pyramid/Pyramid.h"
 #include "Bedroom/Bedroom.h"
 #include "LivingRoom/LivingRoom.h"
 #include "DiningRoom/DiningRoom.h"
 #include "Garage/Garage.h"
+#include "Grass/Grass.h"
 
 class Cottage
 {
@@ -21,4 +20,5 @@ private:
 	LivingRoom m_livingRoom;
 	DiningRoom m_diningRoom;
 	Garage m_garage;
+	Grass m_grass;
 };
