@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include <GL/glew.h>
 #include <Types/DimensionTypes.h>
 #include "ShaderProgram.h"
@@ -12,8 +12,7 @@
 class Cottage
 {
 public:
-	// TODO: убрать все параметры для коттеджа
-	Cottage(Size size, Vector3d position, float angle = 0.f);
+	// FIXED: СѓР±СЂР°С‚СЊ РІСЃРµ РїР°СЂР°РјРµС‚СЂС‹ РґР»СЏ РєРѕС‚С‚РµРґР¶Р°
 
 	void Draw(const glance::ShaderProgram& program) const;
 

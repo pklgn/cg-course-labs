@@ -18,4 +18,6 @@ private:
 
 	glm::mat4 m_view;
 	glm::mat4 m_projection;
+
+	bool m_activeMouse = false;
 };

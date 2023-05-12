@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <GL/glew.h>
 
 namespace glance
@@ -6,6 +6,7 @@ namespace glance
 
 class VertexArray
 {
+	// TODO: сделать защиту от копирования
 public:
 	VertexArray();
 	~VertexArray();

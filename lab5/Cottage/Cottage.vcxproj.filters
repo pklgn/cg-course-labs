@@ -126,5 +126,44 @@
     <Image Include="Model\Assets\window.jpg">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Model\Assets\accentBrickwall.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Model\Assets\door.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Model\Assets\fence.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Model\Assets\garageDoor.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Model\Assets\garageDoor.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Model\Assets\grass.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Model\Assets\roof.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Model\Assets\Skybox\back.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Model\Assets\Skybox\bottom.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Model\Assets\Skybox\front.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Model\Assets\Skybox\left.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Model\Assets\Skybox\right.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Model\Assets\Skybox\top.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

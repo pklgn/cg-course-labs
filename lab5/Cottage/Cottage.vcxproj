@@ -179,7 +179,20 @@
     <Text Include="Model\Assets\pyramid.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Model\Assets\accentBrickwall.jpg" />
     <Image Include="Model\Assets\brickwall.jpg" />
+    <Image Include="Model\Assets\door.jpg" />
+    <Image Include="Model\Assets\fence.jpg" />
+    <Image Include="Model\Assets\garageDoor.jpg" />
+    <Image Include="Model\Assets\garageDoor.png" />
+    <Image Include="Model\Assets\grass.jpg" />
+    <Image Include="Model\Assets\roof.jpg" />
+    <Image Include="Model\Assets\Skybox\back.jpg" />
+    <Image Include="Model\Assets\Skybox\bottom.jpg" />
+    <Image Include="Model\Assets\Skybox\front.jpg" />
+    <Image Include="Model\Assets\Skybox\left.jpg" />
+    <Image Include="Model\Assets\Skybox\right.jpg" />
+    <Image Include="Model\Assets\Skybox\top.jpg" />
     <Image Include="Model\Assets\window.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

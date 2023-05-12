@@ -1,8 +1,9 @@
-#include "../pch.h"
+﻿#include "../pch.h"
 #include "Texture.h"
 
 using namespace glance;
 
+// TODO: добавить в качестве параметров GL_CLAMP_TO_EDGE GL_LINEAR для текстурных параметров
 Texture::Texture(const std::string& path)
 {
 	unsigned char* data = SOIL_load_image(path.c_str(), &m_width, &m_height, 0, SOIL_LOAD_RGB);

@@ -6,7 +6,7 @@ glance::CubemapTexture::CubemapTexture(const std::vector<std::string>& faces)
 	glGenTextures(1, &m_id);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, m_id);
 
-	int width, height, nrChannels;
+	int width, height;
 	for (unsigned int i = 0; i < faces.size(); i++)
 	{
 		unsigned char* data = SOIL_load_image(faces[i].c_str(), &width, &height, 0, SOIL_LOAD_RGB);

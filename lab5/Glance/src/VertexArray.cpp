@@ -1,4 +1,4 @@
-#include "../pch.h"
+﻿#include "../pch.h"
 #include "VertexArray.h"
 
 namespace glance
@@ -26,12 +26,14 @@ void VertexArray::Unbind() const
 
 void VertexArray::SetVertexBuffer(GLint location, GLenum type, GLuint count, GLuint stride, intptr_t offset) const
 {
+	// TODO: возможно стоит избавиться
 	glVertexAttribPointer(location, count, type, GL_FALSE, stride, (const GLvoid*)offset);
 	glEnableVertexAttribArray(location);
 }
 
 void VertexArray::SetIndexBuffer(GLuint buffer) const
 {
+	// TODO: аналогично пред
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer);
 }
 
