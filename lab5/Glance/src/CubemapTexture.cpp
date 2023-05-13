@@ -35,7 +35,7 @@ void glance::CubemapTexture::Bind(GLenum activeTexture) const
 	glBindTexture(GL_TEXTURE_CUBE_MAP, m_id);
 }
 
-void glance::CubemapTexture::Unbind() const
+void glance::CubemapTexture::Unbind()
 {
 	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }

@@ -17,6 +17,9 @@ public:
 
 	operator GLuint() const;
 
+	Shader(const Shader&) = delete;
+	void operator=(const Shader&) = delete;
+
 private:
 	static std::string ReadShaderFile(const char* filePath);
 

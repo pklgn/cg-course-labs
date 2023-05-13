@@ -57,6 +57,7 @@ Skybox::Skybox(const std::vector<std::string>& faces)
 	m_vao->Bind();
 	m_vbo->Bind();
 	m_vbo->BindAttribPointer(0, GL_FLOAT, 3, 3 * sizeof(GLfloat), (GLvoid*)0);
+	// TODO: fix strange C6031 warning
 	m_vao->Unbind();
 }
 

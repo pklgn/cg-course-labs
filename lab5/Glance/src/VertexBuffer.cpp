@@ -25,7 +25,7 @@ void VertexBuffer::Bind() const
 	glBindBuffer(GL_ARRAY_BUFFER, m_id);
 }
 
-void VertexBuffer::Unbind() const
+void VertexBuffer::Unbind()
 {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
@@ -50,8 +50,10 @@ void VertexBuffer::SetData(const void* data, size_t size)
 
 void VertexBuffer::BindAttribPointer(GLint location, GLenum type, GLuint count, GLuint stride, GLvoid* offset) const
 {
+	Bind();
 	glVertexAttribPointer(location, count, type, GL_FALSE, stride, (const GLvoid*)offset);
 	glEnableVertexAttribArray(location);
+	Unbind();
 }
 
 }; // namespace glance

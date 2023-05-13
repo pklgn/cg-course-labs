@@ -4,23 +4,22 @@
 
 namespace glance
 {
-// TODO: защитить от копирования
+// FIXED: защитить от копирования
 class Texture
 {
 public:
 	Texture(const std::string& path);
 
 	void Bind(GLenum activeTexture = GL_TEXTURE0) const;
-	void Unbind() const;
+	static void Unbind();
 
-	// TODO: избавиться от этих методов
-	int GetWidth() const;
-	int GetHeight() const;
+	// FIXED: избавиться от методов GetWidht() и GetHeight()
+
+	Texture(const Texture&) = delete;
+	void operator=(const Texture&) = delete;
 
 private:
 	GLuint m_id;
-	int m_width;
-	int m_height;
 };
 
 }; // namespace glance

@@ -3,16 +3,16 @@
 
 namespace glance
 {
-
+// TODO: подумать, возможно стоит все классы буферы унаследовать от единого базового класса
 class VertexArray
 {
-	// TODO: сделать защиту от копирования
+	// FIXED: сделать защиту от копирования
 public:
 	VertexArray();
 	~VertexArray();
 
 	void Bind() const;
-	void Unbind() const;
+	static void Unbind();
 
 	void SetVertexBuffer(GLint location, GLenum type, GLuint count, GLuint stride, intptr_t offset) const;
 	void SetIndexBuffer(GLuint buffer) const;

@@ -15,8 +15,8 @@ public:
 	void Draw(const ShaderProgram& program, const glm::mat4& view, const glm::mat4& projection) const;
 
 private:
-	std::unique_ptr<glance::VertexArray> m_vao;
-	std::unique_ptr<glance::VertexBuffer> m_vbo;
+	std::unique_ptr<VertexArray> m_vao;
+	std::unique_ptr<VertexBuffer> m_vbo;
 
 	CubemapTexture m_cubemapTexture;
 };

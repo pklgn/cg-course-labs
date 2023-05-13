@@ -51,7 +51,7 @@ ShaderProgram::~ShaderProgram()
 	glDeleteProgram(m_id);
 }
 
-void glance::ShaderProgram::AttachShader(const Shader& shader)
+void glance::ShaderProgram::AttachShader(const Shader& shader) const
 {
 	GLint compiled = GL_FALSE;
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled);
@@ -68,12 +68,12 @@ void glance::ShaderProgram::AttachShader(const Shader& shader)
 	glAttachShader(m_id, shader);
 }
 
-void ShaderProgram::DetachShader(const Shader& shader)
+void ShaderProgram::DetachShader(const Shader& shader) const
 {
 	glDetachShader(m_id, shader);
 }
 
-void ShaderProgram::Link()
+void ShaderProgram::Link() const
 {
 	glLinkProgram(m_id);
 
@@ -90,12 +90,12 @@ void ShaderProgram::Link()
 	}
 }
 
-void ShaderProgram::Use()
+void ShaderProgram::Use() const
 {
 	glUseProgram(m_id);
 }
 
-void ShaderProgram::Unuse()
+void ShaderProgram::Unuse() const
 {
 	glUseProgram(0);
 }

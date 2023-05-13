@@ -11,7 +11,7 @@ public:
 	CubemapTexture(const std::vector<std::string>& faces);
 
 	void Bind(GLenum activeTexture = GL_TEXTURE0) const;
-	void Unbind() const;
+	static void Unbind();
 
 private:
 	GLuint m_id;

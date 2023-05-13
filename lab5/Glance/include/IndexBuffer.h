@@ -11,7 +11,7 @@ public:
 	~IndexBuffer();
 
 	void Bind() const;
-	void Unbind() const;
+	static void Unbind();
 
 	void SetData(const unsigned int* data, unsigned int count, GLenum usage);
 

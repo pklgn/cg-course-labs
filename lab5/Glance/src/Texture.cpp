@@ -6,7 +6,8 @@ using namespace glance;
 // TODO: добавить в качестве параметров GL_CLAMP_TO_EDGE GL_LINEAR для текстурных параметров
 Texture::Texture(const std::string& path)
 {
-	unsigned char* data = SOIL_load_image(path.c_str(), &m_width, &m_height, 0, SOIL_LOAD_RGB);
+	int width, height;
+	unsigned char* data = SOIL_load_image(path.c_str(), &width, &height, 0, SOIL_LOAD_RGB);
 
 	if (!data)
 	{
@@ -19,30 +20,20 @@ Texture::Texture(const std::string& path)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_width, m_height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	SOIL_free_image_data(data);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void glance::Texture::Bind(GLenum activeTexture) const
+void Texture::Bind(GLenum activeTexture) const
 {
 	glActiveTexture(activeTexture);
 	glBindTexture(GL_TEXTURE_2D, m_id);
 }
 
-void glance::Texture::Unbind() const
+void ::Texture::Unbind()
 {
 	glBindTexture(GL_TEXTURE_2D, 0);
-}
-
-int glance::Texture::GetWidth() const
-{
-	return m_width;
-}
-
-int glance::Texture::GetHeight() const
-{
-	return m_height;
 }

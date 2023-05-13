@@ -19,22 +19,26 @@ void VertexArray::Bind() const
 	glBindVertexArray(m_id);
 }
 
-void VertexArray::Unbind() const
+void VertexArray::Unbind()
 {
 	glBindVertexArray(0);
 }
 
 void VertexArray::SetVertexBuffer(GLint location, GLenum type, GLuint count, GLuint stride, intptr_t offset) const
 {
-	// TODO: возможно стоит избавиться
+	// FIXED: добавил bind для удобства использования и правильной работы
+	Bind();
 	glVertexAttribPointer(location, count, type, GL_FALSE, stride, (const GLvoid*)offset);
 	glEnableVertexAttribArray(location);
+	Unbind();
 }
 
 void VertexArray::SetIndexBuffer(GLuint buffer) const
 {
-	// TODO: аналогично пред
+	// TODO: аналогично предыдущему
+	Bind();
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer);
+	Unbind();
 }
 
 }; // namespace glance

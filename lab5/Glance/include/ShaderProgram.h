@@ -1,13 +1,12 @@
 ﻿#pragma once
 #include <string>
-#include <memory>
 #include <glm/glm.hpp>
 #include <Shader.h>
 
 namespace glance
 {
 
-class ShaderProgram : public std::enable_shared_from_this<ShaderProgram>
+class ShaderProgram
 {
 public:
 	ShaderProgram();
@@ -15,12 +14,12 @@ public:
 	ShaderProgram(const std::string& vertexPath, const std::string& fragmentPath);
 	~ShaderProgram();
 
-	// TODO: подумать, нужно ли делать эти методы константными
-	void AttachShader(const Shader& shader);
-	void DetachShader(const Shader& shader);
-	void Link();
-	void Use();
-	void Unuse();
+	// FIXED: подумать, нужно ли делать эти методы константными
+	void AttachShader(const Shader& shader) const;
+	void DetachShader(const Shader& shader) const;
+	void Link() const;
+	void Use() const;
+	void Unuse() const;
 
 	void SetUniform1f(const char* name, float value) const;
 	void SetUniform1i(const char* name, int value) const;
@@ -30,6 +29,9 @@ public:
 	void SetUniform4fv(const char* name, glm::mat4 value) const;
 
 	operator GLuint() const;
+
+	ShaderProgram(const ShaderProgram&) = delete;
+	void operator=(const ShaderProgram&) = delete;
 
 private:
 	GLuint m_id;
