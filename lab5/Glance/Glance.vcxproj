@@ -166,6 +166,7 @@
     <ClInclude Include="include\BaseWindow.hpp" />
     <ClInclude Include="include\CubemapTexture.h" />
     <ClInclude Include="include\OpenGLPrimitive\Skybox.h" />
+    <ClInclude Include="include\ShaderMVPUniformMap.h" />
     <ClInclude Include="include\Texture.h" />
     <ClInclude Include="include\Types\ColorTypes.h" />
     <ClInclude Include="include\Types\DimensionTypes.h" />

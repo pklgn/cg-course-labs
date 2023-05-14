@@ -74,18 +74,22 @@ Vector3d BasePrimitive::GetAngle() const
 // FIXED: переименовать в SetupVerticesData или что-то такое?
 void BasePrimitive::UpdateVerticesData()
 {
-	m_vbo = std::make_unique<VertexBuffer>(m_verticesData.data(), sizeof(VerticesDataType) * m_verticesData.size(), GL_STATIC_DRAW);
+	m_vbo = std::make_unique<VertexBuffer>(m_verticesData.data(), static_cast<GLsizei>(sizeof(VerticesDataType) * m_verticesData.size()), GL_STATIC_DRAW);
 
 	m_vao->Bind();
 	m_vbo->Bind();
 	// position
-	m_vbo->BindAttribPointer(0, GL_FLOAT, 3, (3 + 3 + 3 + 2) * sizeof(GLfloat), (GLvoid*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, (3 + 3 + 3 + 2) * sizeof(VerticesDataType), (GLvoid*)0);
+	glEnableVertexAttribArray(0);
 	// color
-	m_vbo->BindAttribPointer(1, GL_FLOAT, 3, (3 + 3 + 3 + 2) * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, (3 + 3 + 3 + 2) * sizeof(VerticesDataType), (GLvoid*)(3 * sizeof(VerticesDataType)));
+	glEnableVertexAttribArray(1);
 	// normal
-	m_vbo->BindAttribPointer(2, GL_FLOAT, 3, (3 + 3 + 3 + 2) * sizeof(GLfloat), (GLvoid*)((3 + 3) * sizeof(GLfloat)));
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, (3 + 3 + 3 + 2) * sizeof(VerticesDataType), (GLvoid*)((3 + 3) * sizeof(VerticesDataType)));
+	glEnableVertexAttribArray(2);
 	// texture
-	m_vbo->BindAttribPointer(3, GL_FLOAT, 2, (3 + 3 + 3 + 2) * sizeof(GLfloat), (GLvoid*)((3 + 3 + 3) * sizeof(GLfloat)));
+	glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, (3 + 3 + 3 + 2) * sizeof(VerticesDataType), (GLvoid*)((3 + 3 + 3) * sizeof(VerticesDataType)));
+	glEnableVertexAttribArray(3);
 	
 	m_vao->Unbind();
 }
@@ -94,7 +98,8 @@ void BasePrimitive::UpdateIndicesData()
 {
 	m_vao->Bind();
 
-	m_ibo->SetData(m_indicesData.data(), static_cast<unsigned int>(m_indicesData.size()), GL_STATIC_DRAW);
+	m_ibo->Bind();
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indicesData.size() * sizeof(IndicesDataType), m_indicesData.data(), GL_STATIC_DRAW);
 
 	m_vao->Unbind();
 }

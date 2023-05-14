@@ -1,74 +1,74 @@
-#include "../pch.h"
+﻿#include "../pch.h"
 #include "OpenGLPrimitive/Skybox.h"
 
 using namespace glance;
 
 Skybox::Skybox(const std::vector<std::string>& faces)
 	: m_cubemapTexture(faces)
-	, m_vao(std::make_unique<glance::VertexArray>())
+	, m_vao()
 {
 	float skyboxVertices[] = {
 		// positions
-		-1.0f, 1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
 		-1.0f, -1.0f, -1.0f,
-		1.0f, -1.0f, -1.0f,
-		1.0f, -1.0f, -1.0f,
-		1.0f, 1.0f, -1.0f,
-		-1.0f, 1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
 
-		-1.0f, -1.0f, 1.0f,
+		-1.0f, -1.0f,  1.0f,
 		-1.0f, -1.0f, -1.0f,
-		-1.0f, 1.0f, -1.0f,
-		-1.0f, 1.0f, -1.0f,
-		-1.0f, 1.0f, 1.0f,
-		-1.0f, -1.0f, 1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
 
 		1.0f, -1.0f, -1.0f,
-		1.0f, -1.0f, 1.0f,
-		1.0f, 1.0f, 1.0f,
-		1.0f, 1.0f, 1.0f,
-		1.0f, 1.0f, -1.0f,
+		1.0f, -1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f, -1.0f,
 		1.0f, -1.0f, -1.0f,
 
 		-1.0f, -1.0f, 1.0f,
-		-1.0f, 1.0f, 1.0f,
-		1.0f, 1.0f, 1.0f,
-		1.0f, 1.0f, 1.0f,
-		1.0f, -1.0f, 1.0f,
+		-1.0f,  1.0f, 1.0f,
+		 1.0f,  1.0f, 1.0f,
+		 1.0f,  1.0f, 1.0f,
+		 1.0f, -1.0f, 1.0f,
 		-1.0f, -1.0f, 1.0f,
 
 		-1.0f, 1.0f, -1.0f,
-		1.0f, 1.0f, -1.0f,
-		1.0f, 1.0f, 1.0f,
-		1.0f, 1.0f, 1.0f,
-		-1.0f, 1.0f, 1.0f,
+		 1.0f, 1.0f, -1.0f,
+		 1.0f, 1.0f,  1.0f,
+		 1.0f, 1.0f,  1.0f,
+		-1.0f, 1.0f,  1.0f,
 		-1.0f, 1.0f, -1.0f,
 
 		-1.0f, -1.0f, -1.0f,
-		-1.0f, -1.0f, 1.0f,
-		1.0f, -1.0f, -1.0f,
-		1.0f, -1.0f, -1.0f,
-		-1.0f, -1.0f, 1.0f,
-		1.0f, -1.0f, 1.0f
+		-1.0f, -1.0f,  1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f,
+		 1.0f, -1.0f,  1.0f
 	};
 
-	m_vbo = std::make_unique<VertexBuffer>(skyboxVertices, sizeof(skyboxVertices), GL_STATIC_DRAW);
+	m_vbo = std::make_unique<VertexBuffer>(skyboxVertices, static_cast<GLsizei>(sizeof(skyboxVertices)), GL_STATIC_DRAW);
 
-	m_vao->Bind();
+	m_vao.Bind();
+	m_cubemapTexture.Bind();
 	m_vbo->Bind();
-	m_vbo->BindAttribPointer(0, GL_FLOAT, 3, 3 * sizeof(GLfloat), (GLvoid*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+	glEnableVertexAttribArray(0);
+	
 	// TODO: fix strange C6031 warning
-	m_vao->Unbind();
+	m_vao.Unbind();
 }
 
-void Skybox::Draw(const ShaderProgram& skyboxProgram, const glm::mat4& view, const glm::mat4& projection) const
+// TODO: избавиться от skybox в параметрах
+void Skybox::Draw() const
 {
-	skyboxProgram.SetUniform4fv("view", glm::mat4(glm::mat3(view)));
-	skyboxProgram.SetUniform4fv("projection", projection);
-	// skybox cube
-	m_vao->Bind();
-	m_cubemapTexture.Bind();
-	glDrawArrays(GL_TRIANGLES, 0, 36);
-	m_vao->Unbind();
+	m_vao.Bind();
+	glDrawArrays(GL_TRIANGLES, 0, m_vbo->GetSize());
+	m_vao.Unbind();
 }
 

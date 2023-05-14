@@ -14,9 +14,6 @@ public:
 	void Bind() const;
 	static void Unbind();
 
-	void SetVertexBuffer(GLint location, GLenum type, GLuint count, GLuint stride, intptr_t offset) const;
-	void SetIndexBuffer(GLuint buffer) const;
-
 private:
 	GLuint m_id;
 };

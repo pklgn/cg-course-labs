@@ -24,10 +24,6 @@ public:
 			std::cout << "Error!\n";
 		}
 
-		m_skyboxShaderProgram = std::make_unique<ShaderProgram>("Shaders/SkyboxVertex.shader", "Shaders/SkyboxFragment.shader");
-		m_shaderProgram = std::make_unique<ShaderProgram>("Shaders/Vertex.shader", "Shaders/Fragment.shader");
-		m_shaderProgram->Use();
-		//m_skyboxShaderProgram->Use();
 	}
 	BaseWindow(const BaseWindow&) = delete;
 	BaseWindow& operator=(const BaseWindow&) = delete;
@@ -52,7 +48,6 @@ public:
 protected:
 	GLFWwindow* m_window;
 	std::unique_ptr<ShaderProgram> m_shaderProgram;
-	std::unique_ptr<ShaderProgram> m_skyboxShaderProgram;
 
 private:
 	virtual void Draw(int width, int height) = 0;

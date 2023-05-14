@@ -35,7 +35,8 @@ public:
 	void SetAngle(Vector3d angle);
 	Vector3d GetAngle() const;
 
-	virtual void Draw(const glance::ShaderProgram& program) const = 0;
+	glm::mat4 BuildModelMatrix() const;
+	virtual void Draw() const = 0;
 
 	BasePrimitive(const BasePrimitive&) = delete;
 	BasePrimitive& operator=(const BasePrimitive&) = delete;
@@ -43,8 +44,6 @@ public:
 protected:
 	void UpdateVerticesData();
 	void UpdateIndicesData();
-
-	glm::mat4 BuildModelMatrix() const;
 
 	std::vector<Vector3d> CalculateNormals(const std::vector<Vector3d>& vertices) const;
 

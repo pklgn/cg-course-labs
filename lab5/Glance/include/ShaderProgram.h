@@ -19,7 +19,7 @@ public:
 	void DetachShader(const Shader& shader) const;
 	void Link() const;
 	void Use() const;
-	void Unuse() const;
+	static void Unuse();
 
 	void SetUniform1f(const char* name, float value) const;
 	void SetUniform1i(const char* name, int value) const;

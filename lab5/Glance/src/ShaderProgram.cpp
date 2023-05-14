@@ -95,7 +95,7 @@ void ShaderProgram::Use() const
 	glUseProgram(m_id);
 }
 
-void ShaderProgram::Unuse() const
+void ShaderProgram::Unuse()
 {
 	glUseProgram(0);
 }
