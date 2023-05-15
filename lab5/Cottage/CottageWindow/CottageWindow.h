@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <memory>
 #include <BaseWindow.hpp>
 #include "../Cottage/Cottage.h"
@@ -13,9 +13,14 @@ private:
 	void UpdateVPMatrices(int width, int height);
 	void Draw(int width, int height) override;
 
-	std::unique_ptr<Cottage> m_cottagePtr;
+	Cottage m_cottage;
+	
 	std::unique_ptr<glance::Skybox> m_skyboxPtr;
+	glance::ShaderProgram m_skyboxShaderProgram;
+	glance::ShaderMVPUniformMap m_skyboxShaderUniformMap;
 
+
+	// TODO: должны ли здесь храниться матрицы преобразования
 	glm::mat4 m_view;
 	glm::mat4 m_projection;
 
