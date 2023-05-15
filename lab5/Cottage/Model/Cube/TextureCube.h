@@ -1,14 +1,9 @@
 #pragma once
-#include "Texture.h"
 #include "Cube.h"
+#include "../TexturedPolytope.h"
 
-class TextureCube : public Cube
+class TextureCube : public TexturedPolytope
 {
 public:
-	TextureCube(const std::string& texturePath, Size size, Vector3d position, Vector3d angle = { 0.f, 0.f, 0.f });
-
-	void Draw(const glance::ShaderProgram& program) const override;
-
-private:
-	std::unique_ptr<glance::Texture> m_texture;
+	TextureCube(std::unique_ptr<Cube>&& polytope, const std::string& texturePath);
 };

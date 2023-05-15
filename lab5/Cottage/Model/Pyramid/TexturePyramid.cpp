@@ -3,16 +3,7 @@
 
 using namespace glance;
 
-TexturePyramid::TexturePyramid(const std::string& texturePath, Size size, Vector3d position, Vector3d angle)
-	: Pyramid(size, position, angle)
-	, m_texture(std::make_unique<Texture>(texturePath))
+TexturePyramid::TexturePyramid(std::unique_ptr<Pyramid>&& polytope, const std::string& texturePath)
+	: TexturedPolytope(std::move(polytope), texturePath)
 {
 }
-
-void TexturePyramid::Draw(const glance::ShaderProgram& program) const
-{
-	m_texture->Bind();
-	Pyramid::Draw(program);
-}
-
-
