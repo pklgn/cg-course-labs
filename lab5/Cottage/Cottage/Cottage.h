@@ -1,7 +1,9 @@
 ﻿#pragma once
 #include <GL/glew.h>
+#include <glm/glm.hpp>
 #include <Types/DimensionTypes.h>
 #include "ShaderProgram.h"
+#include "ShaderMVPUniformMap.h"
 #include "Bedroom/Bedroom.h"
 #include "LivingRoom/LivingRoom.h"
 #include "DiningRoom/DiningRoom.h"
@@ -13,8 +15,11 @@ class Cottage
 {
 public:
 	// FIXED: убрать все параметры для коттеджа
+	Cottage();
 
-	void Draw(const glance::ShaderProgram& program) const;
+	void Draw(int width, int height) const;
+
+	void UpdateVPMatrices(int width, int height) const;
 
 private:
 	Bedroom m_bedroom;
@@ -23,4 +28,11 @@ private:
 	Garage m_garage;
 	Grass m_grass;
 	Fence m_fence;
+
+	glance::ShaderProgram m_shaderProgram;
+	glance::ShaderMVPUniformMap m_shaderUniformMap;
+
+	// TODO: должны ли здесь храниться матрицы преобразования и нужно ли include сдлеать для glm
+	glm::mat4 m_view;
+	glm::mat4 m_projection;
 };
