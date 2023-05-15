@@ -104,18 +104,6 @@ void BasePrimitive::UpdateIndicesData()
 	m_vao->Unbind();
 }
 
-glm::mat4 BasePrimitive::BuildModelMatrix() const
-{
-	// TODO: возможно стоит последовательно передавать матрицы от предыдущего метода преобразования к следующему
-	auto translate = glm::translate(glm::mat4(1.0f), glm::vec3(m_position.x, m_position.y, m_position.z));
-	auto scale = glm::scale(glm::mat4(1.0f), glm::vec3(m_size.width, m_size.height, m_size.depth));
-	auto rotate = glm::rotate(glm::mat4(1.f), glm::radians(m_angle.x), glm::vec3(1.f, 0.f, 0.f));
-	rotate = glm::rotate(rotate, glm::radians(m_angle.y), glm::vec3(0.f, 1.f, 0.f));
-	rotate = glm::rotate(rotate, glm::radians(m_angle.z), glm::vec3(0.f, 0.f, 1.f));
-	
-	return translate * rotate * scale;
-}
-
 std::vector<Vector3d> BasePrimitive::CalculateNormals(const std::vector<Vector3d>& vertices) const
 {
 	std::vector<Vector3d> normals;

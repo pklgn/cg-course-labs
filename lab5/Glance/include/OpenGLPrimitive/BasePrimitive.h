@@ -35,9 +35,6 @@ public:
 	void SetAngle(Vector3d angle);
 	Vector3d GetAngle() const;
 
-	glm::mat4 BuildModelMatrix() const;
-	virtual void Draw() const = 0;
-
 	BasePrimitive(const BasePrimitive&) = delete;
 	BasePrimitive& operator=(const BasePrimitive&) = delete;
 

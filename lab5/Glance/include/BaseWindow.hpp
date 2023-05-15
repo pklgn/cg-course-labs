@@ -47,7 +47,6 @@ public:
 
 protected:
 	GLFWwindow* m_window;
-	std::unique_ptr<ShaderProgram> m_shaderProgram;
 
 private:
 	virtual void Draw(int width, int height) = 0;
