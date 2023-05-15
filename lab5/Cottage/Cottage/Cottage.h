@@ -31,8 +31,4 @@ private:
 
 	glance::ShaderProgram m_shaderProgram;
 	glance::ShaderMVPUniformMap m_shaderUniformMap;
-
-	// TODO: должны ли здесь храниться матрицы преобразования и нужно ли include сдлеать для glm
-	glm::mat4 m_view;
-	glm::mat4 m_projection;
 };
