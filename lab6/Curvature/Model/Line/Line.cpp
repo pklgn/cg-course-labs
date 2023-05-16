@@ -3,11 +3,9 @@
 #include <glm/gtx/rotate_vector.hpp>
 #include "Line.h"
 
-Line::Line(unsigned int precision, Size size, Vector3d position, Vector3d angle)
+Line::Line(float startX, float finishX, unsigned int precision, Size size, Vector3d position, Vector3d angle)
 	: Primitive(size, position, angle)
 {
-	float startX = -1;
-	float finishX = 1;
 	std::vector<VerticesDataType> verticesData;
 	std::vector<IndicesDataType> indices;
 	float stride = (finishX - startX) / precision;
