@@ -9,7 +9,7 @@ Line::Line(float startX, float finishX, unsigned int precision, Size size, Vecto
 	std::vector<VerticesDataType> verticesData;
 	std::vector<IndicesDataType> indices;
 	float stride = (finishX - startX) / precision;
-	for (int i = 0; i <= precision; ++i)
+	for (int i = 0; i <= static_cast<int>(precision); ++i)
 	{
 		verticesData.insert(verticesData.end(), { startX + stride * i, 0, 0 });
 		indices.push_back(i);

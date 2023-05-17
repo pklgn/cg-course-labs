@@ -13,8 +13,8 @@ void main()
 {
 	float theta = position.x;
 	float R = (1.0 + sin(theta)) * (1.0 + 0.9 * cos(8.0 * theta)) * (1.0 + 0.1 * cos(24.0 * theta)) * (0.5 + 0.05 * cos(140.0 * theta));
-	float x = R * cos(theta) * 1;
-	float y = R * sin(theta) * 1;
+	float x = R * cos(theta) * 0.5;
+	float y = R * sin(theta) * 0.5;
 
 	FragPos = vec3(u_model * vec4(x, y, 1.0, 1.0));
 	gl_Position = u_projection * u_view * vec4(FragPos, 1.0f);

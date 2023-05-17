@@ -7,7 +7,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 
 FlagWindow::FlagWindow(int w, int h, const char* title)
 	: BaseWindow(w, h, title)
-	, m_flag(Size{ static_cast<float>(w), static_cast<float>(h) }, Size{ 400, 250 }, Vector3d{ 0, 0, 0 })
+	, m_flag(Size{ static_cast<float>(w), static_cast<float>(h) }, Size{ 350, 225 }, Vector3d{ 0, 0, 0 })
 {
 	glfwSetKeyCallback(m_window, key_callback);
 	glfwSetCursorPosCallback(m_window, mouse_callback);

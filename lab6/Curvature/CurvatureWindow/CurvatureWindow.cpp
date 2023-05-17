@@ -8,7 +8,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 
 CurvatureWindow::CurvatureWindow(int w, int h, const char* title)
 	: BaseWindow(w, h, title)
-	, m_curvature(Size{ static_cast<float>(w), static_cast<float>(h) }, Size{ 100,100 }, Vector3d{ 0, 0, 0 })
+	, m_curvature(Size{ static_cast<float>(w), static_cast<float>(h) }, Size{ 100, 100 }, Vector3d{ 0, 0, 0 })
 {
 	glfwSetKeyCallback(m_window, key_callback);
 	glfwSetCursorPosCallback(m_window, mouse_callback);

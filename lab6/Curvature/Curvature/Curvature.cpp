@@ -29,7 +29,7 @@ void Curvature::Draw() const
 {
 	m_shaderProgram.Use();
 	UpdateMVPMatrices();
-	glViewport(0, 0, m_windowSize.width, m_windowSize.height);
+	glViewport(0, 0, static_cast<GLsizei>(m_windowSize.width), static_cast<GLsizei>(m_windowSize.height));
 
 	m_line.Draw();
 }
