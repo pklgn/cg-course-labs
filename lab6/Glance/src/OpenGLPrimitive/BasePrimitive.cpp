@@ -91,23 +91,3 @@ void Primitive::UpdateIndicesData()
 
 	m_vao->Unbind();
 }
-
-std::vector<Vector3d> Primitive::CalculateNormals(const std::vector<Vector3d>& vertices) const
-{
-	std::vector<Vector3d> normals;
-	auto vertexCount = vertices.size();
-	for (size_t i = 0; i < vertexCount; i += 3)
-	{
-		auto firstVector = glm::vec3(vertices[i + 1].x - vertices[i].x, vertices[i + 1].y - vertices[i].y, vertices[i + 1].z - vertices[i].z);
-		auto secondVector = glm::vec3(vertices[i + 2].x - vertices[i].x, vertices[i + 2].y - vertices[i].y, vertices[i + 2].z - vertices[i].z);
-
-		auto normal = glm::cross(firstVector, secondVector);
-		normal = glm::normalize(normal);
-
-		normals.push_back({ normal.x, normal.y, normal.z });
-		normals.push_back({ normal.x, normal.y, normal.z });
-		normals.push_back({ normal.x, normal.y, normal.z });
-	}
-
-	return normals;
-}

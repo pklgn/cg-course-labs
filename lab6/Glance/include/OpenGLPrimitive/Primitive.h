@@ -42,8 +42,6 @@ protected:
 	void UpdateVerticesData();
 	void UpdateIndicesData();
 
-	std::vector<Vector3d> CalculateNormals(const std::vector<Vector3d>& vertices) const;
-
 	// TODO: сделать отдельные обертки и сделать их вью онли
 	std::unique_ptr<glance::VertexArray> m_vao;
 	std::unique_ptr<glance::VertexBuffer> m_vbo;

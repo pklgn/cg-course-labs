@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Curvature", "Curvature\Curv
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Glance", "Glance\Glance.vcxproj", "{C746FE2C-977A-4974-A6BC-21BA6773E74D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Flag", "Flag\Flag.vcxproj", "{CFFC2F0B-4269-4D81-AC5F-EC1287D94DC1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{C746FE2C-977A-4974-A6BC-21BA6773E74D}.Release|x64.Build.0 = Release|x64
 		{C746FE2C-977A-4974-A6BC-21BA6773E74D}.Release|x86.ActiveCfg = Release|Win32
 		{C746FE2C-977A-4974-A6BC-21BA6773E74D}.Release|x86.Build.0 = Release|Win32
+		{CFFC2F0B-4269-4D81-AC5F-EC1287D94DC1}.Debug|x64.ActiveCfg = Debug|x64
+		{CFFC2F0B-4269-4D81-AC5F-EC1287D94DC1}.Debug|x64.Build.0 = Debug|x64
+		{CFFC2F0B-4269-4D81-AC5F-EC1287D94DC1}.Debug|x86.ActiveCfg = Debug|Win32
+		{CFFC2F0B-4269-4D81-AC5F-EC1287D94DC1}.Debug|x86.Build.0 = Debug|Win32
+		{CFFC2F0B-4269-4D81-AC5F-EC1287D94DC1}.Release|x64.ActiveCfg = Release|x64
+		{CFFC2F0B-4269-4D81-AC5F-EC1287D94DC1}.Release|x64.Build.0 = Release|x64
+		{CFFC2F0B-4269-4D81-AC5F-EC1287D94DC1}.Release|x86.ActiveCfg = Release|Win32
+		{CFFC2F0B-4269-4D81-AC5F-EC1287D94DC1}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
