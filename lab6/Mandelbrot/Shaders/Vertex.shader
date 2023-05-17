@@ -4,8 +4,8 @@
  * Vertex Shader - Only passes shared values from CPU to the fragment shader.
  */
 
-layout (location = 0) attribute vec3 pos;
-layout (location = 1) attribute vec2 texCoord;
+layout(location = 0) attribute vec3 pos;
+layout(location = 1) attribute vec2 texCoord;
 
 varying float vSystemTime;
 varying vec2 vSystemResolution;

@@ -33,8 +33,8 @@ void Mandelbrot::Draw() const
 	glViewport(0, 0, static_cast<GLsizei>(m_windowSize.width), static_cast<GLsizei>(m_windowSize.height));
 
 	m_shaderProgram.SetUniform2f(m_mandelbrotUniformMap.systemResolution.c_str(), glm::vec2(m_windowSize.width, m_windowSize.height));
-	m_shaderProgram.SetUniform1f(m_mandelbrotUniformMap.systemTime.c_str(), glfwGetTime() * 1000);
-	m_shaderProgram.SetUniform3f(m_mandelbrotUniformMap.mouse.c_str(), glm::vec3(0.0, 0.0, 0.01));
+	m_shaderProgram.SetUniform1f(m_mandelbrotUniformMap.systemTime.c_str(), glfwGetTime());
+	m_shaderProgram.SetUniform3f(m_mandelbrotUniformMap.mouse.c_str(), glm::vec3(0.2, 0.55, 0.01));
 
 	m_rectangle.Draw();
 }

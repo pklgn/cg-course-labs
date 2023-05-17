@@ -45,7 +45,7 @@ float iterateMandebrot(vec2 coord)
 // vec4 coordinateRange represents (Xmin,Xmax,Ymin,Ymax) we want from our screen
 vec2 getCoordinatesFromScreen(vec2 fragCoord, vec2 vSystemResolution, vec4 coordinateRange)
 {
-	vec2 normalizedCoordinates = gl_FragCoord.xy / vSystemResolution; // From 0 to 1 where pixel is in screen
+	vec2 normalizedCoordinates = gl_FragCoord.xy / vSystemResolution.xy; // From 0 to 1 where pixel is in screen
 
 	float horizontalSize = coordinateRange.y - coordinateRange.x; // Size of horizontal part of screen
 	float verticalSize = coordinateRange.w - coordinateRange.z; // Size of vertical part of screen
@@ -62,5 +62,5 @@ void main()
 		vSystemResolution,
 		vec4(-2.0, 2.0, -2.0, 2.0) * vMouse.z + vec4(vec2(vMouse.x), vec2(-vMouse.y)));
 	float shade = iterateMandebrot(pixelCoordinates);
-	gl_FragColor = vec4(shade);
+	gl_FragColor = vec4(orbitTrapMax.x, shade, orbitTrapMax.y, 1.0);
 }
