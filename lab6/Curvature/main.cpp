@@ -7,7 +7,7 @@ int main(void)
 {
 	glance::GLFWInitializer initGLFW;
 
-	CurvatureWindow window(800, 600, "Cottage");
+	CurvatureWindow window(800, 600, "Curvature");
 
 	window.Run();
 }

@@ -18,8 +18,8 @@ void Mouse::MoveMouse(float x, float y)
 
 void Mouse::ZoomMouse()
 {
-	m_zoom += 0.1 * 1 / m_zoomNormalized;
-	m_zoomNormalized = 1.0 / m_zoom;
+	m_zoom += 0.1f * 1.f / m_zoomNormalized;
+	m_zoomNormalized = 1.0f / m_zoom;
 }
 
 void Mouse::UnzoomMouse()
@@ -28,8 +28,8 @@ void Mouse::UnzoomMouse()
 	{
 		return;
 	}
-	m_zoom -= 0.1 * 1 / m_zoomNormalized;
-	m_zoomNormalized = 1.0 / m_zoom;
+	m_zoom -= 0.1f * 1.f / m_zoomNormalized;
+	m_zoomNormalized = 1.0f / m_zoom;
 }
 
 float Mouse::GetX()

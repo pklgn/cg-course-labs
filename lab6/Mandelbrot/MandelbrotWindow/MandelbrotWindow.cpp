@@ -15,7 +15,7 @@ void mouseButtonCallback(GLFWwindow* _window, int button, int action, int mods);
 MandelbrotWindow::MandelbrotWindow(int w, int h, const char* title)
 	: BaseWindow(w, h, title)
 	, m_mandelbrot(Size{ static_cast<float>(w), static_cast<float>(h) }, Size{ 1920, 1080 }, Vector3d{ 0, 0, 0 })
-	, m_mouse(0.0, 0.0, 0.005)
+	, m_mouse(0.0f, 0.0f, 0.005f)
 {
 	glfwSetKeyCallback(m_window, key_callback);
 	glfwSetCursorPosCallback(m_window, mouse_callback);
