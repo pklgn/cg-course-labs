@@ -43,6 +43,7 @@ float iterateMandelbrot(vec2 coord)
 
 //                                  x    y    z     w
 // vec4 coordinateRange represents (Xmin,Xmax,Ymin,Ymax) we want from our screen
+// TODO: simplify shader code
 vec2 getCoordinatesFromScreen(vec2 fragCoord, vec2 vSystemResolution, vec4 coordinateRange)
 {
 	vec2 normalizedCoordinates = gl_FragCoord.xy / vSystemResolution.xy; // From 0 to 1 where pixel is in screen
@@ -62,5 +63,5 @@ void main()
 		vSystemResolution,
 		vec4(-2.0, 2.0, -2.0, 2.0) * vMouse.z + vec4(vec2(-vMouse.x), vec2(vMouse.y)));
 	float shade = iterateMandelbrot(pixelCoordinates);
-	gl_FragColor = vec4(shade + orbitTrap.x, shade - 0.1f + orbitTrap.y, shade, 1.0);
+	gl_FragColor = vec4(shade + orbitTrap.x, shade + orbitTrap.y, shade, 1.0);
 }

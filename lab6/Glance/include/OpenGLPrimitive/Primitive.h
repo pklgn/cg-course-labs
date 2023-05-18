@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <GL/glew.h>
 #include <memory>
 #include <vector>
@@ -42,7 +42,7 @@ protected:
 	void UpdateVerticesData();
 	void UpdateIndicesData();
 
-	// TODO: ������� ��������� ������� � ������� �� ��� ����
+	// TODO: сделать отдельные обертки и сделать их вью онли
 	std::unique_ptr<glance::VertexArray> m_vao;
 	std::unique_ptr<glance::VertexBuffer> m_vbo;
 	std::unique_ptr<glance::IndexBuffer> m_ibo;
@@ -54,3 +54,4 @@ protected:
 	std::vector<VerticesDataType> m_verticesData;
 	std::vector<IndicesDataType> m_indicesData;
 };
+// TODO: подумать о том, как переключаться между частями vao
