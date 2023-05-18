@@ -15,6 +15,9 @@ public:
 	void SetWindowSize(int width, int height);
 	Size GetWindowSize() const;
 
+	void SetMousePosition(const Vector3d& offset);
+	Vector3d GetMousePosition() const;
+
 	void Draw() const;
 	void UpdateMVPMatrices() const;
 
@@ -34,6 +37,7 @@ private:
 	};
 
 	Size m_windowSize;
+	Vector3d m_mousePosition;
 	Rectangle m_rectangle;
 
 	glance::ShaderProgram m_shaderProgram;

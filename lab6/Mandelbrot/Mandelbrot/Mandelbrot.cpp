@@ -26,6 +26,16 @@ Size Mandelbrot::GetWindowSize() const
 	return m_windowSize;
 }
 
+void Mandelbrot::SetMousePosition(const Vector3d& offset)
+{
+	m_mousePosition = offset;
+}
+
+Vector3d Mandelbrot::GetMousePosition() const
+{
+	return m_mousePosition;
+}
+
 void Mandelbrot::Draw() const
 {
 	m_shaderProgram.Use();
@@ -34,7 +44,7 @@ void Mandelbrot::Draw() const
 
 	m_shaderProgram.SetUniform2f(m_mandelbrotUniformMap.systemResolution.c_str(), glm::vec2(m_windowSize.width, m_windowSize.height));
 	m_shaderProgram.SetUniform1f(m_mandelbrotUniformMap.systemTime.c_str(), glfwGetTime());
-	m_shaderProgram.SetUniform3f(m_mandelbrotUniformMap.mouse.c_str(), glm::vec3(0.2, 0.55, 0.01));
+	m_shaderProgram.SetUniform3f(m_mandelbrotUniformMap.mouse.c_str(), glm::vec3(m_mousePosition.x, m_mousePosition.y, m_mousePosition.z));
 
 	m_rectangle.Draw();
 }

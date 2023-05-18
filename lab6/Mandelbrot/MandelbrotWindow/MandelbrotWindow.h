@@ -4,6 +4,7 @@
 #include "../Mandelbrot/Mandelbrot.h"
 #include "OpenGLPrimitive/Skybox.h"
 #include "ShaderMVPUniformMap.h"
+#include "../Mouse/Mouse.h"
 
 class MandelbrotWindow : public glance::BaseWindow
 {
@@ -13,5 +14,8 @@ public:
 private:
 	void Draw(int width, int height) override;
 
-	Mandelbrot m_flag;
+	Mandelbrot m_mandelbrot;
+
+	Mouse m_mouse;
+
 };

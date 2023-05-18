@@ -138,6 +138,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model\TexturePrimitive.cpp" />
     <ClCompile Include="Model\Rectangle\Rectangle.cpp" />
+    <ClCompile Include="Mouse\Mouse.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MandelbrotWindow\MandelbrotWindow.h" />
@@ -145,6 +146,7 @@
     <ClInclude Include="Model\IPrimitiveDrawable.h" />
     <ClInclude Include="Model\TexturePrimitive.h" />
     <ClInclude Include="Model\Rectangle\Rectangle.h" />
+    <ClInclude Include="Mouse\Mouse.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\Fragment.shader" />
