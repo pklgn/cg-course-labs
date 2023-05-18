@@ -14,7 +14,7 @@ void mouseButtonCallback(GLFWwindow* _window, int button, int action, int mods);
 
 MandelbrotWindow::MandelbrotWindow(int w, int h, const char* title)
 	: BaseWindow(w, h, title)
-	, m_mandelbrot(Size{ static_cast<float>(w), static_cast<float>(h) }, Size{ static_cast<float>(w), static_cast<float>(h) }, Vector3d{ 0, 0, 0 })
+	, m_mandelbrot(Size{ static_cast<float>(w), static_cast<float>(h) }, Size{ 1920, 1080 }, Vector3d{ 0, 0, 0 })
 	, m_mouse(0.0, 0.0, 0.01)
 {
 	glfwSetKeyCallback(m_window, key_callback);
@@ -58,7 +58,6 @@ void MandelbrotWindow::Draw(int width, int height)
 		m_mouse.UnzoomMouse();
 		ZOOM = 0;
 	}
-
 	m_mandelbrot.SetMousePosition(Vector3d{ m_mouse.GetX(), m_mouse.GetY(), m_mouse.GetZoomNormalized() });
 	m_mandelbrot.Draw();
 }

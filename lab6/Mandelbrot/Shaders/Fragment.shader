@@ -62,5 +62,5 @@ void main()
 		vSystemResolution,
 		vec4(-2.0, 2.0, -2.0, 2.0) * vMouse.z + vec4(vec2(vMouse.x), vec2(-vMouse.y)));
 	float shade = iterateMandebrot(pixelCoordinates);
-	gl_FragColor = vec4(orbitTrapMax.x, shade, orbitTrapMax.y, 1.0);
+	gl_FragColor = vec4(shade, shade - 0.1f, shade - 0.4f, 1.0);
 }
