@@ -14,7 +14,7 @@ varying vec3 vMouse;
 
 float maxIterations = 100;
 
-vec2 orbitTrap = vec2(2.0, 2.0); // Max length is always 2
+vec2 orbitTrap = vec2(1.5, 2.5); // Max length is always 2
 vec2 orbitTrapMax = vec2(0.0, 0.0);
 vec2 orbitPoint = vec2(1.0, 0.0);
 
@@ -27,7 +27,7 @@ vec2 squareImaginary(vec2 number)
 		2 * number.x * number.y);
 }
 
-float iterateMandebrot(vec2 coord)
+float iterateMandelbrot(vec2 coord)
 {
 	vec2 z = vec2(0, 0);
 	for (int i = 0; i < maxIterations; i++)
@@ -60,7 +60,7 @@ void main()
 {
 	vec2 pixelCoordinates = getCoordinatesFromScreen(gl_FragCoord.xy,
 		vSystemResolution,
-		vec4(-2.0, 2.0, -2.0, 2.0) * vMouse.z + vec4(vec2(vMouse.x), vec2(-vMouse.y)));
-	float shade = iterateMandebrot(pixelCoordinates);
-	gl_FragColor = vec4(shade, shade - 0.1f, shade - 0.4f, 1.0);
+		vec4(-2.0, 2.0, -2.0, 2.0) * vMouse.z + vec4(vec2(-vMouse.x), vec2(vMouse.y)));
+	float shade = iterateMandelbrot(pixelCoordinates);
+	gl_FragColor = vec4(shade + orbitTrap.x, shade - 0.1f + orbitTrap.y, shade, 1.0);
 }

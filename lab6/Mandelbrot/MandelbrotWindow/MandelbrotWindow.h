@@ -17,5 +17,7 @@ private:
 	Mandelbrot m_mandelbrot;
 
 	Mouse m_mouse;
-
+	void MoveMouse();
+	void ZoomWindow();
+	void UnzoomWindow();
 };
