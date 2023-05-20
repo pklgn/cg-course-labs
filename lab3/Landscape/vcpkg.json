@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg/master/scripts/vcpkg.schema.json",
-  "name": "graph",
+  "name": "landscape",
   "version": "0.1",
   "dependencies": [
     "glfw3",
