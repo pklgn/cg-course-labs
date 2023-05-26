@@ -1,0 +1,17 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg/master/scripts/vcpkg.schema.json",
+  "name": "mandelbrot",
+  "version": "0.1",
+  "dependencies": [
+    "glfw3",
+    "glad",
+    "glm",
+    "glew",
+    "soil",
+    "boost-thread",
+    "boost-interprocess",
+    "boost-ptr-container",
+    "boost-timer",
+    "sdl1"
+  ]
+}
