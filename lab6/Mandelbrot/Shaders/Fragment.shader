@@ -7,14 +7,13 @@
 precision highp float;
 
 in vec4 gl_FragCoord;
-
-varying float vSystemTime;
+uniform sampler1D tex;
 varying vec2 vSystemResolution;
 varying vec3 vMouse;
 
-float maxIterations = 100;
+float maxIterations = 500;
 
-vec2 orbitTrap = vec2(1.5, 2.5); // Max length is always 2
+vec2 orbitTrap = vec2(0.5, 0.5); // Max length is always 2
 vec2 orbitTrapMax = vec2(0.0, 0.0);
 vec2 orbitPoint = vec2(1.0, 0.0);
 
@@ -63,5 +62,6 @@ void main()
 		vSystemResolution,
 		vec4(-2.0, 2.0, -2.0, 2.0) * vMouse.z + vec4(vec2(-vMouse.x), vec2(vMouse.y)));
 	float shade = iterateMandelbrot(pixelCoordinates);
-	gl_FragColor = vec4(shade + orbitTrap.x, shade + orbitTrap.y, shade, 1.0);
+
+	gl_FragColor = texture1D(tex, (shade == maxIterations ? 0.0 : float(shade)));
 }

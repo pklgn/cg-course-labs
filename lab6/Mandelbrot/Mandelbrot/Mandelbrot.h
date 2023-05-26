@@ -6,6 +6,7 @@
 #include "ShaderMVPUniformMap.h"
 #include "OpenGLPrimitive/IPrimitiveDrawable.h"
 #include "../Model/Rectangle/Rectangle.h"
+#include "Texture.h"
 
 class Mandelbrot
 {
@@ -24,16 +25,18 @@ public:
 private:
 	struct MandelbrotUniformMap
 	{
-		MandelbrotUniformMap(const std::string& systemResolution, const std::string& systemTime, const std::string& mouse)
+		MandelbrotUniformMap(const std::string& systemResolution, const std::string& systemTime, const std::string& mouse, const std::string& texture)
 		{
 			this->systemResolution = systemResolution;
 			this->systemTime = systemTime;
 			this->mouse = mouse;
+			this->texture = texture;
 		}
 
 		std::string systemResolution;
 		std::string systemTime;
 		std::string mouse;
+		std::string texture;
 	};
 
 	Size m_windowSize;
@@ -43,4 +46,6 @@ private:
 	glance::ShaderProgram m_shaderProgram;
 	glance::ShaderMVPUniformMap m_shaderUniformMap;
 	MandelbrotUniformMap m_mandelbrotUniformMap;
+
+	glance::Texture m_texture;
 };
