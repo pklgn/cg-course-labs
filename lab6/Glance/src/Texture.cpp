@@ -4,7 +4,8 @@
 using namespace glance;
 
 // TODO: добавить в качестве параметров GL_CLAMP_TO_EDGE GL_LINEAR для текстурных параметров
-Texture::Texture(const std::string& path)
+Texture::Texture(const std::string& path, GLenum target)
+	: m_target(target)
 {
 	int width, height;
 	unsigned char* data = SOIL_load_image(path.c_str(), &width, &height, 0, SOIL_LOAD_RGB);
@@ -15,25 +16,38 @@ Texture::Texture(const std::string& path)
 	}
 
 	glGenTextures(1, &m_id);
-	glBindTexture(GL_TEXTURE_2D, m_id);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glBindTexture(m_target, m_id);
+	glTexParameteri(m_target, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(m_target, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(m_target, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(m_target, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-	glGenerateMipmap(GL_TEXTURE_2D);
+	if (m_target == GL_TEXTURE_2D)
+	{
+		glTexImage2D(m_target, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+	}
+	else if (m_target = GL_TEXTURE_1D)
+	{
+		glTexImage1D(m_target, 0, GL_RGB, width, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+	}
+	else
+	{
+		std::cout << "Invalid target value\n";
+	}
+
+	glGenerateMipmap(m_target);
 	SOIL_free_image_data(data);
 
-	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindTexture(m_target, 0);
 }
 
 void Texture::Bind(GLenum activeTexture) const
 {
 	glActiveTexture(activeTexture);
-	glBindTexture(GL_TEXTURE_2D, m_id);
+	glBindTexture(m_target, m_id);
 }
 
-void ::Texture::Unbind()
+void ::Texture::Unbind() const
 {
-	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindTexture(m_target, 0);
 }

@@ -8,10 +8,10 @@ namespace glance
 class Texture
 {
 public:
-	Texture(const std::string& path);
+	Texture(const std::string& path, GLenum target = GL_TEXTURE_2D);
 
 	void Bind(GLenum activeTexture = GL_TEXTURE0) const;
-	static void Unbind();
+	void Unbind() const;
 
 	// FIXED: избавиться от методов GetWidht() и GetHeight()
 
@@ -20,6 +20,7 @@ public:
 
 private:
 	GLuint m_id;
+	GLenum m_target;
 };
 
 }; // namespace glance
