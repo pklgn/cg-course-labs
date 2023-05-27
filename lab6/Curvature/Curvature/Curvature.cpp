@@ -11,13 +11,14 @@ Curvature::Curvature(Size windowSize, Size size, Vector3d position, Vector3d ang
 	, m_shaderUniformMap("u_model", "u_view", "u_projection")
 	, m_line(0, 2 * 3.14f, 2000, size, position, angle)
 	, m_windowSize(windowSize)
+	, m_position(position)
 {
 }
 
 void Curvature::SetWindowSize(int width, int height)
 {
 	m_windowSize = { static_cast<float>(width), static_cast<float>(height), 1 };
-	m_line.SetPosition(Vector3d{ static_cast<float>(width) / 2, static_cast<float>(height) / 2, 0 });
+	m_line.SetPosition(Vector3d{ static_cast<float>(width) / 2 + m_position.x, static_cast<float>(height) / 2 + m_position.y, 0 });
 }
 
 Size Curvature::GetWindowSize() const
@@ -29,7 +30,6 @@ void Curvature::Draw() const
 {
 	m_shaderProgram.Use();
 	UpdateMVPMatrices();
-	glViewport(0, 0, static_cast<GLsizei>(m_windowSize.width), static_cast<GLsizei>(m_windowSize.height));
 
 	m_line.Draw();
 }

@@ -20,6 +20,7 @@ public:
 
 private:
 	Size m_windowSize;
+	Vector3d m_position;
 	Line m_line;
 
 	glance::ShaderProgram m_shaderProgram;
