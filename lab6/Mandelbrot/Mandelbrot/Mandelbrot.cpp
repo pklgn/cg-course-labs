@@ -47,7 +47,7 @@ void Mandelbrot::Draw() const
 	m_shaderProgram.SetUniform2f(m_mandelbrotUniformMap.systemResolution.c_str(), glm::vec2(m_windowSize.width, m_windowSize.height));
 	m_shaderProgram.SetUniform1f(m_mandelbrotUniformMap.systemTime.c_str(), static_cast<float>(glfwGetTime()));
 	m_shaderProgram.SetUniform3f(m_mandelbrotUniformMap.mouse.c_str(), glm::vec3(m_mousePosition.x, m_mousePosition.y, m_mousePosition.z));
-	m_shaderProgram.SetUniform1i("tex", 0);
+	m_shaderProgram.SetUniform1i(m_mandelbrotUniformMap.texture.c_str(), 0);
 
 	m_rectangle.Draw();
 }
