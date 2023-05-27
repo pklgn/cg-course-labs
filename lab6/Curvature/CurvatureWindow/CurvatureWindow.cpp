@@ -3,32 +3,61 @@
 
 using namespace glance;
 
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
-void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+CurvatureWindow* CurvatureWindow::GLFWCallbackWrapper::s_window = nullptr;
 
 CurvatureWindow::CurvatureWindow(int w, int h, const char* title)
 	: BaseWindow(w, h, title)
-	, m_curvature(Size{ static_cast<float>(w), static_cast<float>(h) }, Size{ 100, 100 }, Vector3d{ 0, 0, 0 })
+	, m_curvature(Size{ static_cast<float>(w), static_cast<float>(h) }, Size{ 500, 500 }, Vector3d{ 0, -250, 0 })
 {
-	glfwSetKeyCallback(m_window, key_callback);
-	glfwSetCursorPosCallback(m_window, mouse_callback);
+	GLFWCallbackWrapper::SetWindow(this);
+	glfwSetCursorPosCallback(m_window, GLFWCallbackWrapper::MousePositionCallback);
+	glfwSetKeyCallback(m_window, GLFWCallbackWrapper::KeyboardCallback);
+	glfwSetWindowSizeCallback(m_window, GLFWCallbackWrapper::WindowSizeCallback);
+
+	WindowSizeCallback(m_window, w, h);
 }
 
 void CurvatureWindow::Draw(int width, int height)
 {
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
-	m_curvature.SetWindowSize(width, height);
 
 	m_curvature.Draw();
 }
 
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
+void CurvatureWindow::MousePositionCallback(GLFWwindow* window, double positionX, double positionY)
 {
 	// TODO: реализовать
 }
 
-void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+void CurvatureWindow::KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	// TODO: реализовать
+}
+
+void CurvatureWindow::WindowSizeCallback(GLFWwindow* window, int width, int height)
+{
+	// TODO: нужно ли здесь что-то делать с viewport'ом?
+	glViewport(0, 0, width, height);
+	m_curvature.SetWindowSize(width, height);
+}
+
+void CurvatureWindow::GLFWCallbackWrapper::MousePositionCallback(GLFWwindow* window, double positionX, double positionY)
+{
+	s_window->MousePositionCallback(window, positionX, positionY);
+}
+
+void CurvatureWindow::GLFWCallbackWrapper::KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	s_window->KeyboardCallback(window, key, scancode, action, mods);
+}
+
+void CurvatureWindow::GLFWCallbackWrapper::WindowSizeCallback(GLFWwindow* window, int width, int height)
+{
+	s_window->WindowSizeCallback(window, width, height);
+}
+
+void CurvatureWindow::GLFWCallbackWrapper::SetWindow(CurvatureWindow* window)
+{
+	GLFWCallbackWrapper::s_window = window;
 }
