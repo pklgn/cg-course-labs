@@ -1,6 +1,6 @@
 # The contents of each project window in the list below
 1. Canabola function **(Curvature)** ![curvature](https://lh3.googleusercontent.com/drive-viewer/AFGJ81qSzPbRqqsI_TUzrSlB2Nwwrp-UNMOavBBUrA3c238MFyyAtKgclyOF5E2zcZ-pXhiARPUtXE5N7d-dSfWp3EITHTtNmQ=s1600) 
-2. Flag with a ring **(Flag)** ![ring](https://lh3.googleusercontent.com/drive-viewer/AFGJ81r1Cq-7Jzviv-THBraGDUStoUBnf8kT1k8iYMrSnrAC1uv-ne6Q4f-xA_lWVXhiGpi37bq-1RzLyvNDmeZk6XJ8X5Z6=s1600)
+2. Flag with a blue ring **(Flag)** ![ring](https://lh3.googleusercontent.com/drive-viewer/AFGJ81r1Cq-7Jzviv-THBraGDUStoUBnf8kT1k8iYMrSnrAC1uv-ne6Q4f-xA_lWVXhiGpi37bq-1RzLyvNDmeZk6XJ8X5Z6=s1600)
 3. Mandelbrot fractal **(Mandelbrot)**
 
 * ![fractal-zoom](https://lh3.googleusercontent.com/drive-viewer/AFGJ81qSd_OtK8oMKikE6WBfaVoXBAhI4y-yH6vNFzDHe9uU_f2hQUgEgNyZyP_QqtHWSZx7mH6X4XQWQ9FJa68J3F6lJbFv=s1600)
