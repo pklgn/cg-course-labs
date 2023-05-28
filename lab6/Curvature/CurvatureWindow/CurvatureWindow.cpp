@@ -7,7 +7,7 @@ CurvatureWindow* CurvatureWindow::GLFWCallbackWrapper::s_window = nullptr;
 
 CurvatureWindow::CurvatureWindow(int w, int h, const char* title)
 	: BaseWindow(w, h, title)
-	, m_curvature(Size{ static_cast<float>(w), static_cast<float>(h) }, Size{ 500, 500 }, Vector3d{ 0, -250, 0 })
+	, m_curvature(Size{ static_cast<float>(w), static_cast<float>(h) }, Size{ 450, 450 }, Vector3d{ 0, -225, 0 })
 {
 	GLFWCallbackWrapper::SetWindow(this);
 	glfwSetCursorPosCallback(m_window, GLFWCallbackWrapper::MousePositionCallback);
