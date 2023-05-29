@@ -136,17 +136,46 @@
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp" />
     <ClCompile Include="FrameBuffer\FrameBuffer.cpp" />
+    <ClCompile Include="LightSource\OmniLightSource.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="RenderContext\RenderContext.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
+    <ClCompile Include="SceneObject\SceneObject.cpp" />
+    <ClCompile Include="Scene\Scene.cpp" />
+    <ClCompile Include="Shader\SimpleDiffuseShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
-    <ClInclude Include="Application\GLFWTimer\GLFWTimer.hpp" />
     <ClInclude Include="FrameBuffer\FrameBuffer.h" />
+    <ClInclude Include="GeometryObject\GeometryObjectImpl.h" />
+    <ClInclude Include="GeometryObject\IGeometryObject.h" />
+    <ClInclude Include="GeometryObject\IGeometryObject_fwd.h" />
+    <ClInclude Include="Intersection\Intersection.h" />
+    <ClInclude Include="LightSource\ILightSource.h" />
+    <ClInclude Include="LightSource\ILightSource_fwd.h" />
+    <ClInclude Include="LightSource\LightSourceImpl.h" />
+    <ClInclude Include="LightSource\OmniLightSource.h" />
+    <ClInclude Include="Matrix\Matrix3.h" />
+    <ClInclude Include="Matrix\Matrix4.h" />
+    <ClInclude Include="Matrix\Matrix_fwd.h" />
+    <ClInclude Include="Ray\Ray.h" />
+    <ClInclude Include="RenderContext\RenderContext.h" />
     <ClInclude Include="Renderer\Renderer.h" />
+    <ClInclude Include="SceneObject\SceneObject.h" />
+    <ClInclude Include="SceneObject\SceneObject_fwd.h" />
+    <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Shader\IShader.h" />
+    <ClInclude Include="Shader\ShadeContext.h" />
+    <ClInclude Include="Shader\SimpleDiffuseShader.h" />
+    <ClInclude Include="Shader\SimpleMaterial.h" />
+    <ClInclude Include="Vector\Vector2.h" />
+    <ClInclude Include="Vector\Vector3.h" />
+    <ClInclude Include="Vector\Vector4.h" />
+    <ClInclude Include="Vector\VectorMath.h" />
+    <ClInclude Include="Vector\Vector_fwd.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
