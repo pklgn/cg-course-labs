@@ -135,7 +135,7 @@ void Application::UpdateMainSurface()
 	CopyFrameBufferToSDLSurface(); // (1)
 	SDL_Flip(m_pMainSurface); // (2)
 
-	atomic_write32(&m_mainSurfaceUpdated, 1); // (3)
+	m_mainSurfaceUpdated.store(1); // (3)
 }
 
 void Application::CopyFrameBufferToSDLSurface()
@@ -202,11 +202,11 @@ Uint32 Application::OnTimer(Uint32 interval)
 
 void Application::InvalidateMainSurface()
 {
-	bool redrawIsNeeded = atomic_read32(&m_mainSurfaceUpdated) == 1; // (3)
+	bool redrawIsNeeded = m_mainSurfaceUpdated.load() == 1; // (3)
 
 	if (redrawIsNeeded) // (3.a)
 	{
-		atomic_write32(&m_mainSurfaceUpdated, 0); // (3.b)
+		m_mainSurfaceUpdated.store(0); // (3.b)
 
 		SDL_Event evt; // (3.c)
 		evt.type = SDL_VIDEOEXPOSE;

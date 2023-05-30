@@ -43,6 +43,6 @@ public:
 	}
 
 private:
-	IGeometryObject const & m_object;
-	IShader const * m_pShader;
+	IGeometryObject const& m_object;
+	IShader const* m_pShader;
 };

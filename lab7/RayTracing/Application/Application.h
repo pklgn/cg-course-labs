@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include <SDL/SDL.h>
-#include <boost/interprocess/ipc/message_queue.hpp>
 #include "../FrameBuffer/FrameBuffer.h"
 #include "../GeometryObjects/Plane/Plane.h"
 #include "../GeometryObjects/Sphere/Sphere.h"
@@ -8,8 +7,6 @@
 #include "../Renderer/Renderer.h"
 #include "../Scene/Scene.h"
 #include "../Shader/SimpleDiffuseShader.h"
-
-using namespace boost::interprocess::ipcdetail;
 
 class Application
 {
@@ -55,7 +52,7 @@ private:
 	// Идентификатор SDL-таймера
 	SDL_TimerID m_timerId;
 	// Обновлена ли поверхность окна приложения (1 - да, 0 - нет)
-	boost::uint32_t m_mainSurfaceUpdated;
+	std::atomic<uint32_t> m_mainSurfaceUpdated;
 
 	// Геометрические объекты, присутствующие в сцене
 	CPlane m_plane;
