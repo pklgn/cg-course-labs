@@ -1,10 +1,14 @@
 ﻿#include "Application.h"
 #include "../LightSource/OmniLightSource.h"
 #include "../SceneObject/SceneObject.h"
+// TODO: надо ли исправлять необходимость включать VectorMath.h заголовчник, потому что мы используем в рамках матрицы вида операции работы с векторами Dot и Cross?
+#include "../Vector/VectorMath.h"
 #include "../ViewPort/ViewPort.h"
+// TODO: чисто для отладки
+#include <iostream>
 
 Application::Application()
-	: m_frameBuffer(800, 600)
+	: m_frameBuffer(400, 300)
 	, m_pMainSurface(NULL)
 	, m_timerId(NULL)
 	, m_mainSurfaceUpdated(0)
@@ -18,13 +22,13 @@ Application::Application()
 
 	// Создаем главное окно приложения и сохраняем указатель
 	// на поверхность, связанную с ним
-	m_pMainSurface = SDL_SetVideoMode(800, 600, 32,
+	m_pMainSurface = SDL_SetVideoMode(400, 300, 32,
 		SDL_SWSURFACE | SDL_DOUBLEBUF);
 
 	/*
 	Задаем цвет заднего фона сцены
 	*/
-	m_scene.SetBackdropColor(CVector4f(1, 0, 1, 1));
+	m_scene.SetBackdropColor(CVector4f(1, 1, 1, 1));
 
 
 	// Создаем и добавляем в сцену сферу, имеющую заданный материал
@@ -77,9 +81,9 @@ Application::Application()
 	/*
 	Задаем параметры видового порта и матрицы проецирования в контексте визуализации
 	*/
-	m_context.SetViewPort(CViewPort(0, 0, 800, 600));
+	m_context.SetViewPort(CViewPort(0, 0, 400, 300));
 	CMatrix4d proj;
-	proj.LoadPerspective(60, 800.0 / 600.0, 0.1, 10);
+	proj.LoadPerspective(60, 400.0 / 300.0, 0.1, 10);
 	m_context.SetProjectionMatrix(proj);
 }
 
@@ -109,7 +113,31 @@ void Application::MainLoop()
 			// если оно нуждается в перерисовке
 			UpdateMainSurface(); // (3.а)
 			break;
+
+		case SDL_KEYDOWN: {
+			CMatrix4d modelViewMatrix = m_context.GetModelViewMatrix();
+			switch (evt.key.keysym.sym)
+			{
+			case SDLK_w:
+				modelViewMatrix.Translate(0, 0, 1);
+				break;
+			case SDLK_a:
+				modelViewMatrix.Translate(1, 0, 0);
+				break;
+			case SDLK_s:
+				modelViewMatrix.Translate(0, 0, -1);
+				break;
+			case SDLK_d:
+				modelViewMatrix.Translate(-1, 0, 0);
+				break;
+			default:
+				break;
+			}
+			m_context.SetModelViewMatrix(modelViewMatrix);
+			Initialize();
 		}
+			break;
+		};
 	}
 
 	// Деинициализация приложения
@@ -197,6 +225,7 @@ Uint32 Application::OnTimer(Uint32 interval)
 	}
 
 	InvalidateMainSurface(); // (2.b)
+
 	return interval;
 }
 

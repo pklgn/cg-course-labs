@@ -75,6 +75,16 @@ void CRenderContext::SetModelViewMatrix(CMatrix4d const& modelViewMatrix)
 	UpdateInverseModelViewProjectionMatrix();
 }
 
+CMatrix4d CRenderContext::GetModelViewMatrix() const
+{
+	return m_modelViewMatrix;
+}
+
+CMatrix4d CRenderContext::GetProjectionMatrix() const
+{
+	return m_projectionMatrix;
+}
+
 /*
 Вычисление нормализованных координат внутри видового порта
 */
