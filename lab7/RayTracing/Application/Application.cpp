@@ -137,6 +137,20 @@ void Application::MainLoop()
 			Initialize();
 		}
 			break;
+		case SDL_MOUSEBUTTONDOWN: {
+			case SDL_MOUSEMOTION: {
+				CMatrix4d modelViewMatrix = m_context.GetModelViewMatrix();
+				if (evt.motion.state & SDL_BUTTON(SDL_BUTTON_LEFT))
+				{
+					int deltaX = 0;
+					int deltaY = 0;
+					SDL_GetRelativeMouseState(&deltaX, &deltaY);
+					// TODO: Реализовать поворот камеры
+					std::cout << deltaX << " " << deltaY << " " << std::endl;
+				}
+			}
+			break;
+		}
 		};
 	}
 
