@@ -159,7 +159,7 @@ void Application::CopyFrameBufferToSDLSurface()
 		for (unsigned y = 0; y < h; ++y, pixels += m_pMainSurface->pitch)
 		{
 			// (1.f)
-			boost::uint32_t const* srcLine = m_frameBuffer.GetPixels(y);
+			std::uint32_t const* srcLine = m_frameBuffer.GetPixels(y);
 			Uint32* dstLine = reinterpret_cast<Uint32*>(pixels);
 
 			if (bShift == 0 && gShift == 8 && rShift == 16) // (1.g)

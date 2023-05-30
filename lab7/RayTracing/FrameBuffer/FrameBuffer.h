@@ -1,5 +1,4 @@
 ﻿#pragma once
-#include <boost/cstdint.hpp>
 #include <cassert>
 #include <vector>
 
@@ -19,22 +18,22 @@ public:
 	unsigned GetHeight() const noexcept;
 
 	// Очистка содержимого буфера заданным цветом
-	void Clear(boost::uint32_t color = 0);
+	void Clear(std::uint32_t color = 0);
 
 	// Получение адреса начала соотв. строки пикселей (для чтения)
-	const boost::uint32_t* GetPixels(unsigned row = 0) const noexcept;
+	const std::uint32_t* GetPixels(unsigned row = 0) const noexcept;
 
 	// Получение адреса начала соотв. строки пикселей (для записи)
-	boost::uint32_t* GetPixels(unsigned row = 0) noexcept;
+	std::uint32_t* GetPixels(unsigned row = 0) noexcept;
 
 	// Получение цвета пикселя с заданными координатами
-	boost::uint32_t GetPixel(unsigned x, unsigned y) const noexcept;
+	std::uint32_t GetPixel(unsigned x, unsigned y) const noexcept;
 
 	// Установка цвета пикселя с заданными координатами
-	void SetPixel(unsigned x, unsigned y, boost::uint32_t color) noexcept;
+	void SetPixel(unsigned x, unsigned y, std::uint32_t color) noexcept;
 
 private:
-	std::vector<boost::uint32_t> m_pixels;
+	std::vector<std::uint32_t> m_pixels;
 	unsigned m_width;
 	unsigned m_height;
 };
