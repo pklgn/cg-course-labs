@@ -1,8 +1,13 @@
 ﻿#pragma once
 #include <SDL/SDL.h>
-#include "../FrameBuffer/FrameBuffer.h"
-#include "../Renderer/Renderer.h"
 #include <boost/interprocess/ipc/message_queue.hpp>
+#include "../FrameBuffer/FrameBuffer.h"
+#include "../GeometryObjects/Plane/Plane.h"
+#include "../GeometryObjects/Sphere/Sphere.h"
+#include "../RenderContext/RenderContext.h"
+#include "../Renderer/Renderer.h"
+#include "../Scene/Scene.h"
+#include "../Shader/SimpleDiffuseShader.h"
 
 using namespace boost::interprocess::ipcdetail;
 
@@ -40,10 +45,24 @@ private:
 	FrameBuffer m_frameBuffer;
 	// Визуализатор
 	Renderer m_renderer;
+	// Сцена
+	CScene m_scene;
+	// Контекст
+	CRenderContext m_context;
+
 	// Поверхность окна приложения
 	SDL_Surface* m_pMainSurface;
 	// Идентификатор SDL-таймера
 	SDL_TimerID m_timerId;
 	// Обновлена ли поверхность окна приложения (1 - да, 0 - нет)
 	boost::uint32_t m_mainSurfaceUpdated;
+
+	// Геометрические объекты, присутствующие в сцене
+	CPlane m_plane;
+	CSphere m_sphere1;
+	CSphere m_sphere2;
+
+	// Шейдеры
+	CSimpleDiffuseShader m_simpleDiffuseShader1;
+	CSimpleDiffuseShader m_simpleDiffuseShader2;
 };

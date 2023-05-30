@@ -5,6 +5,10 @@
 #include "../Vector/Vector2.h"
 #include "../Vector/VectorMath.h"
 
+CRenderContext::CRenderContext(void)
+{
+}
+
 std::uint32_t CRenderContext::CalculatePixelColor(CScene const& scene, int x, int y) const
 {
 	// Проверяем принадлежность точки видовому порту

@@ -1,10 +1,16 @@
 ﻿#include "Application.h"
+#include "../LightSource/OmniLightSource.h"
+#include "../SceneObject/SceneObject.h"
+#include "../ViewPort/ViewPort.h"
 
 Application::Application()
 	: m_frameBuffer(800, 600)
 	, m_pMainSurface(NULL)
 	, m_timerId(NULL)
 	, m_mainSurfaceUpdated(0)
+	, m_plane(0, 1, 0, 1) // Плоскость y=-1
+	, m_sphere1(1.5) // Создаем сферу радиуса 1.5
+	, m_sphere2(0.5) // Создаем сферу радиуса 0.5
 {
 	// Инициализация SDL (таймер и видео)
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
@@ -14,6 +20,67 @@ Application::Application()
 	// на поверхность, связанную с ним
 	m_pMainSurface = SDL_SetVideoMode(800, 600, 32,
 		SDL_SWSURFACE | SDL_DOUBLEBUF);
+
+	/*
+	Задаем цвет заднего фона сцены
+	*/
+	m_scene.SetBackdropColor(CVector4f(1, 0, 1, 1));
+
+
+	// Создаем и добавляем в сцену сферу, имеющую заданный материал
+	{
+		/*
+		Матрица трансформации сферы 1
+		*/
+		CMatrix4d sphereTransform;
+		sphereTransform.Translate(2, 0, -5);
+		m_sphere1.SetTransform(sphereTransform);
+
+		/*
+		Материал сферы 1
+		*/
+		CSimpleMaterial material1;
+		material1.SetDiffuseColor(CVector4f(1, 1, 0, 1));
+
+		// Шейдер сферы 1
+		m_simpleDiffuseShader1.SetMaterial(material1);
+		m_scene.AddObject(CSceneObjectPtr(new CSceneObject(m_sphere1, m_simpleDiffuseShader1)));
+	}
+
+	// Создаем и добавляем в сцену сферу, имеющую заданный материал
+	{
+		/*
+		Матрица трансформации сферы 2
+		*/
+		CMatrix4d sphereTransform;
+		sphereTransform.Translate(0, -0.5, -3);
+		m_sphere2.SetTransform(sphereTransform);
+
+		/*
+		Материал сферы 2
+		*/
+		CSimpleMaterial material2;
+		material2.SetDiffuseColor(CVector4f(0.3f, 0.5f, 0.4f, 1));
+
+		// Шейдер сферы 2
+		m_simpleDiffuseShader2.SetMaterial(material2);
+		m_scene.AddObject(CSceneObjectPtr(new CSceneObject(m_sphere2, m_simpleDiffuseShader2)));
+	}
+
+	// Создаем и добавляем в сцену точечный источник света
+	{
+		COmniLightPtr pLight(new COmniLightSource(CVector3d(-4.0, 4.0, 2.0)));
+		pLight->SetDiffuseIntensity(CVector4f(1, 1, 1, 1));
+		m_scene.AddLightSource(pLight);
+	}
+
+	/*
+	Задаем параметры видового порта и матрицы проецирования в контексте визуализации
+	*/
+	m_context.SetViewPort(CViewPort(0, 0, 800, 600));
+	CMatrix4d proj;
+	proj.LoadPerspective(60, 800.0 / 600.0, 0.1, 10);
+	m_context.SetProjectionMatrix(proj);
 }
 
 Application::~Application()
@@ -52,7 +119,7 @@ void Application::MainLoop()
 void Application::Initialize()
 {
 	// Запускаем построение изображения и таймер обновления экрана
-	m_renderer.Render(m_frameBuffer); // (1.а)
+	m_renderer.Render(m_scene, m_context, m_frameBuffer);
 	m_timerId = SDL_AddTimer(50, &TimerCallback, this);
 }
 
@@ -65,7 +132,6 @@ void Application::Uninitialize()
 
 void Application::UpdateMainSurface()
 {
-	// TODO: реализовать
 	CopyFrameBufferToSDLSurface(); // (1)
 	SDL_Flip(m_pMainSurface); // (2)
 

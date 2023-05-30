@@ -136,6 +136,8 @@
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp" />
     <ClCompile Include="FrameBuffer\FrameBuffer.cpp" />
+    <ClCompile Include="GeometryObjects\Plane\Plane.cpp" />
+    <ClCompile Include="GeometryObjects\Sphere\Sphere.cpp" />
     <ClCompile Include="LightSource\OmniLightSource.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RenderContext\RenderContext.cpp" />
@@ -143,6 +145,7 @@
     <ClCompile Include="SceneObject\SceneObject.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Shader\SimpleDiffuseShader.cpp" />
+    <ClCompile Include="ViewPort\ViewPort.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json" />
@@ -150,6 +153,8 @@
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
     <ClInclude Include="FrameBuffer\FrameBuffer.h" />
+    <ClInclude Include="GeometryObjects\Plane\Plane.h" />
+    <ClInclude Include="GeometryObjects\Sphere\Sphere.h" />
     <ClInclude Include="GeometryObject\GeometryObjectImpl.h" />
     <ClInclude Include="GeometryObject\IGeometryObject.h" />
     <ClInclude Include="GeometryObject\IGeometryObject_fwd.h" />
@@ -158,6 +163,7 @@
     <ClInclude Include="LightSource\ILightSource_fwd.h" />
     <ClInclude Include="LightSource\LightSourceImpl.h" />
     <ClInclude Include="LightSource\OmniLightSource.h" />
+    <ClInclude Include="Material\SimpleMaterial.h" />
     <ClInclude Include="Matrix\Matrix3.h" />
     <ClInclude Include="Matrix\Matrix4.h" />
     <ClInclude Include="Matrix\Matrix_fwd.h" />
@@ -176,6 +182,7 @@
     <ClInclude Include="Vector\Vector4.h" />
     <ClInclude Include="Vector\VectorMath.h" />
     <ClInclude Include="Vector\Vector_fwd.h" />
+    <ClInclude Include="ViewPort\ViewPort.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

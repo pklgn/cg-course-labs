@@ -14,6 +14,8 @@ class CScene;
 class CRenderContext
 {
 public:
+	CRenderContext(void);
+
 	/*
 	Трассирует путь луча по сцене, проходящего через пиксель с указанными координатами
 	Возвращает цвет данного пикселя в формате 0xAARRBBGG
@@ -62,13 +64,13 @@ private:
 	void UpdateInverseModelViewProjectionMatrix();
 private:
 	// Матрица проецирования
-	CMatrix4d	m_projectionMatrix;
+	CMatrix4d m_projectionMatrix;
 	// Матрица моделирования-вида
-	CMatrix4d	m_modelViewMatrix;
+	CMatrix4d m_modelViewMatrix;
 
 	// Матрица обратная произведению матриц проецирования и моделирования-вида
-	CMatrix4d	m_inverseModelViewProjectionMatrix;
+	CMatrix4d m_inverseModelViewProjectionMatrix;
 
 	// Видовой порт
-	CViewPort	m_viewPort;
+	CViewPort m_viewPort;
 };
