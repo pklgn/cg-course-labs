@@ -8,6 +8,9 @@
 #include <iostream>
 #include "../Material/ComplexMaterial.h"
 
+// TODO: для отладки
+size_t MOVABLE_LIGHT_SOURCE_INDEX = 0;
+
 Application::Application()
 	: m_frameBuffer(400, 300)
 	, m_pMainSurface(NULL)
@@ -83,6 +86,15 @@ Application::Application()
 		m_scene.AddLightSource(pLight);
 	}
 
+	// Создаем и добавляем в сцену точечный источник света
+	{
+		COmniLightPtr pLight(new COmniLightSource(CVector3d(-20, 1.0, 15.f)));
+		pLight->SetDiffuseIntensity(CVector4f(0, 0.1f, 0, 1));
+		pLight->SetSpecularIntensity(CVector4f(1, 1, 1, 1));
+		pLight->SetAmbientIntensity(CVector4f(1, 1, 1, 1));
+		m_scene.AddLightSource(pLight);
+	}
+
 	/*
 	Задаем параметры видового порта и матрицы проецирования в контексте визуализации
 	*/
@@ -121,25 +133,56 @@ void Application::MainLoop()
 
 		case SDL_KEYDOWN: {
 			CMatrix4d modelViewMatrix = m_context.GetModelViewMatrix();
+			auto lightTranslate = m_scene.GetLight(MOVABLE_LIGHT_SOURCE_INDEX).GetTransform();
+			bool cameraPosChanged = false;
+			bool lightPosChanged = false;
 			switch (evt.key.keysym.sym)
 			{
 			case SDLK_w:
 				modelViewMatrix.Translate(0, 0, 1);
+				cameraPosChanged = true;
 				break;
 			case SDLK_a:
 				modelViewMatrix.Translate(1, 0, 0);
+				cameraPosChanged = true;
 				break;
 			case SDLK_s:
 				modelViewMatrix.Translate(0, 0, -1);
+				cameraPosChanged = true;
 				break;
 			case SDLK_d:
 				modelViewMatrix.Translate(-1, 0, 0);
+				cameraPosChanged = true;
+				break;
+			case SDLK_UP:
+				lightTranslate.Translate(0, 1, 0);
+				lightPosChanged = true;
+				break;
+			case SDLK_DOWN:
+				lightTranslate.Translate(0, -1, 0);
+				lightPosChanged = true;
+				break;
+			case SDLK_LEFT:
+				lightTranslate.Translate(-1, 0, 0);
+				lightPosChanged = true;
+				break;
+			case SDLK_RIGHT:
+				lightTranslate.Translate(1, 0, 0);
+				lightPosChanged = true;
 				break;
 			default:
 				break;
 			}
-			m_context.SetModelViewMatrix(modelViewMatrix);
-			Initialize();
+			if (cameraPosChanged)
+			{
+				m_context.SetModelViewMatrix(modelViewMatrix);
+				Initialize();
+			}
+			if (lightPosChanged)
+			{
+				m_scene.GetLight(MOVABLE_LIGHT_SOURCE_INDEX).SetTransform(lightTranslate);
+				Initialize();
+			}
 		}
 			break;
 		case SDL_MOUSEBUTTONDOWN: {

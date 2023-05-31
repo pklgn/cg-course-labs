@@ -44,6 +44,12 @@ ILightSource const& CScene::GetLight(size_t index) const
 	return *m_lightSources[index];
 }
 
+ILightSource& CScene::GetLight(size_t index)
+{
+	assert(index < m_lightSources.size());
+	return *m_lightSources[index];
+}
+
 /*
 	Добавляем в сцену объект
 */

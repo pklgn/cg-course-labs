@@ -56,5 +56,5 @@ private:
 	CVector4f m_ambientColor;
 	CVector4f m_specularColor;
 	
-	float m_specularCoefficient{200};
+	float m_specularCoefficient{300};
 };

@@ -40,6 +40,7 @@ public:
 	Доступ к источнику света с указанным индексом
 	*/
 	ILightSource const& GetLight(size_t index) const;
+	ILightSource& GetLight(size_t index);
 
 	/*
 	Возвращает цвет луча, столкнувшегося с объектами сцены
