@@ -6,6 +6,7 @@
 #include "../ViewPort/ViewPort.h"
 // TODO: чисто для отладки
 #include <iostream>
+#include "../Material/ComplexMaterial.h"
 
 Application::Application()
 	: m_frameBuffer(400, 300)
@@ -28,7 +29,7 @@ Application::Application()
 	/*
 	Задаем цвет заднего фона сцены
 	*/
-	m_scene.SetBackdropColor(CVector4f(1, 1, 1, 1));
+	m_scene.SetBackdropColor(CVector4f(0, 0, 1, 1));
 
 
 	// Создаем и добавляем в сцену сферу, имеющую заданный материал
@@ -43,12 +44,14 @@ Application::Application()
 		/*
 		Материал сферы 1
 		*/
-		CSimpleMaterial material1;
-		material1.SetDiffuseColor(CVector4f(1, 1, 0, 1));
+		ComplexMaterial material1;
+		material1.SetDiffuseColor(CVector4f(1, 1, 1, 1));
+		material1.SetSpecularColor(CVector4f(1, 1, 1, 1));
+		material1.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 1));
 
 		// Шейдер сферы 1
-		m_simpleDiffuseShader1.SetMaterial(material1);
-		m_scene.AddObject(CSceneObjectPtr(new CSceneObject(m_sphere1, m_simpleDiffuseShader1)));
+		m_phongShader.SetMaterial(material1);
+		m_scene.AddObject(CSceneObjectPtr(new CSceneObject(m_sphere1, m_phongShader)));
 	}
 
 	// Создаем и добавляем в сцену сферу, имеющую заданный материал
@@ -73,8 +76,10 @@ Application::Application()
 
 	// Создаем и добавляем в сцену точечный источник света
 	{
-		COmniLightPtr pLight(new COmniLightSource(CVector3d(-4.0, 4.0, 2.0)));
-		pLight->SetDiffuseIntensity(CVector4f(1, 1, 1, 1));
+		COmniLightPtr pLight(new COmniLightSource(CVector3d(0.f, 1.0, 10.f)));
+		pLight->SetDiffuseIntensity(CVector4f(0, 1, 0, 1));
+		pLight->SetSpecularIntensity(CVector4f(1, 1, 1, 1));
+		pLight->SetAmbientIntensity(CVector4f(1, 1, 1, 1));
 		m_scene.AddLightSource(pLight);
 	}
 

@@ -274,3 +274,11 @@ CVector3<T> operator*(CMatrix3<T> const& mat, CVector3<T> const& vec) noexcept
 		mat.a20 * vec[0] + mat.a21 * vec[1] + mat.a22 * vec[2]
 	);
 }
+
+template <class T>
+inline CVector3<T> Reflect(CVector3<T> const& incidentVec, CVector3<T> const& normal) noexcept
+{
+	auto normIncidentVec = Normalize(incidentVec);
+	auto normNormal = Normalize(normal);
+	return normIncidentVec - 2.f * Dot(normIncidentVec, normNormal) * normNormal;
+}

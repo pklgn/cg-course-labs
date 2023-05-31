@@ -10,18 +10,18 @@ CSimpleDiffuseShader::CSimpleDiffuseShader(void)
 }
 
 /*
-Запоминаем параметры материала, связанного с шейдером
+	Запоминаем параметры материала, связанного с шейдером
 */
 void CSimpleDiffuseShader::SetMaterial(CSimpleMaterial const& material)
 {
 	m_material = material;
 }
 
-CVector4f CSimpleDiffuseShader::Shade(CShadeContext const & shadeContext)const
+CVector4f CSimpleDiffuseShader::Shade(CShadeContext const& shadeContext) const
 {
 	/*
-	Получаем сцену из контекста закрашивания для того, чтобы вычислить вклад
-	каждого из источников света в освещенность обрабатываемой точки
+		Получаем сцену из контекста закрашивания для того, чтобы вычислить вклад
+		каждого из источников света в освещенность обрабатываемой точки
 	*/
 	CScene const& scene = shadeContext.GetScene();
 
@@ -36,7 +36,7 @@ CVector4f CSimpleDiffuseShader::Shade(CShadeContext const & shadeContext)const
 		// Получаем источник света
 		ILightSource const& light = scene.GetLight(i);
 
-		// Вычисляем вектор направления на источник света из текущей точке
+		// Вычисляем вектор направления на источник света из текущей точки
 		CVector3d lightDirection = light.GetDirectionFromPoint(shadeContext.GetSurfacePoint());
 
 		// Вычисляем интенсивность света в направлении от источника к текущей точке

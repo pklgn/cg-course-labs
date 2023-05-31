@@ -7,6 +7,7 @@
 #include "../Renderer/Renderer.h"
 #include "../Scene/Scene.h"
 #include "../Shader/SimpleDiffuseShader.h"
+#include "../Shader/PhongShader.h"
 
 class Application
 {
@@ -60,6 +61,6 @@ private:
 	CSphere m_sphere2;
 
 	// Шейдеры
-	CSimpleDiffuseShader m_simpleDiffuseShader1;
+	PhongShader m_phongShader;
 	CSimpleDiffuseShader m_simpleDiffuseShader2;
 };

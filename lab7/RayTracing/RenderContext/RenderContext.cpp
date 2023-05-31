@@ -86,7 +86,7 @@ CMatrix4d CRenderContext::GetProjectionMatrix() const
 }
 
 /*
-Вычисление нормализованных координат внутри видового порта
+	Вычисление нормализованных координат внутри видового порта
 */
 CVector2d CRenderContext::GetNormalizedViewportCoord(double x, double y)const
 {
@@ -112,9 +112,9 @@ CMatrix4d const& CRenderContext::GetInverseModelViewProjectionMatrix()const
 }
 
 /*
-Вычисляет координаты точки, имеющей нормализованные экранные координаты normalizedX, normalizedY и глубину depth
-в мировой системе координат.
-Глубине=0 соответствует ближняя плоскость отсечения, задаваемая матрицей проецирования, а глубине=1 - дальняя
+	Вычисляет координаты точки, имеющей нормализованные экранные координаты normalizedX, normalizedY и глубину depth
+	в мировой системе координат.
+	Глубине=0 соответствует ближняя плоскость отсечения, задаваемая матрицей проецирования, а глубине=1 - дальняя
 */
 CVector3d CRenderContext::UnProject(double normalizedX, double normalizedY, double depth) const
 {
@@ -123,7 +123,7 @@ CVector3d CRenderContext::UnProject(double normalizedX, double normalizedY, doub
 	CMatrix4d const& invModelViewProj = GetInverseModelViewProjectionMatrix();
 
 	/*
-	Вычисляем нормализованную координату z (от -1 (ближняя плоскость отсечения) до +1 (дальняя)
+		Вычисляем нормализованную координату z (от -1 (ближняя плоскость отсечения) до +1 (дальняя)
 	*/
 	double normalizedZ = depth * 2 - 1;
 

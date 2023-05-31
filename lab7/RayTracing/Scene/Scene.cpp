@@ -11,8 +11,8 @@ CScene::CScene(void)
 }
 
 /*
-Задает цвет заднего фона, который будет возвращаться при трассировке лучей,
-не пересекающихся ни с одним из объектов сцены
+	Задает цвет заднего фона, который будет возвращаться при трассировке лучей,
+	не пересекающихся ни с одним из объектов сцены
 */
 void CScene::SetBackdropColor(CVector4f const& backdropColor)
 {
@@ -20,7 +20,7 @@ void CScene::SetBackdropColor(CVector4f const& backdropColor)
 }
 
 /*
-Добавляем источник света к сцене
+	Добавляем источник света к сцене
 */
 void CScene::AddLightSource(ILightSourcePtr pLightSource)
 {
@@ -28,7 +28,7 @@ void CScene::AddLightSource(ILightSourcePtr pLightSource)
 }
 
 /*
-Возврат количества источников света в сцене
+	Возврат количества источников света в сцене
 */
 size_t CScene::GetLightsCount() const
 {
@@ -36,7 +36,7 @@ size_t CScene::GetLightsCount() const
 }
 
 /*
-Возвращаем ссылку на источник света с указанным индексом
+	Возвращаем ссылку на источник света с указанным индексом
 */
 ILightSource const& CScene::GetLight(size_t index) const
 {
@@ -45,7 +45,7 @@ ILightSource const& CScene::GetLight(size_t index) const
 }
 
 /*
-Добавляем в сцену объект
+	Добавляем в сцену объект
 */
 void CScene::AddObject(CSceneObjectPtr pSceneObject)
 {

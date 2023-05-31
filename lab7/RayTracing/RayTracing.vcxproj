@@ -144,6 +144,7 @@
     <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="SceneObject\SceneObject.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
+    <ClCompile Include="Shader\PhongShader.cpp" />
     <ClCompile Include="Shader\SimpleDiffuseShader.cpp" />
     <ClCompile Include="ViewPort\ViewPort.cpp" />
   </ItemGroup>
@@ -163,6 +164,7 @@
     <ClInclude Include="LightSource\ILightSource_fwd.h" />
     <ClInclude Include="LightSource\LightSourceImpl.h" />
     <ClInclude Include="LightSource\OmniLightSource.h" />
+    <ClInclude Include="Material\ComplexMaterial.h" />
     <ClInclude Include="Material\SimpleMaterial.h" />
     <ClInclude Include="Matrix\Matrix3.h" />
     <ClInclude Include="Matrix\Matrix4.h" />
@@ -174,6 +176,7 @@
     <ClInclude Include="SceneObject\SceneObject_fwd.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Shader\IShader.h" />
+    <ClInclude Include="Shader\PhongShader.h" />
     <ClInclude Include="Shader\ShadeContext.h" />
     <ClInclude Include="Shader\SimpleDiffuseShader.h" />
     <ClInclude Include="Shader\SimpleMaterial.h" />

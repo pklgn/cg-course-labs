@@ -2,7 +2,7 @@
 #include "../Vector/VectorMath.h"
 
 /*
-Инициализация параметров источника света (положение и трансформация)
+	Инициализация параметров источника света (положение и трансформация)
 */
 COmniLightSource::COmniLightSource(CVector3d const& position, CMatrix4d const& transform)
 	: CLightSourceImpl(transform)
@@ -15,7 +15,7 @@ COmniLightSource::COmniLightSource(CVector3d const& position, CMatrix4d const& t
 }
 
 /*
-Установка параметров ослабления света от расстояния до объекта
+	Установка параметров ослабления света от расстояния до объекта
 */
 void COmniLightSource::SetAttenuation(
 	double const & constantAttenuation, 
@@ -32,7 +32,7 @@ void COmniLightSource::SetTransform(CMatrix4d const& transform)
 	CLightSourceImpl::SetTransform(transform);
 
 	/*
-	При установке матрицы трансформации придется вычислить заново положение источника в мировой системе координат
+		При установке матрицы трансформации придется вычислить заново положение источника в мировой системе координат
 	*/
 	UpdatePositionInWorldSpace();
 }
@@ -45,7 +45,7 @@ void COmniLightSource::UpdatePositionInWorldSpace()
 CVector3d COmniLightSource::GetDirectionFromPoint(CVector3d const& point)const
 {
 	/*
-	Направление от точки к источнику в мировых координатах
+		Направление от точки к источнику в мировых координатах
 	*/
 	return GetPositionInWorldSpace() - point;
 }
@@ -53,12 +53,12 @@ CVector3d COmniLightSource::GetDirectionFromPoint(CVector3d const& point)const
 double COmniLightSource::GetIntensityInDirection(CVector3d const& direction)const
 {
 	/*
-	Вычисляем расстояние (длина вектора направления)
+		Вычисляем расстояние (длина вектора направления)
 	*/
 	double distance = direction.GetLength();
 
 	/*
-	Вычисляем интенсивность света с учетом коэффициентов ослабления
+		Вычисляем интенсивность света с учетом коэффициентов ослабления
 	*/
 	return 1.0 / (distance * distance * m_quadraticAttenuation + distance * m_linearAttenuation + m_constantAttenuation);
 }

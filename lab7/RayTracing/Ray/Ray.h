@@ -4,15 +4,15 @@
 #include "../Vector/VectorMath.h"
 
 /*
-Класс "Луч", характеризующийся точкой испускания и направлением
-В момент времени t=0 луч находится в стартовой точке.
-За промежуток времени t=1 луч проходит расстояние direction
+	Класс "Луч", характеризующийся точкой испускания и направлением
+	В момент времени t=0 луч находится в стартовой точке.
+	За промежуток времени t=1 луч проходит расстояние direction
 */
 class CRay
 {
 public:
 	CRay(CVector3d const& start, CVector3d const& direction) noexcept
-		:m_start(start), m_direction(direction)
+		: m_start(start), m_direction(direction)
 	{
 	}
 

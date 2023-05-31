@@ -77,4 +77,7 @@ private:
 
 	// Видовой порт
 	CViewPort m_viewPort;
+
+	// Позиция глаза наблюдателя
+	CVector3d m_eyeWorldPos;
 };

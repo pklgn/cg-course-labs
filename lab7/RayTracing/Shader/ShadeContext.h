@@ -5,9 +5,9 @@ class CRay;
 class CScene;
 
 /*
-Контекст закрашивания, используемый шейдером для вычисления цвета поверхности
-Хранит информацию о координатах обрабатываемой точки, нормали и направлении луча, а также ссылку на сцену
-(в дальнейшем понадобится для построения теней, а также расчета преломлений/отражений)
+	Контекст закрашивания, используемый шейдером для вычисления цвета поверхности
+	Хранит информацию о координатах обрабатываемой точки, нормали и направлении луча, а также ссылку на сцену
+	(в дальнейшем понадобится для построения теней, а также расчета преломлений/отражений)
 */
 class CShadeContext
 {
@@ -22,16 +22,16 @@ public:
 		CVector3d const& surfaceNormal,	// нормаль в мировой системе координат
 		CVector3d const& rayDirection	// направление трассируемого луча в мировой системе координат
 		) noexcept
-		:m_sufracePoint(sufracePoint)
-		,m_surfacePointInObjectSpace(sufracePointInObjectSpace)
-		,m_surfaceNormal(surfaceNormal)
-		,m_rayDirection(rayDirection)
-		,m_scene(scene)
+		: m_sufracePoint(sufracePoint)
+		, m_surfacePointInObjectSpace(sufracePointInObjectSpace)
+		, m_surfaceNormal(surfaceNormal)
+		, m_rayDirection(rayDirection)
+		, m_scene(scene)
 	{
 	}
 
 	/*
-	Возвращает координаты точки в мировой системе координат.
+		Возвращает координаты точки в мировой системе координат.
 	*/
 	CVector3d const& GetSurfacePoint() const noexcept
 	{
@@ -39,7 +39,7 @@ public:
 	}
 
 	/*
-	Возвращает координаты точки в системе координат объекта
+		Возвращает координаты точки в системе координат объекта
 	*/
 	CVector3d const& GetSurfacePointInObjectSpace() const noexcept
 	{
@@ -47,7 +47,7 @@ public:
 	}
 
 	/*
-	Возвращает нормаль к поверхности в мировой системе координат
+		Возвращает нормаль к поверхности в мировой системе координат
 	*/
 	CVector3d const& GetSurfaceNormal() const noexcept
 	{
@@ -55,7 +55,7 @@ public:
 	}
 
 	/*
-	Возвращает направление луча, попавшего в данную точку
+		Возвращает направление луча, попавшего в данную точку
 	*/
 	CVector3d const& GetRayDirection() const noexcept
 	{
@@ -63,7 +63,7 @@ public:
 	}
 
 	/*
-	Возвращает ссылку на сцену
+		Возвращает ссылку на сцену
 	*/
 	CScene const& GetScene() const noexcept
 	{
