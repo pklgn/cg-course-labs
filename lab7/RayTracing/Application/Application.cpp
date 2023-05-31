@@ -12,7 +12,7 @@
 size_t MOVABLE_LIGHT_SOURCE_INDEX = 0;
 
 Application::Application()
-	: m_frameBuffer(400, 300)
+	: m_frameBuffer(800, 600)
 	, m_pMainSurface(NULL)
 	, m_timerId(NULL)
 	, m_mainSurfaceUpdated(0)
@@ -26,7 +26,7 @@ Application::Application()
 
 	// Создаем главное окно приложения и сохраняем указатель
 	// на поверхность, связанную с ним
-	m_pMainSurface = SDL_SetVideoMode(400, 300, 32,
+	m_pMainSurface = SDL_SetVideoMode(800, 600, 32,
 		SDL_SWSURFACE | SDL_DOUBLEBUF);
 
 	/*
@@ -53,8 +53,8 @@ Application::Application()
 		material1.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 1));
 
 		// Шейдер сферы 1
-		m_phongShader.SetMaterial(material1);
-		m_scene.AddObject(CSceneObjectPtr(new CSceneObject(m_sphere1, m_phongShader)));
+		m_phongShaderSphere1.SetMaterial(material1);
+		m_scene.AddObject(CSceneObjectPtr(new CSceneObject(m_sphere1, m_phongShaderSphere1)));
 	}
 
 	// Создаем и добавляем в сцену сферу, имеющую заданный материал
@@ -75,8 +75,30 @@ Application::Application()
 		material2.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 1));
 
 		// Шейдер сферы 2
-		m_phongShader1.SetMaterial(material2);
-		m_scene.AddObject(CSceneObjectPtr(new CSceneObject(m_sphere2, m_phongShader1)));
+		m_phongShaderSphere2.SetMaterial(material2);
+		m_scene.AddObject(CSceneObjectPtr(new CSceneObject(m_sphere2, m_phongShaderSphere2)));
+	}
+
+	// Создаем и добавляем в сцену плоскость, имеющую заданный материал
+	{
+		/*
+		Матрица трансформации сферы 2
+		*/
+		CMatrix4d planeTransform;
+		planeTransform.Translate(0, -0.5, -3);
+		m_plane.SetTransform(planeTransform);
+
+		/*
+		Материал сферы 2
+		*/
+		ComplexMaterial material3;
+		material3.SetDiffuseColor(CVector4f(0, 1, 1, 1));
+		material3.SetSpecularColor(CVector4f(1, 1, 1, 1));
+		material3.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 1));
+
+		// Шейдер сферы 2
+		m_phongShaderPlane.SetMaterial(material3);
+		m_scene.AddObject(CSceneObjectPtr(new CSceneObject(m_plane, m_phongShaderPlane)));
 	}
 
 	// Создаем и добавляем в сцену точечный источник света
@@ -100,9 +122,9 @@ Application::Application()
 	/*
 	Задаем параметры видового порта и матрицы проецирования в контексте визуализации
 	*/
-	m_context.SetViewPort(CViewPort(0, 0, 400, 300));
+	m_context.SetViewPort(CViewPort(0, 0, 800, 600));
 	CMatrix4d proj;
-	proj.LoadPerspective(60, 400.0 / 300.0, 0.1, 10);
+	proj.LoadPerspective(60, 800.0 / 600.0, 0.1, 10);
 	m_context.SetProjectionMatrix(proj);
 }
 

@@ -61,6 +61,7 @@ private:
 	CSphere m_sphere2;
 
 	// Шейдеры
-	PhongShader m_phongShader;
-	PhongShader m_phongShader1;
+	PhongShader m_phongShaderSphere1;
+	PhongShader m_phongShaderSphere2;
+	PhongShader m_phongShaderPlane;
 };
