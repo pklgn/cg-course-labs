@@ -62,5 +62,5 @@ private:
 
 	// Шейдеры
 	PhongShader m_phongShader;
-	CSimpleDiffuseShader m_simpleDiffuseShader2;
+	PhongShader m_phongShader1;
 };

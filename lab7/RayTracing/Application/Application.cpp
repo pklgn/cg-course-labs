@@ -48,7 +48,7 @@ Application::Application()
 		Материал сферы 1
 		*/
 		ComplexMaterial material1;
-		material1.SetDiffuseColor(CVector4f(1, 1, 1, 1));
+		material1.SetDiffuseColor(CVector4f(0, 1, 0, 1));
 		material1.SetSpecularColor(CVector4f(1, 1, 1, 1));
 		material1.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 1));
 
@@ -69,18 +69,20 @@ Application::Application()
 		/*
 		Материал сферы 2
 		*/
-		CSimpleMaterial material2;
-		material2.SetDiffuseColor(CVector4f(0.3f, 0.5f, 0.4f, 1));
+		ComplexMaterial material2;
+		material2.SetDiffuseColor(CVector4f(1, 0, 0, 1));
+		material2.SetSpecularColor(CVector4f(1, 1, 1, 1));
+		material2.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 1));
 
 		// Шейдер сферы 2
-		m_simpleDiffuseShader2.SetMaterial(material2);
-		m_scene.AddObject(CSceneObjectPtr(new CSceneObject(m_sphere2, m_simpleDiffuseShader2)));
+		m_phongShader1.SetMaterial(material2);
+		m_scene.AddObject(CSceneObjectPtr(new CSceneObject(m_sphere2, m_phongShader1)));
 	}
 
 	// Создаем и добавляем в сцену точечный источник света
 	{
 		COmniLightPtr pLight(new COmniLightSource(CVector3d(0.f, 1.0, 10.f)));
-		pLight->SetDiffuseIntensity(CVector4f(0, 1, 0, 1));
+		pLight->SetDiffuseIntensity(CVector4f(1, 1, 1, 1));
 		pLight->SetSpecularIntensity(CVector4f(1, 1, 1, 1));
 		pLight->SetAmbientIntensity(CVector4f(1, 1, 1, 1));
 		m_scene.AddLightSource(pLight);
@@ -88,8 +90,8 @@ Application::Application()
 
 	// Создаем и добавляем в сцену точечный источник света
 	{
-		COmniLightPtr pLight(new COmniLightSource(CVector3d(-20, 1.0, 15.f)));
-		pLight->SetDiffuseIntensity(CVector4f(0, 0.1f, 0, 1));
+		COmniLightPtr pLight(new COmniLightSource(CVector3d(0.f, 30, 10.f)));
+		pLight->SetDiffuseIntensity(CVector4f(1, 1, 1, 1));
 		pLight->SetSpecularIntensity(CVector4f(1, 1, 1, 1));
 		pLight->SetAmbientIntensity(CVector4f(1, 1, 1, 1));
 		m_scene.AddLightSource(pLight);
