@@ -48,7 +48,7 @@ public:
 	CVector4f Shade(CRay const& ray) const;
 
 	/*
-	Трассирует луч вглубь сцены и возвращает информацию о первом столкновении луча с объектам сцены
+		Трассирует луч вглубь сцены и возвращает информацию о первом столкновении луча с объектам сцены
 	*/
 	bool GetFirstHit(CRay const& ray, CIntersection& bestIntersection, CSceneObject const** ppIntersectionObject) const;
 

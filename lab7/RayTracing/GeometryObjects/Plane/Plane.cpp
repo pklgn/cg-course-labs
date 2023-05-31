@@ -9,7 +9,7 @@ CPlane::CPlane(double a, double b, double c, double d, CMatrix4d const & transfo
 {
 }
 
-bool CPlane::Hit(CRay const& ray, CIntersection & intersection) const
+bool CPlane::Hit(CRay const& ray, CIntersection& intersection) const
 {
 	// Величина, меньше которой модуль скалярного произведения вектора направления луча и 
 	// нормали плоскости означает параллельность луча и плоскости

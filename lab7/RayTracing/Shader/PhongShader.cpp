@@ -1,9 +1,12 @@
 #include "PhongShader.h"
 #include "../LightSource/ILightSource.h"
+#include "../Intersection/Intersection.h"
 #include "../Scene/Scene.h"
 #include "../Vector/Vector4.h"
 #include "../Vector/VectorMath.h"
 #include "ShadeContext.h"
+#include "../Ray/Ray.h"
+#include "../Intersection/Intersection.h"
 
 void PhongShader::SetMaterial(ComplexMaterial const& material)
 {
@@ -32,6 +35,15 @@ CVector4f PhongShader::Shade(CShadeContext const& shadeContext) const
 		// Вычисляем вектор направления на источник света из текущей точки
 		CVector3d lightDirection = light.GetDirectionFromPoint(shadeContext.GetSurfacePoint());
 
+		// Считаем тени, выпуская луч из точки касания с поверхностью объекта в направлении текущего источника света
+		auto scene = shadeContext.GetScene();
+		CVector3d rayStart = shadeContext.GetSurfacePoint();
+		CVector3d rayDirection = Normalize(lightDirection);
+		CRay checkShadowRay = CRay(rayStart, rayDirection);
+		CIntersection bestIntersection;
+		CSceneObject const* pSceneObject = NULL;
+		bool isInShadow = scene.GetFirstHit(checkShadowRay, bestIntersection, &pSceneObject);
+
 		// Вычисляем интенсивность света в направлении от источника к текущей точке
 		double lightIntensity = light.GetIntensityInDirection(-lightDirection);
 
@@ -55,8 +67,11 @@ CVector4f PhongShader::Shade(CShadeContext const& shadeContext) const
 		CVector4f ambientColor = light.GetAmbientIntensity() * m_material.GetAmbientColor();
 
 		// К результирующему цвету прибавляется вычисленный диффузный цвет
-		shadedColor += diffuseColor;
-		shadedColor += specularColor;
+		if (!isInShadow)
+		{
+			shadedColor += diffuseColor;
+			shadedColor += specularColor;
+		}
 		shadedColor += ambientColor;
 
 	} // Проделываем данные действия для других источников света
