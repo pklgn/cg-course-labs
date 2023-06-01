@@ -36,7 +36,7 @@ public:
 		double const& constantAttenuation,
 		double const& linearAttenuation,
 		double const& quadraticAttenuation);
-
+	// TODO: добавить аттенуэйшн составляющую при расчете освещения
 private:
 	// Получение позиции источника света в мировых координатах
 	CVector3d const& GetPositionInWorldSpace() const;

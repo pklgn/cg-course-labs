@@ -69,11 +69,11 @@ bool Cube::Hit(CRay const& ray, CIntersection& intersection) const
 		normalInObjectSpace = CVector3d(0.0, 0.0, 1.0);
 	else
 		normalInObjectSpace = CVector3d(0.0, 0.0, 0.0);
-
+	// TODO: нормализовать матрицу нормали
 	// https://ru.stackoverflow.com/questions/767567/%D0%A8%D0%B5%D0%B9%D0%B4%D0%B5%D1%80%D1%8B-%D0%97%D0%B0%D1%87%D0%B5%D0%BC-%D0%BD%D1%83%D0%B6%D0%BD%D0%B0-%D0%BC%D0%B0%D1%82%D1%80%D0%B8%D1%86%D0%B0-%D0%BD%D0%BE%D1%80%D0%BC%D0%B0%D0%BB%D0%B5%D0%B9-normalmatrix-%D0%B8-%D0%BA%D0%B0%D0%BA-%D0%B5%D1%91-%D0%BD%D0%B0%D0%B9%D1%82%D0%B8
-	CVector3d normalInWorldSpace = Normalize(GetTransform() * CVector4d(normalInObjectSpace.x, normalInObjectSpace.y, normalInObjectSpace.z, 0));
+	CVector3d normalInWorldSpace = GetNormalMatrix() * normalInObjectSpace;
 
-	// В список точек пересечения добавляем информацию о найденной точке пересечения
+	// В список точек пересечения добавляем информацию о найденной точке 
 	intersection.AddHit(CHitInfo(
 		tmin, // Когда столкнулись
 		*this, // С кем
