@@ -19,6 +19,7 @@ public:
 	Нахождение точки пересечения луча с плоскостью
 	*/
 	virtual bool Hit(CRay const& ray, CIntersection & intersection) const;
+
 private:
 	// Четырехмерный вектор, хранящий коэффициенты уравнения плоскости
 	CVector4d m_planeEquation;

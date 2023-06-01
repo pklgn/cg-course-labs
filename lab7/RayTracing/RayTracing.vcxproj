@@ -136,6 +136,7 @@
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp" />
     <ClCompile Include="FrameBuffer\FrameBuffer.cpp" />
+    <ClCompile Include="GeometryObjects\Cube\Cube.cpp" />
     <ClCompile Include="GeometryObjects\Plane\Plane.cpp" />
     <ClCompile Include="GeometryObjects\Sphere\Sphere.cpp" />
     <ClCompile Include="LightSource\OmniLightSource.cpp" />
@@ -154,6 +155,7 @@
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
     <ClInclude Include="FrameBuffer\FrameBuffer.h" />
+    <ClInclude Include="GeometryObjects\Cube\Cube.h" />
     <ClInclude Include="GeometryObjects\Plane\Plane.h" />
     <ClInclude Include="GeometryObjects\Sphere\Sphere.h" />
     <ClInclude Include="GeometryObject\GeometryObjectImpl.h" />

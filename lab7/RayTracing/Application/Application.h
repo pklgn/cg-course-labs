@@ -8,6 +8,7 @@
 #include "../Scene/Scene.h"
 #include "../Shader/SimpleDiffuseShader.h"
 #include "../Shader/PhongShader.h"
+#include "../GeometryObjects/Cube/Cube.h"
 
 class Application
 {
@@ -59,9 +60,11 @@ private:
 	CPlane m_plane;
 	CSphere m_sphere1;
 	CSphere m_sphere2;
+	Cube m_cube;
 
 	// Шейдеры
 	PhongShader m_phongShaderSphere1;
 	PhongShader m_phongShaderSphere2;
 	PhongShader m_phongShaderPlane;
+	PhongShader m_phongShaderCube;
 };
