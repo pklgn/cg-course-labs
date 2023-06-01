@@ -8,6 +8,8 @@
 #include "../Ray/Ray.h"
 #include "../Intersection/Intersection.h"
 
+bool CastSecondaryRay(const CVector3d& rayStart, const CScene& scene, const CVector3d lightDirection);
+
 void PhongShader::SetMaterial(ComplexMaterial const& material)
 {
 	m_material = material;
@@ -36,13 +38,7 @@ CVector4f PhongShader::Shade(CShadeContext const& shadeContext) const
 		CVector3d lightDirection = light.GetDirectionFromPoint(shadeContext.GetSurfacePoint());
 
 		// Считаем тени, выпуская луч из точки касания с поверхностью объекта в направлении текущего источника света
-		auto scene = shadeContext.GetScene();
-		CVector3d rayStart = shadeContext.GetSurfacePoint();
-		CVector3d rayDirection = Normalize(lightDirection);
-		CRay checkShadowRay = CRay(rayStart, rayDirection);
-		CIntersection bestIntersection;
-		CSceneObject const* pSceneObject = NULL;
-		bool isInShadow = scene.GetFirstHit(checkShadowRay, bestIntersection, &pSceneObject);
+		bool isInShadow = CastSecondaryRay(shadeContext.GetSurfacePoint(), shadeContext.GetScene(), lightDirection);
 
 		// Вычисляем интенсивность света в направлении от источника к текущей точке
 		double lightIntensity = light.GetIntensityInDirection(-lightDirection);
@@ -78,4 +74,14 @@ CVector4f PhongShader::Shade(CShadeContext const& shadeContext) const
 
 	// Возвращаем результирующий цвет точки
 	return shadedColor;
+}
+
+bool CastSecondaryRay(const CVector3d& rayStart, const CScene& scene, const CVector3d lightDirection)
+{
+	CVector3d rayDirection = Normalize(lightDirection);
+	CRay checkShadowRay = CRay(rayStart, rayDirection);
+	CIntersection bestIntersection;
+	CSceneObject const* pSceneObject = NULL;
+
+	return scene.GetFirstHit(checkShadowRay, bestIntersection, &pSceneObject);
 }

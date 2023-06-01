@@ -9,6 +9,7 @@ Cube::Cube(double size, CVector3d const& center, CMatrix4d const& transform)
 	, m_center(center)
 	, m_transform(transform)
 {
+	
 }
 
 bool Cube::Hit(CRay const& ray, CIntersection& intersection) const
@@ -16,72 +17,61 @@ bool Cube::Hit(CRay const& ray, CIntersection& intersection) const
 	CRay invRay = Transform(ray, GetInverseTransform());
 	auto rayOrigin = invRay.GetStart();
 	auto rayDirection = invRay.GetDirection();
-	double tmin = (m_center.x - m_size - rayOrigin.x) / rayDirection.x;
-	double tmax = (m_center.x + m_size - rayOrigin.x) / rayDirection.x;
-	double tymin = (m_center.y - m_size - rayOrigin.y) / rayDirection.y;
-	double tymax = (m_center.y + m_size - rayOrigin.y) / rayDirection.y;
+	double t1 = (m_center.x - m_size - rayOrigin.x) / rayDirection.x;
+	double t2 = (m_center.x + m_size - rayOrigin.x) / rayDirection.x;
+	double t3 = (m_center.y - m_size - rayOrigin.y) / rayDirection.y;
+	double t4 = (m_center.y + m_size - rayOrigin.y) / rayDirection.y;
+	double t5 = (m_center.z - m_size - rayOrigin.z) / rayDirection.z;
+	double t6 = (m_center.z + m_size - rayOrigin.z) / rayDirection.z;
+	
+	// https://gamedev.stackexchange.com/questions/18436/most-efficient-aabb-vs-ray-collision-algorithms
+	double tmin = std::max(std::max(std::min(t1, t2), std::min(t3, t4)), std::min(t5, t6));
+	double tmax = std::min(std::min(std::max(t1, t2), std::max(t3, t4)), std::max(t5, t6));
 
-	if (tmin > tymax || tymin > tmax)
+	// if tmax < 0, ray (line) is intersecting AABB, but the whole AABB is behind us
+	if (tmax < 0)
 	{
 		return false;
 	}
 
-	if (tymin > tmin)
-	{
-		tmin = tymin;
-	}
-
-	if (tymax < tmax)
-	{
-		tmax = tymax;
-	}
-
-	double tzmin = (m_center.z - m_size - rayOrigin.z) / rayDirection.z;
-	double tzmax = (m_center.z + m_size - rayOrigin.z) / rayDirection.z;
-
-	if (tmin > tzmax || tzmin > tmax)
+	// if tmin > tmax, ray doesn't intersect AABB
+	if (tmin > tmax)
 	{
 		return false;
 	}
 
-	if (tzmin > tmin)
-	{
-		tmin = tzmin;
-	}
-
-	if (tzmax < tmax)
-	{
-		tmax = tzmax;
-	}
-
-	if (tmin < 0 || tmin > tmax)
-	{
-		return false;
-	}
 
 	CVector3d hitPoint = ray.GetPointAtTime(tmin);
-
 	CVector3d hitPointInObjectSpace = invRay.GetPointAtTime(tmin);
 
-	CVector3d normalInObjectSpace = {
-		(hitPoint.x == (m_center.x - m_size)
-			? -1.0
-				: hitPoint.x == (m_center.x + m_size)
-				? 1.0
-				: 0.0),
-		(hitPoint.y == (m_center.y - m_size)
-			? -1.0
-				: hitPoint.y == (m_center.y + m_size)
-				? 1.0
-				: 0.0),
-		(hitPoint.z == (m_center.z - m_size)
-			? -1.0
-				: hitPoint.z == (m_center.z + m_size)
-				? 1.0
-				: 0.0)
-	};
 
-	CVector3d normalInWorldSpace = GetNormalMatrix() * normalInObjectSpace;
+	double epsilon = 0.0000000001;
+
+	double cx = std::abs(hitPointInObjectSpace.x - (m_center.x - m_size));
+	double fx = std::abs(hitPointInObjectSpace.x - (m_center.x + m_size));
+	double cy = std::abs(hitPointInObjectSpace.y - (m_center.y - m_size));
+	double fy = std::abs(hitPointInObjectSpace.y - (m_center.y + m_size));
+	double cz = std::abs(hitPointInObjectSpace.z - (m_center.z - m_size));
+	double fz = std::abs(hitPointInObjectSpace.z - (m_center.z + m_size));
+
+	CVector3d normalInObjectSpace;
+	if (cx < epsilon)
+		normalInObjectSpace = CVector3d(-1.0, 0.0, 0.0);
+	else if (fx < epsilon)
+		normalInObjectSpace = CVector3d(1.0, 0.0, 0.0);
+	else if (cy < epsilon)
+		normalInObjectSpace = CVector3d(0.0, -1.0, 0.0);
+	else if (fy < epsilon)
+		normalInObjectSpace = CVector3d(0.0, 1.0, 0.0);
+	else if (cz < epsilon)
+		normalInObjectSpace = CVector3d(0.0, 0.0, -1.0);
+	else if (fz < epsilon)
+		normalInObjectSpace = CVector3d(0.0, 0.0, 1.0);
+	else
+		normalInObjectSpace = CVector3d(0.0, 0.0, 0.0);
+
+	// https://ru.stackoverflow.com/questions/767567/%D0%A8%D0%B5%D0%B9%D0%B4%D0%B5%D1%80%D1%8B-%D0%97%D0%B0%D1%87%D0%B5%D0%BC-%D0%BD%D1%83%D0%B6%D0%BD%D0%B0-%D0%BC%D0%B0%D1%82%D1%80%D0%B8%D1%86%D0%B0-%D0%BD%D0%BE%D1%80%D0%BC%D0%B0%D0%BB%D0%B5%D0%B9-normalmatrix-%D0%B8-%D0%BA%D0%B0%D0%BA-%D0%B5%D1%91-%D0%BD%D0%B0%D0%B9%D1%82%D0%B8
+	CVector3d normalInWorldSpace = Normalize(GetTransform() * CVector4d(normalInObjectSpace.x, normalInObjectSpace.y, normalInObjectSpace.z, 0));
 
 	// ¬ список точек пересечени€ добавл€ем информацию о найденной точке пересечени€
 	intersection.AddHit(CHitInfo(

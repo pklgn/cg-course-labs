@@ -19,7 +19,7 @@ Application::Application()
 	, m_plane(0, 1, 0, 1) // Плоскость y=-1
 	, m_sphere1(1.5) // Создаем сферу радиуса 1.5
 	, m_sphere2(0.5) // Создаем сферу радиуса 0.5
-	, m_cube(1, CVector3d(0, 11, 0))
+	, m_cube(1, CVector3d(0, 0, 0))
 {
 	// Инициализация SDL (таймер и видео)
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
@@ -43,6 +43,7 @@ Application::Application()
 		*/
 		CMatrix4d sphereTransform;
 		sphereTransform.Translate(2, 0, -5);
+		sphereTransform.Scale(2, 1, 1);
 		m_sphere1.SetTransform(sphereTransform);
 
 		/*
@@ -86,7 +87,7 @@ Application::Application()
 		Матрица трансформации плоскости
 		*/
 		CMatrix4d planeTransform;
-		planeTransform.Translate(0, -1, -3);
+		planeTransform.Translate(0, -2, -3);
 		m_plane.SetTransform(planeTransform);
 
 		/*
@@ -108,11 +109,12 @@ Application::Application()
 		Матрица трансформации куба
 		*/
 		CMatrix4d cubeTransform;
-		cubeTransform.Translate(-1, 3, -3);
+		cubeTransform.Translate(-5, 0, -3);
+		cubeTransform.Scale(2, 1, 1);
 		m_cube.SetTransform(cubeTransform);
 
 		/*
-		Материал плоскости
+		Материал куба
 		*/
 		ComplexMaterial material4;
 		material4.SetDiffuseColor(CVector4f(1, 0, 0, 1));

@@ -11,10 +11,10 @@ public:
 	/*
 		Ќахождение точки пересечени€ луча с кубом
 	*/
-	virtual bool Hit(CRay const& ray, CIntersection& intersection) const;
+	virtual bool Hit(CRay const& ray, CIntersection& intersection) const override;
 
 private:
 	double m_size;
-	CVector3d const& m_center;
-	CMatrix4d const& m_transform;
+	CVector3d m_center;
+	CMatrix4d m_transform;
 };

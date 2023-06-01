@@ -33,12 +33,12 @@ public:
 		CVector3d const& normal,
 		CVector3d const& normalInObjectSpace
 		)
-		:m_hitPoint(hitPoint)
-		,m_hitPointInObjectSpace(hitPointInObjectSpace)
-		,m_normal(Normalize(normal))
-		,m_normalInObjectSpace(Normalize(normalInObjectSpace))
-		,m_hitTime(hitTime)
-		,m_pHitObject(&hitObject)
+		: m_hitPoint(hitPoint)
+		, m_hitPointInObjectSpace(hitPointInObjectSpace)
+		, m_normal(Normalize(normal))
+		, m_normalInObjectSpace(Normalize(normalInObjectSpace))
+		, m_hitTime(hitTime)
+		, m_pHitObject(&hitObject)
 	{
 	}
 
