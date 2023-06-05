@@ -263,7 +263,7 @@ public:
 	/*
 	Возвращаем вектор-строку
 	*/
-	CVector4<T> GetColumn(unsigned i)const noexcept
+	CVector4<T> GetColumn(unsigned i) const noexcept
 	{
 		assert(i < 4);
 		return CVector4<T>(mat[i]);

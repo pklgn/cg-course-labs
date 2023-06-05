@@ -12,14 +12,14 @@
 size_t MOVABLE_LIGHT_SOURCE_INDEX = 0;
 
 Application::Application()
-	: m_frameBuffer(400, 300)
+	: m_frameBuffer(1200, 900)
 	, m_pMainSurface(NULL)
 	, m_timerId(NULL)
 	, m_mainSurfaceUpdated(0)
 	, m_plane(0, 1, 0, 1) // Плоскость y=-1
 	, m_sphere1(1.5) // Создаем сферу радиуса 1.5
 	, m_sphere2(0.5) // Создаем сферу радиуса 0.5
-	, m_cube(1, CVector3d(0, 0, 0))
+	, m_cube()
 {
 	// Инициализация SDL (таймер и видео)
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
@@ -27,7 +27,7 @@ Application::Application()
 
 	// Создаем главное окно приложения и сохраняем указатель
 	// на поверхность, связанную с ним
-	m_pMainSurface = SDL_SetVideoMode(400, 300, 32,
+	m_pMainSurface = SDL_SetVideoMode(1200, 900, 32,
 		SDL_SWSURFACE | SDL_DOUBLEBUF);
 
 	/*
@@ -42,8 +42,8 @@ Application::Application()
 		Матрица трансформации сферы 1
 		*/
 		CMatrix4d sphereTransform;
-		sphereTransform.Translate(2, 0, -5);
-		sphereTransform.Scale(2, 1, 1);
+		sphereTransform.Translate(2, -1, -5);
+		//sphereTransform.Scale(2, 1, 1);
 		m_sphere1.SetTransform(sphereTransform);
 
 		/*
@@ -74,7 +74,7 @@ Application::Application()
 		ComplexMaterial material2;
 		material2.SetDiffuseColor(CVector4f(1, 0, 0, 1));
 		material2.SetSpecularColor(CVector4f(1, 1, 1, 1));
-		material2.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 1));
+		material2.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 0.1f));
 
 		// Шейдер сферы 2
 		m_phongShaderSphere2.SetMaterial(material2);
@@ -110,7 +110,7 @@ Application::Application()
 		*/
 		CMatrix4d cubeTransform;
 		cubeTransform.Translate(-5, 0, -3);
-		cubeTransform.Scale(2, 1, 1);
+		cubeTransform.Scale(1, 1, 1);
 		m_cube.SetTransform(cubeTransform);
 
 		/*
@@ -119,16 +119,16 @@ Application::Application()
 		ComplexMaterial material4;
 		material4.SetDiffuseColor(CVector4f(1, 0, 0, 1));
 		material4.SetSpecularColor(CVector4f(1, 1, 1, 1));
-		material4.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 1));
+		material4.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 0.1f));
 
-		// Шейдер плоскости
+		// Шейдер куба
 		m_phongShaderCube.SetMaterial(material4);
 		m_scene.AddObject(CSceneObjectPtr(new CSceneObject(m_cube, m_phongShaderCube)));
 	}
 
 	// Создаем и добавляем в сцену точечный источник света
 	{
-		COmniLightPtr pLight(new COmniLightSource(CVector3d(0.f, 1.0, 10.f)));
+		COmniLightPtr pLight(new COmniLightSource(CVector3d(0.f, 5.0, 10.f)));
 		pLight->SetDiffuseIntensity(CVector4f(1, 1, 1, 1));
 		pLight->SetSpecularIntensity(CVector4f(1, 1, 1, 1));
 		pLight->SetAmbientIntensity(CVector4f(1, 1, 1, 1));
@@ -138,18 +138,18 @@ Application::Application()
 	// Создаем и добавляем в сцену точечный источник света
 	{
 		COmniLightPtr pLight(new COmniLightSource(CVector3d(0.f, 30, 10.f)));
-		pLight->SetDiffuseIntensity(CVector4f(1, 1, 1, 1));
-		pLight->SetSpecularIntensity(CVector4f(1, 1, 1, 1));
-		pLight->SetAmbientIntensity(CVector4f(1, 1, 1, 1));
+		pLight->SetDiffuseIntensity(CVector4f(0.1, 0.1, 0.1, 1));
+		pLight->SetSpecularIntensity(CVector4f(0.1, 0.1, 0.1, 1));
+		pLight->SetAmbientIntensity(CVector4f(0.1, 0.1, 0.1, 1));
 		m_scene.AddLightSource(pLight);
 	}
 
 	/*
 	Задаем параметры видового порта и матрицы проецирования в контексте визуализации
 	*/
-	m_context.SetViewPort(CViewPort(0, 0, 400, 300));
+	m_context.SetViewPort(CViewPort(0, 0, 1200, 900));
 	CMatrix4d proj;
-	proj.LoadPerspective(60, 400.0 / 300.0, 0.1, 10);
+	proj.LoadPerspective(60, 1200.0 / 900.0, 0.1, 10);
 	m_context.SetProjectionMatrix(proj);
 }
 

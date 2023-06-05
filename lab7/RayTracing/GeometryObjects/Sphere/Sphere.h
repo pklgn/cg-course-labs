@@ -16,12 +16,12 @@ public:
 		CMatrix4d const& transform = CMatrix4d());
 
 	/*
-	Перегруженный метод получения матрицы обратной трансформации объекта
+		Перегруженный метод получения матрицы обратной трансформации объекта
 	*/
 	virtual CMatrix4d const& GetInverseTransform() const;
 
 	/*
-	Пересечение луча со сферой
+		Пересечение луча со сферой
 	*/
 	virtual bool Hit(CRay const& ray, CIntersection & intersection) const;
 
@@ -29,7 +29,6 @@ protected:
 	virtual void OnUpdateTransform() override;
 
 private:
-
 	/*
 		Параметры обратной матрицы трансформации, построенной с учетом начального
 		преобразования базовой сферы и матрицы трансформации сферы

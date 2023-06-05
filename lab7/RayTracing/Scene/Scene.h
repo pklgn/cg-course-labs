@@ -31,13 +31,15 @@ public:
 	*/
 	void AddLightSource(ILightSourcePtr pLightSource);
 
+
+
 	/*
 	Возвращает количество источников света в сцене
 	*/
 	size_t GetLightsCount() const;
 
 	/*
-	Доступ к источнику света с указанным индексом
+		Доступ к источнику света с указанным индексом
 	*/
 	ILightSource const& GetLight(size_t index) const;
 	ILightSource& GetLight(size_t index);

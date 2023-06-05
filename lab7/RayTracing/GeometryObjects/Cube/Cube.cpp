@@ -9,7 +9,38 @@ Cube::Cube(double size, CVector3d const& center, CMatrix4d const& transform)
 	, m_center(center)
 	, m_transform(transform)
 {
-	
+	// Куб заданного размера и с центром в заданной точке получается
+	// путем масштабирования и переноса базового куба (куб размером 1 с центром в начале координат)
+	m_initialTransform.Translate(center.x, center.y, center.z);
+	m_initialTransform.Scale(m_size, m_size, m_size);
+
+	// Обновляем матрицу обратного преобразования
+	OnUpdateTransform();
+}
+
+/*
+	Вычисление матрицы обратного преобразования объекта
+*/
+CMatrix4d const& Cube::GetInverseTransform() const
+{
+	// При последующих вызовах метода GetInverseTransform() будет возвращено ранее вычисленное преобразование
+	return m_inverseTransform;
+}
+
+void Cube::OnUpdateTransform()
+{
+	CGeometryObjectImpl::OnUpdateTransform();
+
+	// При обновлении матрицы трансформации объекта необходимо обновить матрицу обратного преобразования
+
+	// Инвертируем матрицу начального преобразования
+	CMatrix4d inverseInitialTransform = m_initialTransform.GetInverseMatrix();
+
+	// Получаем обратную матрицу преобразования геометрического объект в целом
+	CMatrix4d const& inverseGeomObjectTransform = CGeometryObjectImpl::GetInverseTransform();
+
+	// Вычисляем результирующую матрицу преобразоваиня, перемножив обратные матрицы в обратном порядке
+	m_inverseTransform = inverseInitialTransform * inverseGeomObjectTransform;
 }
 
 bool Cube::Hit(CRay const& ray, CIntersection& intersection) const
@@ -71,6 +102,8 @@ bool Cube::Hit(CRay const& ray, CIntersection& intersection) const
 		normalInObjectSpace = CVector3d(0.0, 0.0, 0.0);
 	// TODO: нормализовать матрицу нормали
 	// https://ru.stackoverflow.com/questions/767567/%D0%A8%D0%B5%D0%B9%D0%B4%D0%B5%D1%80%D1%8B-%D0%97%D0%B0%D1%87%D0%B5%D0%BC-%D0%BD%D1%83%D0%B6%D0%BD%D0%B0-%D0%BC%D0%B0%D1%82%D1%80%D0%B8%D1%86%D0%B0-%D0%BD%D0%BE%D1%80%D0%BC%D0%B0%D0%BB%D0%B5%D0%B9-normalmatrix-%D0%B8-%D0%BA%D0%B0%D0%BA-%D0%B5%D1%91-%D0%BD%D0%B0%D0%B9%D1%82%D0%B8
+	auto normalMatrix = GetNormalMatrix();
+
 	CVector3d normalInWorldSpace = GetNormalMatrix() * normalInObjectSpace;
 
 	// В список точек пересечения добавляем информацию о найденной точке 

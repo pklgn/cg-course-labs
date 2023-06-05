@@ -2,6 +2,7 @@
 #include "ILightSource.h"
 #include "../Matrix/Matrix4.h"
 #include "../Vector/Vector4.h"
+#include "../Vector/VectorMath.h"
 
 /*
 	Реализация методов, общих для различных типов источников света
@@ -73,10 +74,23 @@ public:
 		return m_ambientIntensity;
 	}
 
-protected:
-	CLightSourceImpl(CMatrix4d const& transform = CMatrix4d())
-		:m_transform(transform)
+	virtual CVector3d const& GetPositionInWorldSpace() const
 	{
+		return m_positionInWorldSpace;
+	}
+
+protected:
+	CLightSourceImpl(CMatrix4d const& transform = CMatrix4d(), const CVector3d& position = CVector3d())
+		: m_transform(transform)
+		, m_position(position)
+
+	{
+	}
+
+	//	Обновление позиции источника света в мировых координатах в зависимости от матрицы трансформации
+	void UpdatePositionInWorldSpace()
+	{
+		m_positionInWorldSpace = GetTransform() * CVector4d(m_position, 1);
 	}
 
 private:
@@ -84,4 +98,9 @@ private:
 	CVector4f m_ambientIntensity;
 	CVector4f m_specularIntensity;
 	CMatrix4d m_transform;
+
+	// Начальная позиция источника света
+	CVector3d m_position;
+	// Вычисленная позиция источника света в мировых координатах
+	CVector3d m_positionInWorldSpace;
 };

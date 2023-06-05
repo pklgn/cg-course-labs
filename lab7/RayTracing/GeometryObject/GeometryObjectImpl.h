@@ -34,10 +34,11 @@ public:
 
 		// Также вычисляем матрицу обратного преобразования
 		m_invTransform = transform.GetInverseMatrix();
+
 		// и матрицу нормали
-		m_normalMatrix.SetColumn(0, m_transform.GetColumn(0));
-		m_normalMatrix.SetColumn(1, m_transform.GetColumn(1));
-		m_normalMatrix.SetColumn(2, m_transform.GetColumn(2));
+		m_normalMatrix.SetRow(0, m_invTransform.GetColumn(0));
+		m_normalMatrix.SetRow(1, m_invTransform.GetColumn(1));
+		m_normalMatrix.SetRow(2, m_invTransform.GetColumn(2));
 		
 		// Уведомляем наследников об изменении матрицы преобразования
 		OnUpdateTransform();
@@ -61,8 +62,8 @@ public:
 	}
 protected:
 	/*
-	Вызывается всякий раз, когда у объекта изменяется матрица трансформации
-	Может быть перегружен в классах-наследниках для выполнения связанных с этим операций
+		Вызывается всякий раз, когда у объекта изменяется матрица трансформации
+		Может быть перегружен в классах-наследниках для выполнения связанных с этим операций
 	*/
 	virtual void OnUpdateTransform()
 	{

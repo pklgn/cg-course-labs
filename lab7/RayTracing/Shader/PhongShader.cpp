@@ -82,6 +82,14 @@ bool CastSecondaryRay(const CVector3d& rayStart, const CScene& scene, const CVec
 	CRay checkShadowRay = CRay(rayStart, rayDirection);
 	CIntersection bestIntersection;
 	CSceneObject const* pSceneObject = NULL;
+	
+	bool wasHit = scene.GetFirstHit(checkShadowRay, bestIntersection, &pSceneObject);
+	bool result = wasHit;
+	if (wasHit)
+	{
+		auto hitTime = bestIntersection.GetHit(0).GetHitTime();
+		result = ((hitTime > 0) && (bestIntersection.GetHit(0).GetHitTime() < lightDirection.GetLength()));
+	}
 
-	return scene.GetFirstHit(checkShadowRay, bestIntersection, &pSceneObject);
+	return result;
 }

@@ -47,4 +47,7 @@ public:
 		Направление на источник света из указанной точки, заданной в мировой системе координат
 	*/
 	virtual CVector3d GetDirectionFromPoint(CVector3d const& point) const = 0;
+
+	// Получение позиции источника света в мировых координатах
+	virtual CVector3d const& GetPositionInWorldSpace() const = 0;
 };
