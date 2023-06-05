@@ -136,6 +136,7 @@
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp" />
     <ClCompile Include="FrameBuffer\FrameBuffer.cpp" />
+    <ClCompile Include="GeometryObjects\ConicCylinder\ConicCylinder.cpp" />
     <ClCompile Include="GeometryObjects\Cube\Cube.cpp" />
     <ClCompile Include="GeometryObjects\Plane\Plane.cpp" />
     <ClCompile Include="GeometryObjects\Sphere\Sphere.cpp" />
@@ -155,10 +156,12 @@
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
     <ClInclude Include="FrameBuffer\FrameBuffer.h" />
+    <ClInclude Include="GeometryObjects\ConicCylinder\ConicCylinder.h" />
     <ClInclude Include="GeometryObjects\Cube\Cube.h" />
     <ClInclude Include="GeometryObjects\Plane\Plane.h" />
     <ClInclude Include="GeometryObjects\Sphere\Sphere.h" />
     <ClInclude Include="GeometryObject\GeometryObjectImpl.h" />
+    <ClInclude Include="GeometryObject\GeometryObjectWithInitialTransformImpl.h" />
     <ClInclude Include="GeometryObject\IGeometryObject.h" />
     <ClInclude Include="GeometryObject\IGeometryObject_fwd.h" />
     <ClInclude Include="Intersection\Intersection.h" />

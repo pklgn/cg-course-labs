@@ -57,6 +57,9 @@
     <ClCompile Include="GeometryObjects\Cube\Cube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeometryObjects\ConicCylinder\ConicCylinder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json" />
@@ -165,6 +168,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GeometryObjects\Cube\Cube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryObjects\ConicCylinder\ConicCylinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryObject\GeometryObjectWithInitialTransformImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

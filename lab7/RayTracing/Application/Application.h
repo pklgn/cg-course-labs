@@ -9,6 +9,7 @@
 #include "../Shader/SimpleDiffuseShader.h"
 #include "../Shader/PhongShader.h"
 #include "../GeometryObjects/Cube/Cube.h"
+#include "../GeometryObjects/ConicCylinder/ConicCylinder.h"
 
 class Application
 {
@@ -61,10 +62,12 @@ private:
 	CSphere m_sphere1;
 	CSphere m_sphere2;
 	Cube m_cube;
+	ConicCylinder m_conicCylinder;
 
 	// Шейдеры
 	PhongShader m_phongShaderSphere1;
 	PhongShader m_phongShaderSphere2;
 	PhongShader m_phongShaderPlane;
 	PhongShader m_phongShaderCube;
+	PhongShader m_phongShaderConicCylinder;
 };

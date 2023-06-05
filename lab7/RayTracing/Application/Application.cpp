@@ -126,6 +126,21 @@ Application::Application()
 		m_scene.AddObject(CSceneObjectPtr(new CSceneObject(m_cube, m_phongShaderCube)));
 	}
 
+	// Рисуем конический цилиндр
+	{
+		ComplexMaterial white;
+		white.SetDiffuseColor(CVector4f(1, 1, 1, 1));
+
+		CMatrix4d transform;
+		transform.Translate(-1, -1, 0);
+		transform.Rotate(-90, 1, 0, 0);
+		m_conicCylinder.SetTransform(transform);
+
+		m_phongShaderConicCylinder.SetMaterial(white);
+
+		m_scene.AddObject(CSceneObjectPtr(new CSceneObject(m_conicCylinder, m_phongShaderConicCylinder)));
+	}
+
 	// Создаем и добавляем в сцену точечный источник света
 	{
 		COmniLightPtr pLight(new COmniLightSource(CVector3d(0.f, 5.0, 10.f)));
