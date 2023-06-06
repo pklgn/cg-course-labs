@@ -37,33 +37,12 @@ Application::Application()
 
 	AddSomeConicCylinders();
 
+	AddSomeCubes();
+
 	AddSomeLight();
 
-	// Создаем и добавляем в сцену куб, имеющий заданный материал
-	{
-		///*
-		//Матрица трансформации куба
-		//*/
-		//CMatrix4d cubeTransform;
-		//cubeTransform.Translate(-5, 0, -3);
-		//cubeTransform.Scale(1, 1, 1);
-		//m_cube.SetTransform(cubeTransform);
-
-		///*
-		//Материал куба
-		//*/
-		//ComplexMaterial material4;
-		//material4.SetDiffuseColor(CVector4f(1, 0, 0, 1));
-		//material4.SetSpecularColor(CVector4f(1, 1, 1, 1));
-		//material4.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 0.1f));
-
-		//// Шейдер куба
-		//m_phongShaderCube.SetMaterial(material4);
-		//m_scene.AddObject(CSceneObjectPtr(new CSceneObject(m_cube, m_phongShaderCube)));
-	}
-
 	/*
-	Задаем параметры видового порта и матрицы проецирования в контексте визуализации
+		Задаем параметры видового порта и матрицы проецирования в контексте визуализации
 	*/
 	m_context.SetViewPort(CViewPort(0, 0, 1200, 900));
 	CMatrix4d proj;
@@ -336,9 +315,9 @@ void Application::AddSomeLight()
 	m_scene.AddLightSource(pLightFront);
 
 	COmniLightPtr pLightUpper(new COmniLightSource(CVector3d(0.f, 30, 10.f)));
-	pLightUpper->SetDiffuseIntensity(CVector4f(0.1, 0.1, 0.1, 1));
-	pLightUpper->SetSpecularIntensity(CVector4f(0.1, 0.1, 0.1, 1));
-	pLightUpper->SetAmbientIntensity(CVector4f(0.1, 0.1, 0.1, 1));
+	pLightUpper->SetDiffuseIntensity(CVector4f(0.1f, 0.1f, 0.1f, 1));
+	pLightUpper->SetSpecularIntensity(CVector4f(0.1f, 0.1f, 0.1f, 1));
+	pLightUpper->SetAmbientIntensity(CVector4f(0.1f, 0.1f, 0.1f, 1));
 	m_scene.AddLightSource(pLightUpper);
 }
 
@@ -354,6 +333,23 @@ void Application::AddSomeConicCylinders()
 	transform.Rotate(-90, 1, 0, 0);
 	
 	AddConicCylinder(CreatePhongShader(whiteMaterial), 1, 0.5, 0.3, transform);
+}
+
+void Application::AddSomeCubes()
+{
+	// Матрица трансформации куба
+	CMatrix4d cubeTransform;
+	cubeTransform.Translate(-5, -0.5f, -3);
+	cubeTransform.Scale(1, 1, 1);
+	cubeTransform.Rotate(-20, 0, 1, 0);
+
+	//Материал куба
+	ComplexMaterial cubeMaterial;
+	cubeMaterial.SetDiffuseColor(CVector4f(1, 0, 0, 1));
+	cubeMaterial.SetSpecularColor(CVector4f(1, 1, 1, 1));
+	cubeMaterial.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 0.1f));
+
+	AddCube(CreatePhongShader(cubeMaterial), 1, CVector3d(0, 0, 0), cubeTransform);
 }
 
 CSimpleDiffuseShader& Application::CreateSimpleDiffuseShader(CSimpleMaterial const& material)
@@ -402,6 +398,14 @@ CSceneObject& Application::AddSceneObject(IGeometryObject const& object, IShader
 	m_scene.AddObject(obj);
 
 	return *obj;
+}
+
+CSceneObject& Application::AddCube(IShader const& shader, double size, CVector3d const& center, CMatrix4d const& transform)
+{
+	const auto& cube = *m_geometryObjects.emplace_back(
+		std::make_unique<Cube>(size, center, transform));
+
+	return AddSceneObject(cube, shader);
 }
 
 

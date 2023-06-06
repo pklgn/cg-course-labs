@@ -44,6 +44,7 @@ private:
 	void AddSomeSpheres();
 	void AddSomeLight();
 	void AddSomeConicCylinders();
+	void AddSomeCubes();
 
 	// Методы создания и добавления шейдеров в коллекцию m_shaders
 	CSimpleDiffuseShader& CreateSimpleDiffuseShader(CSimpleMaterial const& material);
@@ -54,6 +55,8 @@ private:
 	CSceneObject& AddConicCylinder(IShader const& shader, double height = 1, double baseRadius = 1, double capRadius = 0, CMatrix4d const& transform = CMatrix4d());
 	CSceneObject& AddPlane(IShader const& shader, double a, double b, double c, double d, CMatrix4d const& transform = CMatrix4d());
 	CSceneObject& AddSceneObject(IGeometryObject const& object, IShader const& shader);
+	CSceneObject& AddCube(IShader const& shader, double size, CVector3d const& center = CVector3d(), CMatrix4d const& transform = CMatrix4d());
+
 
 private:
 	// Буфер кадра
