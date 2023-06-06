@@ -60,6 +60,9 @@
     <ClCompile Include="GeometryObjects\ConicCylinder\ConicCylinder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TriangleMesh\TriangleMesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json" />
@@ -174,6 +177,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GeometryObject\GeometryObjectWithInitialTransformImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TriangleMesh\TriangleMesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <SDL/SDL.h>
+#include <memory>
 #include "../FrameBuffer/FrameBuffer.h"
 #include "../GeometryObjects/Plane/Plane.h"
 #include "../GeometryObjects/Sphere/Sphere.h"
@@ -10,6 +11,7 @@
 #include "../Shader/PhongShader.h"
 #include "../GeometryObjects/Cube/Cube.h"
 #include "../GeometryObjects/ConicCylinder/ConicCylinder.h"
+#include "../TriangleMesh/TriangleMesh.h"
 
 class Application
 {
@@ -45,6 +47,8 @@ private:
 	void AddSomeLight();
 	void AddSomeConicCylinders();
 	void AddSomeCubes();
+	void AddSomeTetrahedron();
+	void AddSomeOctahedron();
 
 	// Методы создания и добавления шейдеров в коллекцию m_shaders
 	CSimpleDiffuseShader& CreateSimpleDiffuseShader(CSimpleMaterial const& material);
@@ -56,7 +60,8 @@ private:
 	CSceneObject& AddPlane(IShader const& shader, double a, double b, double c, double d, CMatrix4d const& transform = CMatrix4d());
 	CSceneObject& AddSceneObject(IGeometryObject const& object, IShader const& shader);
 	CSceneObject& AddCube(IShader const& shader, double size, CVector3d const& center = CVector3d(), CMatrix4d const& transform = CMatrix4d());
-
+	CSceneObject& AddTriangleMesh(IShader const& shader, CTriangleMeshData const* pMeshData, CMatrix4d const& transform = CMatrix4d());
+	CTriangleMeshData* CreateTriangleMeshData(std::vector<Vertex> const& vertices, std::vector<Face> const& faces);
 
 private:
 	// Буфер кадра
@@ -77,4 +82,5 @@ private:
 
 	std::vector<std::unique_ptr<IGeometryObject>> m_geometryObjects;
 	std::vector<std::unique_ptr<IShader>> m_shaders;
+	std::vector<std::unique_ptr<CTriangleMeshData>> m_triangleMeshDataObjects;
 };

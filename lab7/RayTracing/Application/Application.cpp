@@ -7,12 +7,13 @@
 // TODO: чисто для отладки
 #include <iostream>
 #include "../Material/ComplexMaterial.h"
+#include "../TriangleMesh/TriangleMesh.h"
 
 // TODO: для отладки
 size_t MOVABLE_LIGHT_SOURCE_INDEX = 0;
 
 Application::Application()
-	: m_frameBuffer(1200, 900)
+	: m_frameBuffer(400, 300)
 	, m_pMainSurface(NULL)
 	, m_timerId(NULL)
 	, m_mainSurfaceUpdated(0)
@@ -23,7 +24,7 @@ Application::Application()
 
 	// Создаем главное окно приложения и сохраняем указатель
 	// на поверхность, связанную с ним
-	m_pMainSurface = SDL_SetVideoMode(1200, 900, 32,
+	m_pMainSurface = SDL_SetVideoMode(400, 300, 32,
 		SDL_SWSURFACE | SDL_DOUBLEBUF);
 
 	/*
@@ -39,14 +40,18 @@ Application::Application()
 
 	AddSomeCubes();
 
+	AddSomeTetrahedron();
+
+	AddSomeOctahedron();
+
 	AddSomeLight();
 
 	/*
 		Задаем параметры видового порта и матрицы проецирования в контексте визуализации
 	*/
-	m_context.SetViewPort(CViewPort(0, 0, 1200, 900));
+	m_context.SetViewPort(CViewPort(0, 0, 400, 300));
 	CMatrix4d proj;
-	proj.LoadPerspective(60, 1200.0 / 900.0, 0.1, 10);
+	proj.LoadPerspective(60, 400.0 / 300.0, 0.1, 10);
 	m_context.SetProjectionMatrix(proj);
 
 	// Задаем матрицу камеры
@@ -273,7 +278,7 @@ void Application::AddSomePlane()
 	ComplexMaterial planeMaterial;
 	planeMaterial.SetDiffuseColor(CVector4f(0, 1, 1, 1));
 	planeMaterial.SetSpecularColor(CVector4f(1, 1, 1, 1));
-	planeMaterial.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 1));
+	planeMaterial.SetAmbientColor(CVector4f(0.0f, 0.2f, 0.2f, 1));
 
 	AddPlane(CreatePhongShader(planeMaterial), 0, 1, 0, 0, planeTransform);
 }
@@ -288,7 +293,7 @@ void Application::AddSomeSpheres()
 	ComplexMaterial material1;
 	material1.SetDiffuseColor(CVector4f(0, 1, 0, 1));
 	material1.SetSpecularColor(CVector4f(1, 1, 1, 1));
-	material1.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 1));
+	material1.SetAmbientColor(CVector4f(0.0f, 0.3f, 0.0f, 1));
 
 	AddSphere(CreatePhongShader(material1), 1, CVector3d(0, 0, 0), sphereTransform1);
 
@@ -300,7 +305,7 @@ void Application::AddSomeSpheres()
 	ComplexMaterial material2;
 	material2.SetDiffuseColor(CVector4f(1, 0, 0, 1));
 	material2.SetSpecularColor(CVector4f(1, 1, 1, 1));
-	material2.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 0.1f));
+	material2.SetAmbientColor(CVector4f(0.2f, 0.0f, 0.0f, 1));
 	material2.SetSpecularCoefficient(512);
 
 	AddSphere(CreatePhongShader(material2), 1, CVector3d(0, 0, 0), sphereTransform2);
@@ -332,7 +337,7 @@ void Application::AddSomeConicCylinders()
 	transform.Translate(-1, -2, 0);
 	transform.Rotate(-90, 1, 0, 0);
 	
-	AddConicCylinder(CreatePhongShader(whiteMaterial), 1, 0.5, 0.3, transform);
+	AddConicCylinder(CreatePhongShader(whiteMaterial), 1, 0.5, 0.2, transform);
 }
 
 void Application::AddSomeCubes()
@@ -341,15 +346,89 @@ void Application::AddSomeCubes()
 	CMatrix4d cubeTransform;
 	cubeTransform.Translate(-5, -0.5f, -3);
 	cubeTransform.Scale(1, 1, 1);
-	cubeTransform.Rotate(-20, 0, 1, 0);
+	cubeTransform.Rotate(30, 0, 1, 0);
+	cubeTransform.Rotate(-15, 1, 0, 0);
 
 	//Материал куба
 	ComplexMaterial cubeMaterial;
 	cubeMaterial.SetDiffuseColor(CVector4f(1, 0, 0, 1));
 	cubeMaterial.SetSpecularColor(CVector4f(1, 1, 1, 1));
-	cubeMaterial.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 0.1f));
+	cubeMaterial.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 1));
+	cubeMaterial.SetSpecularCoefficient(2048);
 
 	AddCube(CreatePhongShader(cubeMaterial), 1, CVector3d(0, 0, 0), cubeTransform);
+}
+
+void Application::AddSomeTetrahedron()
+{
+	// Вершины
+	CVector3d v0(-1, 0, 1);
+	CVector3d v1(+1, 0, 1);
+	CVector3d v2(0, 0, -1);
+	CVector3d v3(0, 2, 0);
+	std::vector<Vertex> vertices;
+	vertices.push_back(Vertex(v0));
+	vertices.push_back(Vertex(v1));
+	vertices.push_back(Vertex(v2));
+	vertices.push_back(Vertex(v3));
+
+	// Грани
+	std::vector<Face> faces;
+	faces.push_back(Face(0, 2, 1));
+	faces.push_back(Face(3, 0, 1));
+	faces.push_back(Face(3, 1, 2));
+	faces.push_back(Face(3, 2, 0));
+
+	// Данные полигональной сетки
+	CTriangleMeshData* pMeshData = CreateTriangleMeshData(vertices, faces);
+
+	CMatrix4d transform;
+	transform.Translate(3, 0.3, -1);
+	transform.Rotate(170, 0, 1, 0);
+	CSimpleMaterial blue;
+	blue.SetDiffuseColor(CVector4f(0.5f, 0.8f, 1, 1));
+
+	AddTriangleMesh(CreateSimpleDiffuseShader(blue), pMeshData, transform);
+}
+
+void Application::AddSomeOctahedron()
+{
+	// Вершины
+	CVector3d v0(0, 1, 0);
+	CVector3d v1(1, 0, 0);
+	CVector3d v2(0, -1, 0);
+	CVector3d v3(-1, 0, 0);
+	CVector3d v4(0, 0, 1);
+	CVector3d v5(0, 0, -1);
+	std::vector<Vertex> vertices;
+	vertices.push_back(Vertex(v0));
+	vertices.push_back(Vertex(v1));
+	vertices.push_back(Vertex(v2));
+	vertices.push_back(Vertex(v3));
+	vertices.push_back(Vertex(v4));
+	vertices.push_back(Vertex(v5));
+
+	// Грани
+	std::vector<Face> faces;
+	faces.push_back(Face(2, 1, 4));
+	faces.push_back(Face(1, 0, 4));
+	faces.push_back(Face(0, 3, 4));
+	faces.push_back(Face(3, 2, 4));
+	faces.push_back(Face(2, 5, 1));
+	faces.push_back(Face(1, 5, 0));
+	faces.push_back(Face(0, 5, 3));
+	faces.push_back(Face(3, 5, 2));
+
+	// Данные полигональной сетки
+	CTriangleMeshData* pMeshData = CreateTriangleMeshData(vertices, faces);
+
+	CMatrix4d transform;
+	transform.Translate(-3, 0.3, -5);
+	transform.Scale(2, 2, 2);
+	CSimpleMaterial violet;
+	violet.SetDiffuseColor(CVector4f(0.8f, 0.0f, 0.8f, 1));
+
+	AddTriangleMesh(CreateSimpleDiffuseShader(violet), pMeshData, transform);
 }
 
 CSimpleDiffuseShader& Application::CreateSimpleDiffuseShader(CSimpleMaterial const& material)
@@ -406,6 +485,18 @@ CSceneObject& Application::AddCube(IShader const& shader, double size, CVector3d
 		std::make_unique<Cube>(size, center, transform));
 
 	return AddSceneObject(cube, shader);
+}
+
+CSceneObject& Application::AddTriangleMesh(IShader const& shader, CTriangleMeshData const* pMeshData, CMatrix4d const& transform)
+{
+	const auto& mesh = *m_geometryObjects.emplace_back(std::make_unique<CTriangleMesh>(pMeshData, transform));
+	return AddSceneObject(mesh, shader);
+}
+
+CTriangleMeshData* Application::CreateTriangleMeshData(std::vector<Vertex> const& vertices, std::vector<Face> const& faces)
+{
+	auto* meshData = m_triangleMeshDataObjects.emplace_back(std::make_unique<CTriangleMeshData>(vertices, faces)).get();
+	return meshData;
 }
 
 

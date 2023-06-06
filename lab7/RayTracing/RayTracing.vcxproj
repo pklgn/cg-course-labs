@@ -148,6 +148,7 @@
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Shader\PhongShader.cpp" />
     <ClCompile Include="Shader\SimpleDiffuseShader.cpp" />
+    <ClCompile Include="TriangleMesh\TriangleMesh.cpp" />
     <ClCompile Include="ViewPort\ViewPort.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -185,6 +186,7 @@
     <ClInclude Include="Shader\ShadeContext.h" />
     <ClInclude Include="Shader\SimpleDiffuseShader.h" />
     <ClInclude Include="Shader\SimpleMaterial.h" />
+    <ClInclude Include="TriangleMesh\TriangleMesh.h" />
     <ClInclude Include="Vector\Vector2.h" />
     <ClInclude Include="Vector\Vector3.h" />
     <ClInclude Include="Vector\Vector4.h" />
