@@ -5,7 +5,8 @@
 #include "../Vector/VectorMath.h"
 #include "ShadeContext.h"
 
-CSimpleDiffuseShader::CSimpleDiffuseShader(void)
+CSimpleDiffuseShader::CSimpleDiffuseShader(CSimpleMaterial const& material)
+	: m_material(material)
 {
 }
 

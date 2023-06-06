@@ -8,8 +8,7 @@
 class CSimpleDiffuseShader : public IShader
 {
 public:
-	// TODO: можно ли избавиться от этого конструктора?
-	CSimpleDiffuseShader();
+	CSimpleDiffuseShader(CSimpleMaterial const& material = CSimpleMaterial());
 
 	/*
 		В качестве параметра шейдера выступает класс CSimpleMaterial, хранящий в простейшем случае

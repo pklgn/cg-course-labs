@@ -16,10 +16,6 @@ Application::Application()
 	, m_pMainSurface(NULL)
 	, m_timerId(NULL)
 	, m_mainSurfaceUpdated(0)
-	, m_plane(0, 1, 0, 1) // Плоскость y=-1
-	, m_sphere1(1.5) // Создаем сферу радиуса 1.5
-	, m_sphere2(0.5) // Создаем сферу радиуса 0.5
-	, m_cube()
 {
 	// Инициализация SDL (таймер и видео)
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
@@ -35,128 +31,35 @@ Application::Application()
 	*/
 	m_scene.SetBackdropColor(CVector4f(0, 0, 1, 1));
 
+	AddSomePlane();
 
-	// Создаем и добавляем в сцену сферу, имеющую заданный материал
-	{
-		/*
-		Матрица трансформации сферы 1
-		*/
-		CMatrix4d sphereTransform;
-		sphereTransform.Translate(2, -1, -5);
-		//sphereTransform.Scale(2, 1, 1);
-		m_sphere1.SetTransform(sphereTransform);
+	AddSomeSpheres();
 
-		/*
-		Материал сферы 1
-		*/
-		ComplexMaterial material1;
-		material1.SetDiffuseColor(CVector4f(0, 1, 0, 1));
-		material1.SetSpecularColor(CVector4f(1, 1, 1, 1));
-		material1.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 1));
+	AddSomeConicCylinders();
 
-		// Шейдер сферы 1
-		m_phongShaderSphere1.SetMaterial(material1);
-		m_scene.AddObject(CSceneObjectPtr(new CSceneObject(m_sphere1, m_phongShaderSphere1)));
-	}
-
-	// Создаем и добавляем в сцену сферу, имеющую заданный материал
-	{
-		/*
-		Матрица трансформации сферы 2
-		*/
-		CMatrix4d sphereTransform;
-		sphereTransform.Translate(0, -0.5, -3);
-		m_sphere2.SetTransform(sphereTransform);
-
-		/*
-		Материал сферы 2
-		*/
-		ComplexMaterial material2;
-		material2.SetDiffuseColor(CVector4f(1, 0, 0, 1));
-		material2.SetSpecularColor(CVector4f(1, 1, 1, 1));
-		material2.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 0.1f));
-
-		// Шейдер сферы 2
-		m_phongShaderSphere2.SetMaterial(material2);
-		m_scene.AddObject(CSceneObjectPtr(new CSceneObject(m_sphere2, m_phongShaderSphere2)));
-	}
-
-	// Создаем и добавляем в сцену плоскость, имеющую заданный материал
-	{
-		/*
-		Матрица трансформации плоскости
-		*/
-		CMatrix4d planeTransform;
-		planeTransform.Translate(0, -2, -3);
-		m_plane.SetTransform(planeTransform);
-
-		/*
-		Материал плоскости
-		*/
-		ComplexMaterial material3;
-		material3.SetDiffuseColor(CVector4f(0, 1, 1, 1));
-		material3.SetSpecularColor(CVector4f(1, 1, 1, 1));
-		material3.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 1));
-
-		// Шейдер плоскости
-		m_phongShaderPlane.SetMaterial(material3);
-		m_scene.AddObject(CSceneObjectPtr(new CSceneObject(m_plane, m_phongShaderPlane)));
-	}
+	AddSomeLight();
 
 	// Создаем и добавляем в сцену куб, имеющий заданный материал
 	{
-		/*
-		Матрица трансформации куба
-		*/
-		CMatrix4d cubeTransform;
-		cubeTransform.Translate(-5, 0, -3);
-		cubeTransform.Scale(1, 1, 1);
-		m_cube.SetTransform(cubeTransform);
+		///*
+		//Матрица трансформации куба
+		//*/
+		//CMatrix4d cubeTransform;
+		//cubeTransform.Translate(-5, 0, -3);
+		//cubeTransform.Scale(1, 1, 1);
+		//m_cube.SetTransform(cubeTransform);
 
-		/*
-		Материал куба
-		*/
-		ComplexMaterial material4;
-		material4.SetDiffuseColor(CVector4f(1, 0, 0, 1));
-		material4.SetSpecularColor(CVector4f(1, 1, 1, 1));
-		material4.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 0.1f));
+		///*
+		//Материал куба
+		//*/
+		//ComplexMaterial material4;
+		//material4.SetDiffuseColor(CVector4f(1, 0, 0, 1));
+		//material4.SetSpecularColor(CVector4f(1, 1, 1, 1));
+		//material4.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 0.1f));
 
-		// Шейдер куба
-		m_phongShaderCube.SetMaterial(material4);
-		m_scene.AddObject(CSceneObjectPtr(new CSceneObject(m_cube, m_phongShaderCube)));
-	}
-
-	// Рисуем конический цилиндр
-	{
-		ComplexMaterial white;
-		white.SetDiffuseColor(CVector4f(1, 1, 1, 1));
-
-		CMatrix4d transform;
-		transform.Translate(-1, -1, 0);
-		transform.Rotate(-90, 1, 0, 0);
-		m_conicCylinder.SetTransform(transform);
-
-		m_phongShaderConicCylinder.SetMaterial(white);
-
-		m_scene.AddObject(CSceneObjectPtr(new CSceneObject(m_conicCylinder, m_phongShaderConicCylinder)));
-	}
-
-	// Создаем и добавляем в сцену точечный источник света
-	{
-		COmniLightPtr pLight(new COmniLightSource(CVector3d(0.f, 5.0, 10.f)));
-		pLight->SetDiffuseIntensity(CVector4f(1, 1, 1, 1));
-		pLight->SetSpecularIntensity(CVector4f(1, 1, 1, 1));
-		pLight->SetAmbientIntensity(CVector4f(1, 1, 1, 1));
-		m_scene.AddLightSource(pLight);
-	}
-
-	// Создаем и добавляем в сцену точечный источник света
-	{
-		COmniLightPtr pLight(new COmniLightSource(CVector3d(0.f, 30, 10.f)));
-		pLight->SetDiffuseIntensity(CVector4f(0.1, 0.1, 0.1, 1));
-		pLight->SetSpecularIntensity(CVector4f(0.1, 0.1, 0.1, 1));
-		pLight->SetAmbientIntensity(CVector4f(0.1, 0.1, 0.1, 1));
-		m_scene.AddLightSource(pLight);
+		//// Шейдер куба
+		//m_phongShaderCube.SetMaterial(material4);
+		//m_scene.AddObject(CSceneObjectPtr(new CSceneObject(m_cube, m_phongShaderCube)));
 	}
 
 	/*
@@ -166,6 +69,14 @@ Application::Application()
 	CMatrix4d proj;
 	proj.LoadPerspective(60, 1200.0 / 900.0, 0.1, 10);
 	m_context.SetProjectionMatrix(proj);
+
+	// Задаем матрицу камеры
+	CMatrix4d modelView;
+	modelView.LoadLookAtRH(
+		1, 1, 5,
+		0, 0, 0,
+		0, 1, 0);
+	m_context.SetModelViewMatrix(modelView);
 }
 
 Application::~Application()
@@ -368,3 +279,129 @@ void Application::InvalidateMainSurface()
 		SDL_PushEvent(&evt);
 	}
 }
+
+void Application::AddSomePlane()
+{
+	/*
+		Матрица трансформации плоскости
+	*/
+	CMatrix4d planeTransform;
+	planeTransform.Translate(0, -2, -3);
+
+	/*
+		Материал плоскости
+	*/
+	ComplexMaterial planeMaterial;
+	planeMaterial.SetDiffuseColor(CVector4f(0, 1, 1, 1));
+	planeMaterial.SetSpecularColor(CVector4f(1, 1, 1, 1));
+	planeMaterial.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 1));
+
+	AddPlane(CreatePhongShader(planeMaterial), 0, 1, 0, 0, planeTransform);
+}
+
+void Application::AddSomeSpheres()
+{
+	// Матрица трансформации сферы 1
+	CMatrix4d sphereTransform1;
+	sphereTransform1.Translate(2, -1, -5);
+
+	// Материал сферы 1
+	ComplexMaterial material1;
+	material1.SetDiffuseColor(CVector4f(0, 1, 0, 1));
+	material1.SetSpecularColor(CVector4f(1, 1, 1, 1));
+	material1.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 1));
+
+	AddSphere(CreatePhongShader(material1), 1, CVector3d(0, 0, 0), sphereTransform1);
+
+	// Матрица трансформации сферы 2
+	CMatrix4d sphereTransform2;
+	sphereTransform2.Translate(0, -0.5, -3);
+
+	// Материал сферы 2
+	ComplexMaterial material2;
+	material2.SetDiffuseColor(CVector4f(1, 0, 0, 1));
+	material2.SetSpecularColor(CVector4f(1, 1, 1, 1));
+	material2.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 0.1f));
+	material2.SetSpecularCoefficient(512);
+
+	AddSphere(CreatePhongShader(material2), 1, CVector3d(0, 0, 0), sphereTransform2);
+}
+
+void Application::AddSomeLight()
+{
+	COmniLightPtr pLightFront(new COmniLightSource(CVector3d(0.f, 5.0, 10.f)));
+	pLightFront->SetDiffuseIntensity(CVector4f(1, 1, 1, 1));
+	pLightFront->SetSpecularIntensity(CVector4f(1, 1, 1, 1));
+	pLightFront->SetAmbientIntensity(CVector4f(1, 1, 1, 1));
+	m_scene.AddLightSource(pLightFront);
+
+	COmniLightPtr pLightUpper(new COmniLightSource(CVector3d(0.f, 30, 10.f)));
+	pLightUpper->SetDiffuseIntensity(CVector4f(0.1, 0.1, 0.1, 1));
+	pLightUpper->SetSpecularIntensity(CVector4f(0.1, 0.1, 0.1, 1));
+	pLightUpper->SetAmbientIntensity(CVector4f(0.1, 0.1, 0.1, 1));
+	m_scene.AddLightSource(pLightUpper);
+}
+
+void Application::AddSomeConicCylinders()
+{
+	ComplexMaterial whiteMaterial;
+	whiteMaterial.SetDiffuseColor(CVector4f(0.9f, 0.9f, 0.1f, 1));
+	whiteMaterial.SetSpecularColor(CVector4f(1, 1, 1, 1));
+	whiteMaterial.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 1));
+
+	CMatrix4d transform;
+	transform.Translate(-1, -2, 0);
+	transform.Rotate(-90, 1, 0, 0);
+	
+	AddConicCylinder(CreatePhongShader(whiteMaterial), 1, 0.5, 0.3, transform);
+}
+
+CSimpleDiffuseShader& Application::CreateSimpleDiffuseShader(CSimpleMaterial const& material)
+{
+	auto shader = std::make_unique<CSimpleDiffuseShader>(material);
+	auto& shaderRef = *shader;
+	m_shaders.emplace_back(std::move(shader));
+	return shaderRef;
+}
+
+PhongShader& Application::CreatePhongShader(const ComplexMaterial& material)
+{
+	auto shader = std::make_unique<PhongShader>(material);
+	auto& shaderRef = *shader;
+	m_shaders.emplace_back(std::move(shader));
+	return shaderRef;
+}
+
+CSceneObject& Application::AddSphere(IShader const& shader, double radius, CVector3d const& center, CMatrix4d const& transform)
+{
+	const auto& sphere = *m_geometryObjects.emplace_back(
+		std::make_unique<CSphere>(radius, center, transform));
+
+	return AddSceneObject(sphere, shader);
+}
+
+CSceneObject& Application::AddConicCylinder(IShader const& shader, double height, double baseRadius, double capRadius, CMatrix4d const& transform)
+{
+	const auto& conicCylinder = *m_geometryObjects.emplace_back(
+		std::make_unique<ConicCylinder>(height, baseRadius, capRadius, transform));
+
+	return AddSceneObject(conicCylinder, shader);
+}
+
+CSceneObject& Application::AddPlane(IShader const& shader, double a, double b, double c, double d, CMatrix4d const& transform)
+{
+	const auto& plane = *m_geometryObjects.emplace_back(
+		std::make_unique<CPlane>(a, b, c, d, transform));
+
+	return AddSceneObject(plane, shader);
+}
+
+CSceneObject& Application::AddSceneObject(IGeometryObject const& object, IShader const& shader)
+{
+	auto obj = std::make_shared<CSceneObject>(object, shader);
+	m_scene.AddObject(obj);
+
+	return *obj;
+}
+
+

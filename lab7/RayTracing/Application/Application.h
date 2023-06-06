@@ -40,6 +40,21 @@ private:
 	// Пометка содержимого окна, как нуждающейся в перерисовке
 	void InvalidateMainSurface();
 
+	void AddSomePlane();
+	void AddSomeSpheres();
+	void AddSomeLight();
+	void AddSomeConicCylinders();
+
+	// Методы создания и добавления шейдеров в коллекцию m_shaders
+	CSimpleDiffuseShader& CreateSimpleDiffuseShader(CSimpleMaterial const& material);
+	PhongShader& CreatePhongShader(const ComplexMaterial& material);
+
+	// Методы, создающие и добавляющие объекты к сцене
+	CSceneObject& AddSphere(IShader const& shader, double radius = 1, CVector3d const& center = CVector3d(), CMatrix4d const& transform = CMatrix4d());
+	CSceneObject& AddConicCylinder(IShader const& shader, double height = 1, double baseRadius = 1, double capRadius = 0, CMatrix4d const& transform = CMatrix4d());
+	CSceneObject& AddPlane(IShader const& shader, double a, double b, double c, double d, CMatrix4d const& transform = CMatrix4d());
+	CSceneObject& AddSceneObject(IGeometryObject const& object, IShader const& shader);
+
 private:
 	// Буфер кадра
 	FrameBuffer m_frameBuffer;
@@ -57,17 +72,6 @@ private:
 	// Обновлена ли поверхность окна приложения (1 - да, 0 - нет)
 	std::atomic<uint32_t> m_mainSurfaceUpdated;
 
-	// Геометрические объекты, присутствующие в сцене
-	CPlane m_plane;
-	CSphere m_sphere1;
-	CSphere m_sphere2;
-	Cube m_cube;
-	ConicCylinder m_conicCylinder;
-
-	// Шейдеры
-	PhongShader m_phongShaderSphere1;
-	PhongShader m_phongShaderSphere2;
-	PhongShader m_phongShaderPlane;
-	PhongShader m_phongShaderCube;
-	PhongShader m_phongShaderConicCylinder;
+	std::vector<std::unique_ptr<IGeometryObject>> m_geometryObjects;
+	std::vector<std::unique_ptr<IShader>> m_shaders;
 };

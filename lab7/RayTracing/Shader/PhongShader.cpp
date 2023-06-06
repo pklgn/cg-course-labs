@@ -10,6 +10,11 @@
 
 bool CastSecondaryRay(const CVector3d& rayStart, const CScene& scene, const CVector3d lightDirection);
 
+PhongShader::PhongShader(const ComplexMaterial& material)
+	: m_material(material)
+{
+}
+
 void PhongShader::SetMaterial(ComplexMaterial const& material)
 {
 	m_material = material;

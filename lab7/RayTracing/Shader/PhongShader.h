@@ -5,6 +5,8 @@
 class PhongShader : public IShader
 {
 public:
+	PhongShader(const ComplexMaterial& material);
+
 	/*
 		В качестве параметра шейдера выступает класс CSimpleMaterial, хранящий в простейшем случае
 		диффузный цвет материала поверхности объекта
