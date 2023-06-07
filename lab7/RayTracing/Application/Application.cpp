@@ -9,12 +9,13 @@
 #include "../Material/ComplexMaterial.h"
 #include "../TriangleMesh/TriangleMesh.h"
 #include "../GeometryObjects/Dodecahedron/Dodecahedron.h"
+#include "../GeometryObjects/Icosahedron/Icosahedron.h"
 
 // TODO: для отладки
 size_t MOVABLE_LIGHT_SOURCE_INDEX = 0;
 
 Application::Application()
-	: m_frameBuffer(400, 300)
+	: m_frameBuffer(1200, 900)
 	, m_pMainSurface(NULL)
 	, m_timerId(NULL)
 	, m_mainSurfaceUpdated(0)
@@ -25,7 +26,7 @@ Application::Application()
 
 	// Создаем главное окно приложения и сохраняем указатель
 	// на поверхность, связанную с ним
-	m_pMainSurface = SDL_SetVideoMode(400, 300, 32,
+	m_pMainSurface = SDL_SetVideoMode(1200, 900, 32,
 		SDL_SWSURFACE | SDL_DOUBLEBUF);
 
 	/*
@@ -33,28 +34,30 @@ Application::Application()
 	*/
 	m_scene.SetBackdropColor(CVector4f(0, 0, 1, 1));
 
-	//AddSomePlane();
+	AddSomePlane();
 
-	//AddSomeSpheres();
+	AddSomeSpheres();
 
-	//AddSomeConicCylinders();
+	AddSomeConicCylinders();
 
-	//AddSomeCubes();
+	AddSomeCubes();
 
-	//AddSomeTetrahedron();
+	AddSomeTetrahedron();
 
-	//AddSomeOctahedron();
+	AddSomeOctahedron();
 
 	AddSomeDodecahedron();
+
+	AddSomeIcosahedron();
 
 	AddSomeLight();
 
 	/*
 		Задаем параметры видового порта и матрицы проецирования в контексте визуализации
 	*/
-	m_context.SetViewPort(CViewPort(0, 0, 400, 300));
+	m_context.SetViewPort(CViewPort(0, 0, 1200, 900));
 	CMatrix4d proj;
-	proj.LoadPerspective(60, 400.0 / 300.0, 0.1, 10);
+	proj.LoadPerspective(75, 1200.0 / 900.0, 0.1, 10);
 	m_context.SetProjectionMatrix(proj);
 
 	// Задаем матрицу камеры
@@ -347,7 +350,7 @@ void Application::AddSomeCubes()
 {
 	// Матрица трансформации куба
 	CMatrix4d cubeTransform;
-	cubeTransform.Translate(-5, -0.5f, -3);
+	cubeTransform.Translate(-4, -0.5f, 0);
 	cubeTransform.Scale(1, 1, 1);
 	cubeTransform.Rotate(30, 0, 1, 0);
 	cubeTransform.Rotate(-15, 1, 0, 0);
@@ -386,7 +389,7 @@ void Application::AddSomeTetrahedron()
 	CTriangleMeshData* pMeshData = CreateTriangleMeshData(vertices, faces);
 
 	CMatrix4d transform;
-	transform.Translate(3, 0.3, -1);
+	transform.Translate(3, 0.5f, -1);
 	transform.Rotate(170, 0, 1, 0);
 	CSimpleMaterial blue;
 	blue.SetDiffuseColor(CVector4f(0.5f, 0.8f, 1, 1));
@@ -426,7 +429,7 @@ void Application::AddSomeOctahedron()
 	CTriangleMeshData* pMeshData = CreateTriangleMeshData(vertices, faces);
 
 	CMatrix4d transform;
-	transform.Translate(-3, 0.3, -5);
+	transform.Translate(-3, 2, -5);
 	transform.Scale(2, 2, 2);
 	CSimpleMaterial violet;
 	violet.SetDiffuseColor(CVector4f(0.8f, 0.0f, 0.8f, 1));
@@ -437,7 +440,8 @@ void Application::AddSomeOctahedron()
 void Application::AddSomeDodecahedron()
 {
 	CMatrix4d transform;
-	transform.Translate(-3, 0.3, 2);
+	transform.Translate(-2.5, -1, -3);
+	transform.Rotate(75, 0, 1, 1);
 
 	//Материал додекадра
 	ComplexMaterial material;
@@ -447,6 +451,22 @@ void Application::AddSomeDodecahedron()
 	material.SetSpecularCoefficient(2048);
 
 	AddDodecahedron(CreatePhongShader(material), transform);
+}
+
+void Application::AddSomeIcosahedron()
+{
+	CMatrix4d transform;
+	transform.Translate(3, 0, 1);
+	transform.Rotate(20, 0, 1, 1);
+
+	//Материал додекадра
+	ComplexMaterial material;
+	material.SetDiffuseColor(CVector4f(0.5f, 0.2f, 0.9f, 1));
+	material.SetSpecularColor(CVector4f(1, 1, 1, 1));
+	material.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 1));
+	material.SetSpecularCoefficient(2048);
+
+	AddIcosahedron(CreatePhongShader(material), transform);
 }
 
 CSimpleDiffuseShader& Application::CreateSimpleDiffuseShader(CSimpleMaterial const& material)
@@ -523,6 +543,14 @@ CSceneObject& Application::AddDodecahedron(IShader const& shader, CMatrix4d cons
 		std::make_unique<Dodecahedron>(transform));
 
 	return AddSceneObject(dodecahedron, shader);
+}
+
+CSceneObject& Application::AddIcosahedron(IShader const& shader, CMatrix4d const& transform)
+{
+	const auto& icosahedron = *m_geometryObjects.emplace_back(
+		std::make_unique<Icosahedron>(transform));
+
+	return AddSceneObject(icosahedron, shader);
 }
 
 

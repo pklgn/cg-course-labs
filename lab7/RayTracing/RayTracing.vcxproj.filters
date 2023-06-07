@@ -69,6 +69,12 @@
     <ClCompile Include="GeometryObjects\PolytopeReader\PolytopeReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeometryObjects\Icosahedron\Icosahedron.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeometryObjects\WavefrontObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json" />
@@ -192,6 +198,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GeometryObjects\PolytopeReader\PolytopeReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryObjects\Icosahedron\Icosahedron.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryObjects\WavefrontObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -14,7 +14,7 @@ class CHitInfo
 public:
 	// Конструктор по умолчанию - пересечения нет
 	CHitInfo()
-		:m_hitTime(0)
+		:m_hitTime(-1)
 		,m_pHitObject(nullptr)
 	{
 	}

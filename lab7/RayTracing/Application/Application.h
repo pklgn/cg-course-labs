@@ -50,6 +50,7 @@ private:
 	void AddSomeTetrahedron();
 	void AddSomeOctahedron();
 	void AddSomeDodecahedron();
+	void AddSomeIcosahedron();
 
 	// Методы создания и добавления шейдеров в коллекцию m_shaders
 	CSimpleDiffuseShader& CreateSimpleDiffuseShader(CSimpleMaterial const& material);
@@ -64,6 +65,7 @@ private:
 	CSceneObject& AddTriangleMesh(IShader const& shader, CTriangleMeshData const* pMeshData, CMatrix4d const& transform = CMatrix4d());
 	CTriangleMeshData* CreateTriangleMeshData(std::vector<Vertex> const& vertices, std::vector<Face> const& faces);
 	CSceneObject& AddDodecahedron(IShader const& shader, CMatrix4d const& transform = CMatrix4d());
+	CSceneObject& AddIcosahedron(IShader const& shader, CMatrix4d const& transform = CMatrix4d());
 
 private:
 	// Буфер кадра

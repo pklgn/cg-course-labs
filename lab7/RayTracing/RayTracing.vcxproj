@@ -136,9 +136,11 @@
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp" />
     <ClCompile Include="FrameBuffer\FrameBuffer.cpp" />
+    <ClCompile Include="GeometryObjects\WavefrontObject.cpp" />
     <ClCompile Include="GeometryObjects\ConicCylinder\ConicCylinder.cpp" />
     <ClCompile Include="GeometryObjects\Cube\Cube.cpp" />
     <ClCompile Include="GeometryObjects\Dodecahedron\Dodecahedron.cpp" />
+    <ClCompile Include="GeometryObjects\Icosahedron\Icosahedron.cpp" />
     <ClCompile Include="GeometryObjects\Plane\Plane.cpp" />
     <ClCompile Include="GeometryObjects\PolytopeReader\PolytopeReader.cpp" />
     <ClCompile Include="GeometryObjects\Sphere\Sphere.cpp" />
@@ -159,9 +161,11 @@
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
     <ClInclude Include="FrameBuffer\FrameBuffer.h" />
+    <ClInclude Include="GeometryObjects\WavefrontObject.h" />
     <ClInclude Include="GeometryObjects\ConicCylinder\ConicCylinder.h" />
     <ClInclude Include="GeometryObjects\Cube\Cube.h" />
     <ClInclude Include="GeometryObjects\Dodecahedron\Dodecahedron.h" />
+    <ClInclude Include="GeometryObjects\Icosahedron\Icosahedron.h" />
     <ClInclude Include="GeometryObjects\Plane\Plane.h" />
     <ClInclude Include="GeometryObjects\PolytopeReader\PolytopeReader.h" />
     <ClInclude Include="GeometryObjects\Sphere\Sphere.h" />

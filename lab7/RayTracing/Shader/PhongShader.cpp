@@ -46,7 +46,7 @@ CVector4f PhongShader::Shade(CShadeContext const& shadeContext) const
 		bool isInShadow = CastSecondaryRay(shadeContext.GetSurfacePoint(), shadeContext.GetScene(), lightDirection);
 
 		// Вычисляем интенсивность света в направлении от источника к текущей точке
-		double lightIntensity = light.GetIntensityInDirection(-lightDirection);
+		double lightIntensity = light.GetIntensityInDirection(lightDirection);
 
 		// Получаем нормаль к поверхности в обрабатываемой точке
 		CVector3d const& n = shadeContext.GetSurfaceNormal();
@@ -62,7 +62,6 @@ CVector4f PhongShader::Shade(CShadeContext const& shadeContext) const
 		CVector3d h = Normalize(lightDirection - shadeContext.GetRayDirection());
 		double hDotN = Max(Dot(h, n), 0.0);
 		CVector4f specularColor = static_cast<float>(pow(hDotN, m_material.GetSpecularCoefficient())) * light.GetSpecularIntensity() * m_material.GetSpecularColor();
-
 
 		// Найдем фоновую составляю света
 		CVector4f ambientColor = light.GetAmbientIntensity() * m_material.GetAmbientColor();
@@ -93,7 +92,7 @@ bool CastSecondaryRay(const CVector3d& rayStart, const CScene& scene, const CVec
 	if (wasHit)
 	{
 		auto hitTime = bestIntersection.GetHit(0).GetHitTime();
-		result = ((hitTime > 0) && (bestIntersection.GetHit(0).GetHitTime() < lightDirection.GetLength()));
+		result = ((hitTime > 0) && (hitTime < lightDirection.GetLength()));
 	}
 
 	return result;
