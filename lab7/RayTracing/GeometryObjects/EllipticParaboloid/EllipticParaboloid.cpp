@@ -1,15 +1,13 @@
-#include "HyperbolicParaboloid.h"
+#include "EllipticParaboloid.h"
 #include "../../Intersection/Intersection.h"
 #include "../../Ray/Ray.h"
 
-HyperbolicParaboloid::HyperbolicParaboloid(CVector3d const& center, CMatrix4d const& transform)
+EllipticParaboloid::EllipticParaboloid(CMatrix4d const& transform)
 	: CGeometryObjectWithInitialTransformImpl(transform)
 {
-	CMatrix4d initialTransform;
-	initialTransform.Translate(center.x, center.y, center.z);
 }
 
-bool HyperbolicParaboloid::Hit(CRay const& ray, CIntersection& intersection) const
+bool EllipticParaboloid::Hit(CRay const& ray, CIntersection& intersection) const
 {
 	// Вычисляем обратно преобразованный луч (вместо вполнения прямого преобразования объекта)
 	CRay invRay = Transform(ray, GetInverseTransform());
@@ -26,9 +24,9 @@ bool HyperbolicParaboloid::Hit(CRay const& ray, CIntersection& intersection) con
 	/*
 		Коэффициенты квадратного уравнения боковой стенки конического цилиндра
 	*/
-	double a = Sqr(dir.x) - Sqr(dir.z);
-	double b = 2 * (start.x * dir.x) - 2 * (start.z * dir.z) - dir.y;
-	double c = Sqr(start.x) - Sqr(start.z) - start.y;
+	double a = Sqr(dir.x) + Sqr(dir.z);
+	double b = 2 * (start.x * dir.x) + 2 * (start.z * dir.z) - dir.y;
+	double c = Sqr(start.x) + Sqr(start.z) - start.y;
 
 	// Дискриминант квадратного уравнения
 	double discr = b * b - 4 * a * c;
@@ -53,10 +51,8 @@ bool HyperbolicParaboloid::Hit(CRay const& ray, CIntersection& intersection) con
 		{
 			// Проверяем координату z точки пересечения. Она не должна выходить за пределы
 			// диапазона 0..1
-			double hitX = start.x + dir.x * t;
-			double hitY = start.z + dir.z * t;
-			if (hitX >= -1 && hitX <= 1 &&
-				hitY >= -1 && hitY <= 1)
+			double hitY = start.y + dir.y * t;
+			if (hitY <= 1)
 			{
 				hitTimes[numHits++] = t;
 			}
@@ -67,10 +63,8 @@ bool HyperbolicParaboloid::Hit(CRay const& ray, CIntersection& intersection) con
 		// Выполняем аналогичные проверки
 		if (t > HIT_TIME_EPSILON)
 		{
-			double hitX = start.x + dir.x * t;
-			double hitY = start.z + dir.z * t;
-			if (hitX >= -1 && hitX <= 1 &&
-				hitY >= -1 && hitY <= 1)
+			double hitY = start.y + dir.y * t;
+			if (hitY <= 1)
 			{
 				hitTimes[numHits++] = t;
 			}
@@ -110,7 +104,7 @@ bool HyperbolicParaboloid::Hit(CRay const& ray, CIntersection& intersection) con
 		CVector3d hitPointInObjectSpace = invRay.GetPointAtTime(hitTime);
 		CVector3d hitNormalInObjectSpace;
 
-		hitNormalInObjectSpace = CVector3d(2 * hitPointInObjectSpace.x, -2 * hitPointInObjectSpace.z, -1);
+		hitNormalInObjectSpace = CVector3d(2 * hitPointInObjectSpace.x, 2 * hitPointInObjectSpace.z, -1);
 
 		auto nDotR = Dot(hitNormalInObjectSpace, dir);
 		if (nDotR > 0)
@@ -122,7 +116,6 @@ bool HyperbolicParaboloid::Hit(CRay const& ray, CIntersection& intersection) con
 			Собираем информацию о точке столкновения
 		*/
 		CVector3d hitNormal = GetNormalMatrix() * hitNormalInObjectSpace;
-
 
 		CHitInfo hit(
 			hitTime, *this,

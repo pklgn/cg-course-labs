@@ -78,6 +78,9 @@
     <ClCompile Include="GeometryObjects\HyperbolicParaboloid\HyperbolicParaboloid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeometryObjects\EllipticParaboloid\EllipticParaboloid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json" />
@@ -210,6 +213,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GeometryObjects\HyperbolicParaboloid\HyperbolicParaboloid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryObjects\EllipticParaboloid\EllipticParaboloid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

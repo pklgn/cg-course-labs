@@ -11,6 +11,7 @@
 #include "../GeometryObjects/Dodecahedron/Dodecahedron.h"
 #include "../GeometryObjects/Icosahedron/Icosahedron.h"
 #include "../GeometryObjects/HyperbolicParaboloid/HyperbolicParaboloid.h"
+#include "../GeometryObjects/EllipticParaboloid/EllipticParaboloid.h"
 
 
 // TODO: для отладки
@@ -53,6 +54,8 @@ Application::Application()
 	AddSomeIcosahedron();
 
 	AddSomeHyperbolicParaboloid();
+
+	AddSomeEllipticParaboloid();
 
 	AddSomeLight();
 
@@ -490,6 +493,22 @@ void Application::AddSomeHyperbolicParaboloid()
 	AddHyperbolicParaboloid(CreatePhongShader(material), CVector3d(0, 0, 0), transform);
 }
 
+void Application::AddSomeEllipticParaboloid()
+{
+	CMatrix4d transform;
+	transform.Translate(-1, -1, 2.75f);
+	transform.Scale(1, 0.5f, 0.5f);
+
+	//Материал эллептического параболоида
+	ComplexMaterial material;
+	material.SetDiffuseColor(CVector4f(0.8f, 0.4f, 0, 1));
+	material.SetSpecularColor(CVector4f(1, 1, 1, 1));
+	material.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 1));
+	material.SetSpecularCoefficient(256);
+
+	AddEllipticParaboloid(CreatePhongShader(material), transform);
+}
+
 CSimpleDiffuseShader& Application::CreateSimpleDiffuseShader(CSimpleMaterial const& material)
 {
 	auto shader = std::make_unique<CSimpleDiffuseShader>(material);
@@ -578,6 +597,14 @@ CSceneObject& Application::AddHyperbolicParaboloid(IShader const& shader, CVecto
 {
 	const auto& hyperbolicParaboloid = *m_geometryObjects.emplace_back(
 		std::make_unique<HyperbolicParaboloid>(center, transform));
+
+	return AddSceneObject(hyperbolicParaboloid, shader);
+}
+
+CSceneObject& Application::AddEllipticParaboloid(IShader const& shader, CMatrix4d const& transform)
+{
+	const auto& hyperbolicParaboloid = *m_geometryObjects.emplace_back(
+		std::make_unique<EllipticParaboloid>(transform));
 
 	return AddSceneObject(hyperbolicParaboloid, shader);
 }

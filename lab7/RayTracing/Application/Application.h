@@ -52,6 +52,7 @@ private:
 	void AddSomeDodecahedron();
 	void AddSomeIcosahedron();
 	void AddSomeHyperbolicParaboloid();
+	void AddSomeEllipticParaboloid();
 
 	// Методы создания и добавления шейдеров в коллекцию m_shaders
 	CSimpleDiffuseShader& CreateSimpleDiffuseShader(CSimpleMaterial const& material);
@@ -68,6 +69,7 @@ private:
 	CSceneObject& AddDodecahedron(IShader const& shader, CMatrix4d const& transform = CMatrix4d());
 	CSceneObject& AddIcosahedron(IShader const& shader, CMatrix4d const& transform = CMatrix4d());
 	CSceneObject& AddHyperbolicParaboloid(IShader const& shader, CVector3d const& center, CMatrix4d const& transform = CMatrix4d());
+	CSceneObject& AddEllipticParaboloid(IShader const& shader, CMatrix4d const& transform = CMatrix4d());
 
 private:
 	// Буфер кадра
