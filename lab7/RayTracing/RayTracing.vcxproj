@@ -136,6 +136,7 @@
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp" />
     <ClCompile Include="FrameBuffer\FrameBuffer.cpp" />
+    <ClCompile Include="GeometryObjects\HyperbolicParaboloid\HyperbolicParaboloid.cpp" />
     <ClCompile Include="GeometryObjects\WavefrontObject.cpp" />
     <ClCompile Include="GeometryObjects\ConicCylinder\ConicCylinder.cpp" />
     <ClCompile Include="GeometryObjects\Cube\Cube.cpp" />
@@ -161,6 +162,7 @@
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
     <ClInclude Include="FrameBuffer\FrameBuffer.h" />
+    <ClInclude Include="GeometryObjects\HyperbolicParaboloid\HyperbolicParaboloid.h" />
     <ClInclude Include="GeometryObjects\WavefrontObject.h" />
     <ClInclude Include="GeometryObjects\ConicCylinder\ConicCylinder.h" />
     <ClInclude Include="GeometryObjects\Cube\Cube.h" />

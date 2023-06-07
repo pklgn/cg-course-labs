@@ -75,7 +75,7 @@ bool ConicCylinder::Hit(CRay const& ray, CIntersection& intersection) const
 	*/
 
 	/*
-	Идентификаторы поверхностей конического цилиндра
+		Идентификаторы поверхностей конического цилиндра
 	*/
 	enum HitSurface
 	{
@@ -85,7 +85,7 @@ bool ConicCylinder::Hit(CRay const& ray, CIntersection& intersection) const
 	};
 
 	/*
-	Краткая информация о пересечении луча с поверхностями конического цилиндра.
+		Краткая информация о пересечении луча с поверхностями конического цилиндра.
 	*/
 	struct HitPoint
 	{
@@ -97,7 +97,7 @@ bool ConicCylinder::Hit(CRay const& ray, CIntersection& intersection) const
 	HitPoint hitPoints[2]; // С выпуклым объектом максимально возможны 2 точки пересечения луча
 
 	/*
-	Начало и направление луча
+		Начало и направление луча
 	*/
 	CVector3d const& start = invRay.GetStart();
 	CVector3d const& dir = invRay.GetDirection();

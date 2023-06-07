@@ -75,6 +75,9 @@
     <ClCompile Include="GeometryObjects\WavefrontObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeometryObjects\HyperbolicParaboloid\HyperbolicParaboloid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json" />
@@ -204,6 +207,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GeometryObjects\WavefrontObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryObjects\HyperbolicParaboloid\HyperbolicParaboloid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

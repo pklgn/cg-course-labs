@@ -10,12 +10,14 @@
 #include "../TriangleMesh/TriangleMesh.h"
 #include "../GeometryObjects/Dodecahedron/Dodecahedron.h"
 #include "../GeometryObjects/Icosahedron/Icosahedron.h"
+#include "../GeometryObjects/HyperbolicParaboloid/HyperbolicParaboloid.h"
+
 
 // TODO: для отладки
 size_t MOVABLE_LIGHT_SOURCE_INDEX = 0;
 
 Application::Application()
-	: m_frameBuffer(1200, 900)
+	: m_frameBuffer(400, 300)
 	, m_pMainSurface(NULL)
 	, m_timerId(NULL)
 	, m_mainSurfaceUpdated(0)
@@ -26,7 +28,7 @@ Application::Application()
 
 	// Создаем главное окно приложения и сохраняем указатель
 	// на поверхность, связанную с ним
-	m_pMainSurface = SDL_SetVideoMode(1200, 900, 32,
+	m_pMainSurface = SDL_SetVideoMode(400, 300, 32,
 		SDL_SWSURFACE | SDL_DOUBLEBUF);
 
 	/*
@@ -50,14 +52,16 @@ Application::Application()
 
 	AddSomeIcosahedron();
 
+	AddSomeHyperbolicParaboloid();
+
 	AddSomeLight();
 
 	/*
 		Задаем параметры видового порта и матрицы проецирования в контексте визуализации
 	*/
-	m_context.SetViewPort(CViewPort(0, 0, 1200, 900));
+	m_context.SetViewPort(CViewPort(0, 0, 400, 300));
 	CMatrix4d proj;
-	proj.LoadPerspective(75, 1200.0 / 900.0, 0.1, 10);
+	proj.LoadPerspective(75, 400.0 / 300.0, 0.1, 10);
 	m_context.SetProjectionMatrix(proj);
 
 	// Задаем матрицу камеры
@@ -459,7 +463,7 @@ void Application::AddSomeIcosahedron()
 	transform.Translate(3, 0, 1);
 	transform.Rotate(20, 0, 1, 1);
 
-	//Материал додекадра
+	//Материал икосаэдра
 	ComplexMaterial material;
 	material.SetDiffuseColor(CVector4f(0.5f, 0.2f, 0.9f, 1));
 	material.SetSpecularColor(CVector4f(1, 1, 1, 1));
@@ -467,6 +471,23 @@ void Application::AddSomeIcosahedron()
 	material.SetSpecularCoefficient(2048);
 
 	AddIcosahedron(CreatePhongShader(material), transform);
+}
+
+void Application::AddSomeHyperbolicParaboloid()
+{
+	CMatrix4d transform;
+	transform.Rotate(-25, 0, 1, 0);
+	transform.Translate(1, -1, 0);
+	transform.Scale(0.7f, 0.7f, 0.7f);
+
+	//Материал гиперболического параболоида
+	ComplexMaterial material;
+	material.SetDiffuseColor(CVector4f(0.5f, 0.2f, 0.9f, 1));
+	material.SetSpecularColor(CVector4f(1, 1, 1, 1));
+	material.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 1));
+	material.SetSpecularCoefficient(2048);
+
+	AddHyperbolicParaboloid(CreatePhongShader(material), CVector3d(0, 0, 0), transform);
 }
 
 CSimpleDiffuseShader& Application::CreateSimpleDiffuseShader(CSimpleMaterial const& material)
@@ -551,6 +572,14 @@ CSceneObject& Application::AddIcosahedron(IShader const& shader, CMatrix4d const
 		std::make_unique<Icosahedron>(transform));
 
 	return AddSceneObject(icosahedron, shader);
+}
+
+CSceneObject& Application::AddHyperbolicParaboloid(IShader const& shader, CVector3d const& center, CMatrix4d const& transform)
+{
+	const auto& hyperbolicParaboloid = *m_geometryObjects.emplace_back(
+		std::make_unique<HyperbolicParaboloid>(center, transform));
+
+	return AddSceneObject(hyperbolicParaboloid, shader);
 }
 
 
