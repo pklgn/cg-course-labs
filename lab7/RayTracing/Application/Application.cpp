@@ -482,10 +482,10 @@ void Application::AddSomeHyperbolicParaboloid()
 
 	//Материал гиперболического параболоида
 	ComplexMaterial material;
-	material.SetDiffuseColor(CVector4f(0.5f, 0.2f, 0.9f, 1));
+	material.SetDiffuseColor(CVector4f(1, 0.4f, 0.6f, 1));
 	material.SetSpecularColor(CVector4f(1, 1, 1, 1));
 	material.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 1));
-	material.SetSpecularCoefficient(2048);
+	material.SetSpecularCoefficient(256);
 
 	AddHyperbolicParaboloid(CreatePhongShader(material), CVector3d(0, 0, 0), transform);
 }
