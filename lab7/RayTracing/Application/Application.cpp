@@ -8,6 +8,7 @@
 #include <iostream>
 #include "../Material/ComplexMaterial.h"
 #include "../TriangleMesh/TriangleMesh.h"
+#include "../GeometryObjects/Dodecahedron/Dodecahedron.h"
 
 // TODO: для отладки
 size_t MOVABLE_LIGHT_SOURCE_INDEX = 0;
@@ -32,17 +33,19 @@ Application::Application()
 	*/
 	m_scene.SetBackdropColor(CVector4f(0, 0, 1, 1));
 
-	AddSomePlane();
+	//AddSomePlane();
 
-	AddSomeSpheres();
+	//AddSomeSpheres();
 
-	AddSomeConicCylinders();
+	//AddSomeConicCylinders();
 
-	AddSomeCubes();
+	//AddSomeCubes();
 
-	AddSomeTetrahedron();
+	//AddSomeTetrahedron();
 
-	AddSomeOctahedron();
+	//AddSomeOctahedron();
+
+	AddSomeDodecahedron();
 
 	AddSomeLight();
 
@@ -431,6 +434,21 @@ void Application::AddSomeOctahedron()
 	AddTriangleMesh(CreateSimpleDiffuseShader(violet), pMeshData, transform);
 }
 
+void Application::AddSomeDodecahedron()
+{
+	CMatrix4d transform;
+	transform.Translate(-3, 0.3, 2);
+
+	//Материал додекадра
+	ComplexMaterial material;
+	material.SetDiffuseColor(CVector4f(1, 0, 0, 1));
+	material.SetSpecularColor(CVector4f(1, 1, 1, 1));
+	material.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 1));
+	material.SetSpecularCoefficient(2048);
+
+	AddDodecahedron(CreatePhongShader(material), transform);
+}
+
 CSimpleDiffuseShader& Application::CreateSimpleDiffuseShader(CSimpleMaterial const& material)
 {
 	auto shader = std::make_unique<CSimpleDiffuseShader>(material);
@@ -497,6 +515,14 @@ CTriangleMeshData* Application::CreateTriangleMeshData(std::vector<Vertex> const
 {
 	auto* meshData = m_triangleMeshDataObjects.emplace_back(std::make_unique<CTriangleMeshData>(vertices, faces)).get();
 	return meshData;
+}
+
+CSceneObject& Application::AddDodecahedron(IShader const& shader, CMatrix4d const& transform)
+{
+	const auto& dodecahedron = *m_geometryObjects.emplace_back(
+		std::make_unique<Dodecahedron>(transform));
+
+	return AddSceneObject(dodecahedron, shader);
 }
 
 

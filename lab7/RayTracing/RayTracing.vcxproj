@@ -138,7 +138,9 @@
     <ClCompile Include="FrameBuffer\FrameBuffer.cpp" />
     <ClCompile Include="GeometryObjects\ConicCylinder\ConicCylinder.cpp" />
     <ClCompile Include="GeometryObjects\Cube\Cube.cpp" />
+    <ClCompile Include="GeometryObjects\Dodecahedron\Dodecahedron.cpp" />
     <ClCompile Include="GeometryObjects\Plane\Plane.cpp" />
+    <ClCompile Include="GeometryObjects\PolytopeReader\PolytopeReader.cpp" />
     <ClCompile Include="GeometryObjects\Sphere\Sphere.cpp" />
     <ClCompile Include="LightSource\OmniLightSource.cpp" />
     <ClCompile Include="main.cpp" />
@@ -159,7 +161,9 @@
     <ClInclude Include="FrameBuffer\FrameBuffer.h" />
     <ClInclude Include="GeometryObjects\ConicCylinder\ConicCylinder.h" />
     <ClInclude Include="GeometryObjects\Cube\Cube.h" />
+    <ClInclude Include="GeometryObjects\Dodecahedron\Dodecahedron.h" />
     <ClInclude Include="GeometryObjects\Plane\Plane.h" />
+    <ClInclude Include="GeometryObjects\PolytopeReader\PolytopeReader.h" />
     <ClInclude Include="GeometryObjects\Sphere\Sphere.h" />
     <ClInclude Include="GeometryObject\GeometryObjectImpl.h" />
     <ClInclude Include="GeometryObject\GeometryObjectWithInitialTransformImpl.h" />

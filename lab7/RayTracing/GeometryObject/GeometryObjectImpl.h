@@ -29,7 +29,7 @@ public:
 	*/
 	void SetTransform(CMatrix4d const& transform) override
 	{
-		// TODO: транспонированная обратная матрица к modelview
+		// TODO: транспонированная обратная матрица к model
 		m_transform = transform;
 
 		// Также вычисляем матрицу обратного преобразования
