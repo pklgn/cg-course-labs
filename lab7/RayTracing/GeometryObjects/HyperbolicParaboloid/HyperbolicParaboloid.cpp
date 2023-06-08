@@ -2,11 +2,9 @@
 #include "../../Intersection/Intersection.h"
 #include "../../Ray/Ray.h"
 
-HyperbolicParaboloid::HyperbolicParaboloid(CVector3d const& center, CMatrix4d const& transform)
-	: CGeometryObjectWithInitialTransformImpl(transform)
+HyperbolicParaboloid::HyperbolicParaboloid(CMatrix4d const& transform)
+	: CGeometryObjectImpl(transform)
 {
-	CMatrix4d initialTransform;
-	initialTransform.Translate(center.x, center.y, center.z);
 }
 
 bool HyperbolicParaboloid::Hit(CRay const& ray, CIntersection& intersection) const

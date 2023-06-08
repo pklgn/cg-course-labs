@@ -1,7 +1,7 @@
 #pragma once
-#include "../../GeometryObject/GeometryObjectWithInitialTransformImpl.h"
+#include "../../GeometryObject/GeometryObjectImpl.h"
 
-class EllipticParaboloid : public CGeometryObjectWithInitialTransformImpl
+class EllipticParaboloid : public CGeometryObjectImpl
 {
 public:
 	EllipticParaboloid(CMatrix4d const& transform);

@@ -490,7 +490,7 @@ void Application::AddSomeHyperbolicParaboloid()
 	material.SetAmbientColor(CVector4f(0.2f, 0.2f, 0.2f, 1));
 	material.SetSpecularCoefficient(256);
 
-	AddHyperbolicParaboloid(CreatePhongShader(material), CVector3d(0, 0, 0), transform);
+	AddHyperbolicParaboloid(CreatePhongShader(material), transform);
 }
 
 void Application::AddSomeEllipticParaboloid()
@@ -593,10 +593,10 @@ CSceneObject& Application::AddIcosahedron(IShader const& shader, CMatrix4d const
 	return AddSceneObject(icosahedron, shader);
 }
 
-CSceneObject& Application::AddHyperbolicParaboloid(IShader const& shader, CVector3d const& center, CMatrix4d const& transform)
+CSceneObject& Application::AddHyperbolicParaboloid(IShader const& shader, CMatrix4d const& transform)
 {
 	const auto& hyperbolicParaboloid = *m_geometryObjects.emplace_back(
-		std::make_unique<HyperbolicParaboloid>(center, transform));
+		std::make_unique<HyperbolicParaboloid>(transform));
 
 	return AddSceneObject(hyperbolicParaboloid, shader);
 }

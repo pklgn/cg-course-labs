@@ -3,7 +3,7 @@
 #include "../../Ray/Ray.h"
 
 EllipticParaboloid::EllipticParaboloid(CMatrix4d const& transform)
-	: CGeometryObjectWithInitialTransformImpl(transform)
+	: CGeometryObjectImpl(transform)
 {
 }
 
@@ -50,7 +50,7 @@ bool EllipticParaboloid::Hit(CRay const& ray, CIntersection& intersection) const
 		if (t > HIT_TIME_EPSILON)
 		{
 			// ѕровер€ем координату z точки пересечени€. ќна не должна выходить за пределы
-			// диапазона 0..1
+			// z = 1
 			double hitY = start.y + dir.y * t;
 			if (hitY <= 1)
 			{

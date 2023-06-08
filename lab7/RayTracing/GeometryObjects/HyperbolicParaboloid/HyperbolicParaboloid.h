@@ -1,10 +1,10 @@
 #pragma once
-#include "../../GeometryObject/GeometryObjectWithInitialTransformImpl.h"
+#include "../../GeometryObject/GeometryObjectImpl.h"
 
-class HyperbolicParaboloid : public CGeometryObjectWithInitialTransformImpl
+class HyperbolicParaboloid : public CGeometryObjectImpl
 {
 public:
-	HyperbolicParaboloid(CVector3d const& center, CMatrix4d const& transform);
+	HyperbolicParaboloid(CMatrix4d const& transform = CMatrix4d());
 
 	bool Hit(CRay const& ray, CIntersection& intersection) const override;
 };

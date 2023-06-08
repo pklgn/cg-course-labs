@@ -68,7 +68,7 @@ private:
 	CTriangleMeshData* CreateTriangleMeshData(std::vector<Vertex> const& vertices, std::vector<Face> const& faces);
 	CSceneObject& AddDodecahedron(IShader const& shader, CMatrix4d const& transform = CMatrix4d());
 	CSceneObject& AddIcosahedron(IShader const& shader, CMatrix4d const& transform = CMatrix4d());
-	CSceneObject& AddHyperbolicParaboloid(IShader const& shader, CVector3d const& center, CMatrix4d const& transform = CMatrix4d());
+	CSceneObject& AddHyperbolicParaboloid(IShader const& shader, CMatrix4d const& transform = CMatrix4d());
 	CSceneObject& AddEllipticParaboloid(IShader const& shader, CMatrix4d const& transform = CMatrix4d());
 
 private:
