@@ -18,7 +18,7 @@
 size_t MOVABLE_LIGHT_SOURCE_INDEX = 0;
 
 Application::Application()
-	: m_frameBuffer(400, 300)
+	: m_frameBuffer(600, 400)
 	, m_pMainSurface(NULL)
 	, m_timerId(NULL)
 	, m_mainSurfaceUpdated(0)
@@ -29,7 +29,7 @@ Application::Application()
 
 	// Создаем главное окно приложения и сохраняем указатель
 	// на поверхность, связанную с ним
-	m_pMainSurface = SDL_SetVideoMode(400, 300, 32,
+	m_pMainSurface = SDL_SetVideoMode(600, 400, 32,
 		SDL_SWSURFACE | SDL_DOUBLEBUF);
 
 	/*
@@ -62,9 +62,9 @@ Application::Application()
 	/*
 		Задаем параметры видового порта и матрицы проецирования в контексте визуализации
 	*/
-	m_context.SetViewPort(CViewPort(0, 0, 400, 300));
+	m_context.SetViewPort(CViewPort(0, 0, 600, 400));
 	CMatrix4d proj;
-	proj.LoadPerspective(75, 400.0 / 300.0, 0.1, 10);
+	proj.LoadPerspective(75, 600.0 / 400.0, 0.1, 10);
 	m_context.SetProjectionMatrix(proj);
 
 	// Задаем матрицу камеры

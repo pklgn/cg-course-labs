@@ -76,7 +76,12 @@ bool CTriangle::HitTest(CVector3d const& rayStart, CVector3d const& rayDirection
 			return false;
 		}
 
-		// Подставляем начальную точку в уравнение луча
+		/*
+			Подставляем начальную точку в уравнение луча
+			Подстановка начальной точки луча (rayStart) в это уравнение дает значение playEquationAtRayStart,
+			которое показывает, находится ли начальная точка луча выше или ниже плоскости треугольника. Если значение положительное,
+			то начальная точка луча находится выше плоскости, а если отрицательное, то ниже
+		*/
 		double playEquationAtRayStart = m_planeEquation.x * rayStart.x + m_planeEquation.y * rayStart.y + m_planeEquation.z * rayStart.z + m_planeEquation.w;
 
 		// Вычисляем время соударения луча с плоскостью треугольника
