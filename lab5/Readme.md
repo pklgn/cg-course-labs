@@ -1,7 +1,10 @@
 # The contents of each project window in the list below
 1. Cottage **(Cottage)**
-* ![cottage](https://github.com/pklgn/cg-course-labs/assets/73781985/7371a87e-5b32-42b4-b34e-842fb53cc179)
+* ![cottage](https://github.com/pklgn/cg-course-labs/assets/73781985/cad486cb-32f6-43ef-b2fb-ccd31c33a70f)
 
 
 
-* https://github.com/pklgn/cg-course-labs/assets/73781985/f16a4c4d-5184-4fee-9ee4-7049ac677baa
+
+* https://github.com/pklgn/cg-course-labs/assets/73781985/de3be8b3-e486-43b7-81d7-8b6d975a2b62
+
+
